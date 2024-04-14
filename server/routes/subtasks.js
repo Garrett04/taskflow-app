@@ -42,7 +42,7 @@ router.post('/', isAuthenticated, async (req, res) => {
     const { task_id } = req.params;
 
     if (!title) {
-        return res.status(404).json({ success: false, msg: "Please provide title" });
+        return res.status(404).json({ success: false, msg: "Please provide subtask title" });
     }
 
     const newSubtask = await SubTask.create({ title, description, task_id });

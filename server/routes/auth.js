@@ -1,11 +1,16 @@
 const router = require('express').Router();
 const utils = require('../lib/utils');
 const User = require('../models/User');
+const { isAuthenticated } = require('./middlewares/authMiddleware');
 
 // POST ROUTES
 // Login of users who used custom jwt
 router.post('/login', async (req, res) => {
     const { username, password } = req.body;
+
+    if (!username || !password) {
+        return res.status(404).json({ success: false, msg: "Please provide username and password" });
+    }
 
     const user = await User.findByUsername(username);
 
@@ -72,5 +77,13 @@ router.post('/register', async (req, res) => {
         }
     })
 })
+
+
+// GET ROUTE
+// check authentication status
+router.get('/check-authentication', isAuthenticated, async (req, res) => {
+    // if the isAuthenticated proceeds to next route then send this response.
+    res.json({ success: true, authenticated: true });
+});
 
 module.exports = router;
