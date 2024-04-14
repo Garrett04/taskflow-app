@@ -71,7 +71,6 @@ router.post('/register', async (req, res) => {
             login_method: newUser.login_method
         }
     })
-
 })
 
 module.exports = router;
