@@ -79,11 +79,36 @@ router.post('/register', async (req, res) => {
 })
 
 
-// GET ROUTE
+// logs out the user
+router.post('/logout', isAuthenticated, async (req, res, next) => {
+    // if its a user that used the custom strategy then log out
+    if (req && req.cookies) {
+        res.clearCookie('accessToken', {
+            secure: true,
+            sameSite: 'none'
+        });
+
+        return res.json({ success: true, msg: "Succesfully logged out." });
+    }
+
+    // if its a google user then log out
+    if (req.user) {
+        req.logout((err) => {
+            if (err) {
+                return next(err);
+            }
+            return res.json({ success: true, msg: "Successfully logged out." });
+        })
+    }
+})
+
+
+// GET ROUTES
 // check authentication status
 router.get('/check-authentication', isAuthenticated, async (req, res) => {
     // if the isAuthenticated proceeds to next route then send this response.
     res.json({ success: true, authenticated: true });
 });
+
 
 module.exports = router;
