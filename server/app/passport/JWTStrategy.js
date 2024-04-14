@@ -16,6 +16,7 @@ const cookieExtractor = (req) => {
 }
 
 const options = {
+    // jwtFromRequest: ExtractJwt.fromAuthHeaderAsBearerToken(),
     jwtFromRequest: ExtractJwt.fromExtractors([cookieExtractor]),
     secretOrKey: PUB_KEY,
     algorithms: ['RS256'],

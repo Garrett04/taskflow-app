@@ -27,9 +27,10 @@ class User {
     async findById(id) {
         try {
             // query statement
-            const statement = `SELECT username,
+            const statement = `SELECT id,
+                                    username,
                                     first_name,
-                                    last_name,
+                                    last_name
                                 FROM users
                                 WHERE id = $1`
             
