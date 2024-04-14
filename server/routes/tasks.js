@@ -92,4 +92,6 @@ router.delete('/:id', isAuthenticated, async (req, res) => {
     });
 });
 
+router.use('/:task_id/subtasks', require('./subtasks'));
+
 module.exports = router;
