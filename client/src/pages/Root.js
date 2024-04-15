@@ -1,7 +1,7 @@
 import { Outlet } from "react-router-dom"
 import { createTheme } from "@mui/material";
 import { ThemeProvider } from "@emotion/react";
-import { blue } from "@mui/material/colors";
+import { blue, green } from "@mui/material/colors";
 import AppLayout from "../components/appLayout/AppLayout";
 import { useEffect } from "react";
 import { useDispatch } from "react-redux";
@@ -11,10 +11,16 @@ const Root = () => {
   const theme = createTheme({
     palette: {
       primary: {
-        main: blue[900], // Change primary color to orange
+        light: '#757ce8',
+        main: '#e8e8ff',
+        dark: '#002884',
+        contrastText: '#fff',
       },
       secondary: {
-        main: '#673ab7', // Change secondary color to purple
+        light: '#ff7961',
+        main: '#000000',
+        dark: '#ba000d',
+        contrastText: '#000',
       },
     },
   });

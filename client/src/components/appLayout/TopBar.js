@@ -1,6 +1,7 @@
 import { IconButton, Toolbar, styled } from "@mui/material";
 import MuiAppBar from '@mui/material/AppBar';
 import MenuIcon from '@mui/icons-material/Menu';
+import AccountButton from "./AccountButton";
 
 const drawerWidth = 240;
 
@@ -29,7 +30,7 @@ const TopBar = ({
 }) => {
     return (
       <AppBar position="fixed" open={open}>
-        <Toolbar>
+        <Toolbar sx={{ display: 'flex', justifyContent: 'space-between' }}>
           {isAuthenticated && <IconButton
             color="inherit"
             aria-label="open drawer"
@@ -43,6 +44,7 @@ const TopBar = ({
             <MenuIcon sx={{ fontSize: '2rem' }} />
           </IconButton>}
           <h2 className='logo'>TaskFlow</h2>
+          <AccountButton />
         </Toolbar>
       </AppBar>
     )

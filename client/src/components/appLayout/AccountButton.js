@@ -1,6 +1,23 @@
+import AccountCircleIcon from '@mui/icons-material/AccountCircle';
+import { Button, IconButton } from '@mui/material';
+import { useNavigate } from 'react-router-dom';
+
 const AccountButton = () => {
+    const navigate = useNavigate();
+
+    const handleClick = () => {
+        navigate('/login');
+    }
+
     return (
-        <div>Hello from AccountButton</div>
+        <IconButton 
+            title='Your account' 
+            aria-label='account-button' 
+            color='secondary'
+            onClick={handleClick}
+        >
+            <AccountCircleIcon sx={{ fontSize: '3.5rem' }}/>
+        </IconButton>
     )
 }
 
