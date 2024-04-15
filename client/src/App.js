@@ -6,7 +6,7 @@ import {
 } from "react-router-dom";
 
 import Root from './pages/Root';
-import Main from "./pages/Main";
+import Main from "./components/main/Tasks";
 
 function App() {
   const router = createBrowserRouter(createRoutesFromElements(

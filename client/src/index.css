@@ -3,18 +3,14 @@
 /* Header */
 @import url('https://fonts.googleapis.com/css2?family=Special+Elite&display=swap');
 
-.header {
-  display: flex;
-  border-bottom: 1px solid gold;
-  align-items: center;
-  height: 2.8rem;
-  background-color: black;
-  padding: 1rem 0;
-}
-
-.header .logo {
+.logo {
   font-family: 'Special Elite';
   font-size: 2.5rem;
   color: white;
+  margin-top: .5rem;
+}
+
+.main {
+  
 }
 
