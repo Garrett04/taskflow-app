@@ -13,22 +13,38 @@
 .tasks {
   display: flex;
   margin: 5rem 2rem;
-  flex-flow: column wrap;
-  width: 30%;
+  flex-flow: row wrap;
   gap: 1rem;
+  justify-content: center;
 }
 
-.tasks div {
+.tasks h2 {
+  width: 100%;
+  font-size: 1.65rem;
+}
+
+.tasks div:not(.bottom) {
   text-align: center;
   border: 2px solid black;
-  border-radius: 1rem;
+  border-radius: .5rem;
   background: #fff9d9;
+  width: 40%;
+}
+
+.tasks div.bottom {
+  display: flex;
+  justify-content: space-between;
+  margin: .5rem 1rem;
+}
+
+.tasks div.bottom .deadline-date {
+  color: red;
 }
 
 .tasks div h4 {
   font-size: 1.2rem;
   background-color: #E9E3A1;
   border-bottom: 1px solid black;
-  border-radius: 1rem 1rem 0 0;
+  border-radius: .5rem .5rem 0 0;
 }
 

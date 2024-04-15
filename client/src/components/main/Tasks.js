@@ -3,7 +3,10 @@ import { fetchSampleTasks, getTasksError, getTasksStatus, selectTasks } from "..
 import { useEffect } from "react";
 import { fetchTasksByUserId } from "../../services/tasksService";
 import { selectIsAuthenticated } from "../../features/auth/authSlice";
-
+import { toTitleCase } from "../../utils/toTitleCase";
+import PendingActionsIcon from '@mui/icons-material/PendingActions';
+import TaskIcon from '@mui/icons-material/Task';
+import HourglassDisabled from "@mui/icons-material/HourglassDisabled";
 
 const Tasks = () => {
     const tasks = useSelector(selectTasks);
@@ -18,17 +21,28 @@ const Tasks = () => {
         if (isAuthenticated) {
             dispatch(fetchTasksByUserId());
         } else {
-            // dispatch fetchPremadeTasks
             dispatch(fetchSampleTasks());
         }
     }, [dispatch]);
+
+    const renderTaskStatus = (taskStatus) => {
+        if (taskStatus === 'pending') {
+            return <PendingActionsIcon/>;
+        } else if (taskStatus === 'completed') {
+            return <TaskIcon/>;
+        } else if (taskStatus === 'overdue') {
+            return <HourglassDisabled />;
+        }
+    }
 
     const renderAllTasks = () => {
         return tasks.map(task => (
             <div key={task.id}>
                 <h4>{task.title}</h4>
-                <p>{task.status}</p>
-                <p>{task.deadline_date}</p>
+                <div className="bottom">
+                    {renderTaskStatus(task.status)}
+                    <p className="deadline-date">{task.deadline_date}</p>
+                </div>
             </div>
         ))
     }
@@ -44,9 +58,12 @@ const Tasks = () => {
 
     return (
         // Show all tasks here
-        <div className="tasks">
-            {content}
-        </div>
+        <>
+            <div className="tasks">
+            <h2>All Tasks</h2>
+                {content}
+            </div>
+        </>
     )
 }
 
