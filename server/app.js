@@ -6,7 +6,7 @@ const passport = require('passport');
 const cookieParser = require('cookie-parser');
 const session = require('express-session');
 const pgSession = require('connect-pg-simple')(session);
-const pool = require('./db/config');
+const pool = require('./config/db/config');
 
 const PORT = process.env.PORT || 3000;
 
@@ -41,7 +41,7 @@ app.use(session({
 }))
 
 // PASSPORT AUTHENTICATION
-require('./app/passport/JWTStrategy')(passport);
+require('./config/passport/JWTStrategy')(passport);
 
 app.use(passport.initialize());
 app.use(passport.session());

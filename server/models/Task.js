@@ -1,4 +1,4 @@
-const db = require('../db/index')
+const db = require('../config/db/index')
 
 class Task {
     async create(data) {

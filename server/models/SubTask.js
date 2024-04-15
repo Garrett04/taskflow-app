@@ -1,4 +1,4 @@
-const db = require('../db/index');
+const db = require('../config/db/index');
 
 class SubTask {
     async findByTaskId(task_id) {
