@@ -24,12 +24,13 @@ const AppBar = styled(MuiAppBar, {
 
 const TopBar = ({ 
   open, 
-  handleDrawerOpen
+  handleDrawerOpen,
+  isAuthenticated
 }) => {
     return (
       <AppBar position="fixed" open={open}>
         <Toolbar>
-          <IconButton
+          {isAuthenticated && <IconButton
             color="inherit"
             aria-label="open drawer"
             onClick={handleDrawerOpen}
@@ -40,7 +41,7 @@ const TopBar = ({
             }}
           >
             <MenuIcon sx={{ fontSize: '2rem' }} />
-          </IconButton>
+          </IconButton>}
           <h2 className='logo'>TaskFlow</h2>
         </Toolbar>
       </AppBar>

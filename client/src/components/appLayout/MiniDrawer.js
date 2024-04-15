@@ -12,6 +12,8 @@ import List from '@mui/material/List';
 import TaskIcon from '@mui/icons-material/Task';
 import HourglassDisabledIcon from '@mui/icons-material/HourglassDisabled';
 import DeleteIcon from '@mui/icons-material/Delete';
+import { useSelector } from "react-redux";
+import { selectIsAuthenticated } from "../../features/auth/authSlice";
 
 const drawerWidth = 240;
 
@@ -65,17 +67,19 @@ const Drawer = styled(MuiDrawer, { shouldForwardProp: (prop) => prop !== 'open' 
 const MiniDrawer = ({
   open,
   handleDrawerClose,
+  isAuthenticated
 }) => {
     const theme = useTheme();
-
-    return (
+    
+    if (isAuthenticated) {
+      return (
         <Drawer variant="permanent" open={open}>
           <DrawerHeader>
             <IconButton onClick={handleDrawerClose}>
               {theme.direction === 'rtl' ? <ChevronRightIcon /> : <ChevronLeftIcon />}
             </IconButton>
           </DrawerHeader>
-          <Divider />
+          <Divider sx={{ marginTop: '.2rem' }} />
           <List>
             {['Completed Tasks', 'Overdue Tasks', 'Trash'].map((text, index) => (
               <ListItem key={text} disablePadding sx={{ display: 'block' }}>
@@ -103,7 +107,8 @@ const MiniDrawer = ({
             ))}
           </List>
         </Drawer>
-    )
+      )
+    }
 }
 
 export default MiniDrawer;

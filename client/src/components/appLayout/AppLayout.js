@@ -3,11 +3,12 @@ import Box from '@mui/material/Box';
 import CssBaseline from '@mui/material/CssBaseline';
 import TopBar from './TopBar';
 import MiniDrawer from './MiniDrawer';
-
-const drawerWidth = 240;
+import { selectIsAuthenticated } from '../../features/auth/authSlice';
+import { useSelector } from 'react-redux';
 
 export default function AppLayout() {
   const [open, setOpen] = React.useState(false);
+  const isAuthenticated = useSelector(selectIsAuthenticated);
 
   const handleDrawerOpen = () => {
     setOpen(true);
@@ -20,8 +21,16 @@ export default function AppLayout() {
   return (
       <Box sx={{ display: 'flex' }}>
         <CssBaseline />
-        <TopBar open={open} handleDrawerOpen={handleDrawerOpen} drawerWidth={drawerWidth} />
-        <MiniDrawer open={open} handleDrawerClose={handleDrawerClose} drawerWidth={drawerWidth} />
+        <TopBar 
+          open={open} 
+          handleDrawerOpen={handleDrawerOpen}
+          isAuthenticated={isAuthenticated} 
+        />
+        <MiniDrawer 
+          open={open} 
+          handleDrawerClose={handleDrawerClose} 
+          isAuthenticated={isAuthenticated}
+        />
         {/* <Box component="main" sx={{ flexGrow: 1, p: 3 }}>
           <DrawerHeader />
           <Typography paragraph>

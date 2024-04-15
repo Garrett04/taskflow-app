@@ -10,7 +10,25 @@
   margin-top: .5rem;
 }
 
-.main {
-  
+.tasks {
+  display: flex;
+  margin: 5rem 2rem;
+  flex-flow: column wrap;
+  width: 30%;
+  gap: 1rem;
+}
+
+.tasks div {
+  text-align: center;
+  border: 2px solid black;
+  border-radius: 1rem;
+  background: #fff9d9;
+}
+
+.tasks div h4 {
+  font-size: 1.2rem;
+  background-color: #E9E3A1;
+  border-bottom: 1px solid black;
+  border-radius: 1rem 1rem 0 0;
 }
 

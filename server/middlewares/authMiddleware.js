@@ -14,7 +14,7 @@ const isAuthenticated = (req, res, next) => {
         // so return an authenticated of false.
         // else attach the user object to req.user property and proceed to the route.
         if (err || !user) {
-            return res.json({ success: false, authenticated: false });
+            return res.status(401).json({ success: false, authenticated: false });
         }
         req.user = user;
         return next();
