@@ -21,6 +21,7 @@ const authSlice = createSlice({
             })
             .addCase(fetchAuthenticationStatus.rejected, (state, action) => {
                 state.status = 'rejected';
+                state.isAuthenticated = action.payload;
                 state.error = action.error.message;
             })
     }

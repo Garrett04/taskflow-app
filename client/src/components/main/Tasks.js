@@ -46,7 +46,7 @@ const Tasks = () => {
         } else {
             dispatch(fetchSampleTasks());
         }
-    }, [dispatch]);
+    }, [dispatch, isAuthenticated]);
 
     const renderTaskStatus = (taskStatus) => {
         if (taskStatus === 'pending') {
@@ -66,7 +66,7 @@ const Tasks = () => {
                         <CardHeader 
                             titleTypographyProps={{ variant: 'taskTitle' }}
                             title={task.title} 
-                            action={ <DeleteTaskButton /> }
+                            action={ <DeleteTaskButton task_id={task.id} /> }
                         />
                     </Box>
                     <Divider />
@@ -89,8 +89,6 @@ const Tasks = () => {
     } else if (tasksStatus === 'rejected') {
         content = tasksError;
     }
-
-    
 
     return (
         // Show all tasks here

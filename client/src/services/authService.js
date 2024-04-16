@@ -12,3 +12,31 @@ export const fetchAuthenticationStatus = createAsyncThunk(
         }
     }
 );
+
+export const loginUser = async (data) => {
+    try {
+        const { username, password } = data;
+
+        const response = await API.post(
+            '/auth/login', 
+            { 
+                username, 
+                password 
+            }
+        );
+
+        return response.data;
+    } catch (err) {
+        throw err.response;
+    }
+}
+
+export const logoutUser = async () => {
+    try {
+        const response = await API.post('/auth/logout');
+
+        return response.data;
+    } catch (err) {
+        throw err.response;
+    }
+}

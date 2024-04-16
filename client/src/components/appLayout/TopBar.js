@@ -2,6 +2,7 @@ import { IconButton, Toolbar, Typography, styled } from "@mui/material";
 import MuiAppBar from '@mui/material/AppBar';
 import MenuIcon from '@mui/icons-material/Menu';
 import AccountButton from "./AccountButton";
+import LogoutButton from "./LogoutButton";
 
 const drawerWidth = 240;
 
@@ -56,6 +57,7 @@ const TopBar = ({
           </IconButton>}
           <Logo>TaskFlow</Logo>
           <AccountButton />
+          <LogoutButton />
         </Toolbar>
       </AppBar>
     )

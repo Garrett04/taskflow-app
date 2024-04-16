@@ -8,12 +8,7 @@ import { useDispatch } from "react-redux";
 import { fetchAuthenticationStatus } from "../services/authService";
 
 const Root = () => {
-  
-  const dispatch = useDispatch();
 
-  useEffect(() => {
-    dispatch(fetchAuthenticationStatus());
-  }, [dispatch]);
 
   return (
     <>
