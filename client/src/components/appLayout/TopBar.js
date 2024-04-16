@@ -1,4 +1,4 @@
-import { IconButton, Toolbar, styled } from "@mui/material";
+import { IconButton, Toolbar, Typography, styled } from "@mui/material";
 import MuiAppBar from '@mui/material/AppBar';
 import MenuIcon from '@mui/icons-material/Menu';
 import AccountButton from "./AccountButton";
@@ -29,7 +29,7 @@ const TopBar = ({
   isAuthenticated
 }) => {
     return (
-      <AppBar position="fixed" open={open}>
+      <AppBar position="fixed" open={open} elevation="0" sx={{ borderBottom: '2px solid black' }}>
         <Toolbar sx={{ display: 'flex', justifyContent: 'space-between' }}>
           {isAuthenticated && <IconButton
             color="inherit"
@@ -43,7 +43,9 @@ const TopBar = ({
           >
             <MenuIcon sx={{ fontSize: '2rem' }} />
           </IconButton>}
-          <h2 className='logo'>TaskFlow</h2>
+          <Typography variant="logo">
+            TaskFlow
+          </Typography>
           <AccountButton />
         </Toolbar>
       </AppBar>

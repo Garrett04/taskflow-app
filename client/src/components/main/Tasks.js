@@ -8,7 +8,7 @@ import PendingActionsIcon from '@mui/icons-material/PendingActions';
 import TaskIcon from '@mui/icons-material/Task';
 import HourglassDisabled from "@mui/icons-material/HourglassDisabled";
 import Subtasks from "./Subtasks";
-import { Typography } from "@mui/material";
+import { Box, Typography } from "@mui/material";
 
 const Tasks = () => {
     const tasks = useSelector(selectTasks);
@@ -39,16 +39,16 @@ const Tasks = () => {
 
     const renderAllTasks = () => {
         return tasks.map(task => (
-            <div className="task-container" key={task.id}>
-                <div className="task-title">
-                    <Typography variant="h5">{task.title}</Typography>
-                </div>
+            <Box className="task-container" key={task.id}>
+                <Box className="task-title">
+                    <Typography variant="taskTitle">{task.title}</Typography>
+                </Box>
                 <Subtasks task_id={task.id} />
-                <div className="bottom">
+                <Box className="bottom">
                     {renderTaskStatus(task.status)}
-                    <p className="deadline-date">{task.deadline_date}</p>
-                </div>
-            </div>
+                    <Typography className="deadline-date">{task.deadline_date}</Typography>
+                </Box>
+            </Box>
         ))
     }
 
@@ -63,12 +63,12 @@ const Tasks = () => {
 
     return (
         // Show all tasks here
-        <div className="tasks">
-        <Typography variant="h4" sx={{ width: '100%' }} fontFamily="serif">
-            All Tasks
-        </Typography>
+        <Box className="tasks">
+            <Typography variant="h4" sx={{ width: '100%' }} fontFamily="serif">
+                All Tasks
+            </Typography>
             {content}
-        </div>
+        </Box>
     )
 }
 

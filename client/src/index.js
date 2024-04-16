@@ -6,11 +6,49 @@ import App from './App';
 import reportWebVitals from './reportWebVitals';
 import { Provider } from 'react-redux';
 import { store } from './app/store';
+import { createTheme } from '@mui/material';
+import { ThemeProvider } from '@emotion/react';
+
+const theme = createTheme({
+  palette: {
+    primary: {
+      light: '#757ce8',
+      main: '#03a9f4',
+      dark: '#002884',
+      contrastText: '#FFF',
+    },
+    secondary: {
+      light: '#ff7961',
+      main: '#000000',
+      dark: '#ba000d',
+      contrastText: '#FFF',
+    },
+    ochre: {
+      main: '#E3D026',
+      light: '#E9DB5D',
+      dark: '#A29415',
+      contrastText: '#242105',
+    },
+  },
+  typography: {
+    logo: {
+      fontSize: '3rem',
+      fontFamily: 'Special Elite',
+      marginTop: '.5rem',
+    },
+    taskTitle: {
+      fontSize: '1.5rem',
+      fontFamily: 'Noto Serif, serif',
+    },
+  }
+})
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   <Provider store={store}>
-    <App />
+    <ThemeProvider theme={theme}>
+      <App />
+    </ThemeProvider>
   </Provider>
 );
 

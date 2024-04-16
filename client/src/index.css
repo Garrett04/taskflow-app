@@ -2,6 +2,7 @@
 
 /* Header */
 @import url('https://fonts.googleapis.com/css2?family=Special+Elite&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Noto+Serif:ital,wght@0,100..900;1,100..900&display=swap');
 
 .logo {
   font-family: 'Special Elite';
@@ -12,7 +13,7 @@
 
 .tasks {
   display: flex;
-  margin: 5rem 2rem;
+  margin: 6rem 2rem;
   flex-flow: row wrap;
   gap: 1rem;
   justify-content: center;

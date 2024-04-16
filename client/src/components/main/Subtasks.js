@@ -1,10 +1,12 @@
 import { useDispatch, useSelector } from "react-redux";
 import { fetchSampleSubtasks, getSubtasksError, getSubtasksStatus, selectSubtasks } from "../../features/subtasks/subtasksSlice";
 import { useEffect } from "react";
-import { Box, Checkbox, FormControlLabel, FormGroup, Typography } from "@mui/material";
+import { Checkbox, FormControlLabel, FormGroup, Stack, Typography } from "@mui/material";
 
 
-const Subtasks = ({ task_id }) => {
+const Subtasks = ({ 
+    task_id 
+}) => {
     const subtasks = useSelector(selectSubtasks);
     const subtasksStatus = useSelector(getSubtasksStatus);
     const subtasksError = useSelector(getSubtasksError);
@@ -19,9 +21,8 @@ const Subtasks = ({ task_id }) => {
         const foundSubtask = subtasks.filter(subtask => subtask.task_id === task_id);
     
         return foundSubtask.map(subtask => (
-            <Box 
-                display="flex" 
-                flexDirection="column" 
+            <Stack 
+                direction="column" 
                 alignItems="flex-start"
                 marginLeft="1rem"
             >
@@ -36,7 +37,7 @@ const Subtasks = ({ task_id }) => {
                 <Typography variant="body1" marginLeft="2rem">
                     {subtask.description}
                 </Typography>
-            </Box>
+            </Stack>
         ))
     }
 
