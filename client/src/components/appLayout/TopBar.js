@@ -2,6 +2,7 @@ import { IconButton, Toolbar, Typography, styled } from "@mui/material";
 import MuiAppBar from '@mui/material/AppBar';
 import MenuIcon from '@mui/icons-material/Menu';
 import AccountButton from "./AccountButton";
+import { useTheme } from "@emotion/react";
 
 const drawerWidth = 240;
 
@@ -28,6 +29,8 @@ const TopBar = ({
   handleDrawerOpen,
   isAuthenticated
 }) => {
+    const theme = useTheme();
+
     return (
       <AppBar position="fixed" open={open} elevation="0" sx={{ borderBottom: '2px solid black' }}>
         <Toolbar sx={{ display: 'flex', justifyContent: 'space-between' }}>
@@ -43,7 +46,13 @@ const TopBar = ({
           >
             <MenuIcon sx={{ fontSize: '2rem' }} />
           </IconButton>}
-          <Typography variant="logo">
+          <Typography 
+            variant="logo" 
+            sx={{
+            [theme.breakpoints.down('sm')]: {
+              fontSize: '2.2rem'
+            }
+          }}>
             TaskFlow
           </Typography>
           <AccountButton />

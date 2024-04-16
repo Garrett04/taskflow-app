@@ -5,7 +5,8 @@ import { Checkbox, FormControlLabel, FormGroup, Stack, Typography } from "@mui/m
 
 
 const Subtasks = ({ 
-    task_id 
+    task_id,
+    isOpen
 }) => {
     const subtasks = useSelector(selectSubtasks);
     const subtasksStatus = useSelector(getSubtasksStatus);
@@ -34,7 +35,7 @@ const Subtasks = ({
                         </Typography>
                     } 
                 />
-                <Typography variant="body1" marginLeft="2rem">
+                <Typography variant="body1" marginLeft="3.4rem">
                     {subtask.description}
                 </Typography>
             </Stack>

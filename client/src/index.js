@@ -40,6 +40,10 @@ const theme = createTheme({
       fontSize: '1.5rem',
       fontFamily: 'Noto Serif, serif',
     },
+    deadlineDate: {
+      color: 'red',
+      fontSize: '1.2rem'
+    }
   }
 })
 

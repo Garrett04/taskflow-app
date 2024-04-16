@@ -1,6 +1,6 @@
 import { useDispatch, useSelector } from "react-redux";
 import { fetchSampleTasks, getTasksError, getTasksStatus, selectTasks } from "../../features/tasks/tasksSlice";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { fetchTasksByUserId } from "../../services/tasksService";
 import { selectIsAuthenticated } from "../../features/auth/authSlice";
 import { toTitleCase } from "../../utils/toTitleCase";
@@ -8,9 +8,11 @@ import PendingActionsIcon from '@mui/icons-material/PendingActions';
 import TaskIcon from '@mui/icons-material/Task';
 import HourglassDisabled from "@mui/icons-material/HourglassDisabled";
 import Subtasks from "./Subtasks";
-import { Box, Typography } from "@mui/material";
+import { Box, Card, CardActionArea, CardContent, CardHeader, Container, Divider, Grid, Typography } from "@mui/material";
+import { useTheme } from "@emotion/react";
 
 const Tasks = () => {
+    const theme = useTheme();
     const tasks = useSelector(selectTasks);
     const tasksStatus = useSelector(getTasksStatus);
     const tasksError = useSelector(getTasksError);
@@ -39,16 +41,20 @@ const Tasks = () => {
 
     const renderAllTasks = () => {
         return tasks.map(task => (
-            <Box className="task-container" key={task.id}>
-                <Box className="task-title">
-                    <Typography variant="taskTitle">{task.title}</Typography>
-                </Box>
-                <Subtasks task_id={task.id} />
-                <Box className="bottom">
-                    {renderTaskStatus(task.status)}
-                    <Typography className="deadline-date">{task.deadline_date}</Typography>
-                </Box>
-            </Box>
+            <Grid item key={task.id} xs={12} md={6} lg={4}>
+                <Card className="task-container">
+                    <CardActionArea>
+                        <CardHeader className="task-title" titleTypographyProps={{ variant: 'taskTitle' }} title={task.title} />
+                        <Divider />
+                        <Subtasks task_id={task.id} />
+                        <Divider />
+                        <CardContent className="bottom">
+                            {renderTaskStatus(task.status)}
+                            <Typography variant="deadlineDate">{task.deadline_date}</Typography>
+                        </CardContent>
+                    </CardActionArea>
+                </Card>
+            </Grid>
         ))
     }
 
@@ -63,12 +69,28 @@ const Tasks = () => {
 
     return (
         // Show all tasks here
-        <Box className="tasks">
-            <Typography variant="h4" sx={{ width: '100%' }} fontFamily="serif">
-                All Tasks
-            </Typography>
-            {content}
-        </Box>
+        <>
+            <Typography 
+                    variant="h4" 
+                    sx={{ 
+                        width: '100%',
+                        margin: '6rem 0 1rem',
+                        textAlign: 'center',
+                        [theme.breakpoints.down('sm')]: {
+                            fontSize: '1.5rem',
+                            marginTop: '5rem'
+                        } 
+                    }} 
+                    fontFamily="serif"
+                >
+                    All Tasks
+                </Typography>
+            <Container className="tasks">
+                <Grid container spacing={3}>
+                    {content}
+                </Grid>
+            </Container>
+        </>
     )
 }
 
