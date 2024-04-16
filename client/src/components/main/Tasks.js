@@ -44,7 +44,18 @@ const Tasks = () => {
             <Grid item key={task.id} xs={12} md={6} lg={4}>
                 <Card className="task-container">
                     <CardActionArea>
-                        <CardHeader className="task-title" titleTypographyProps={{ variant: 'taskTitle' }} title={task.title} />
+                        <CardHeader 
+                            className="task-title" 
+                            titleTypographyProps={{ 
+                                variant: 'taskTitle',
+                                sx: {
+                                    [theme.breakpoints.down('sm')]: {
+                                        fontSize: '1.2rem',
+                                    }
+                                }
+                            }} 
+                            title={task.title} 
+                        />
                         <Divider />
                         <Subtasks task_id={task.id} />
                         <Divider />

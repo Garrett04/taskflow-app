@@ -2,12 +2,13 @@ import { useDispatch, useSelector } from "react-redux";
 import { fetchSampleSubtasks, getSubtasksError, getSubtasksStatus, selectSubtasks } from "../../features/subtasks/subtasksSlice";
 import { useEffect } from "react";
 import { Checkbox, FormControlLabel, FormGroup, Stack, Typography } from "@mui/material";
+import { useTheme } from "@emotion/react";
 
 
 const Subtasks = ({ 
     task_id,
-    isOpen
 }) => {
+    const theme = useTheme();
     const subtasks = useSelector(selectSubtasks);
     const subtasksStatus = useSelector(getSubtasksStatus);
     const subtasksError = useSelector(getSubtasksError);
@@ -28,14 +29,39 @@ const Subtasks = ({
                 marginLeft="1rem"
             >
                 <FormControlLabel 
-                    control={<Checkbox color="secondary" defaultChecked={subtask.checked} />} 
+                    control={
+                        <Checkbox 
+                            color="secondary" 
+                            defaultChecked={subtask.checked}
+                            sx={{
+                                [theme.breakpoints.down('sm')]: {
+                                    '& .MuiSvgIcon-root': { 
+                                        fontSize: '1.3rem',
+                                        marginTop: '-1px'
+                                    }
+                                }
+                            }}
+                        />
+                    } 
                     label={
-                        <Typography variant="h6">
+                        <Typography variant="h6" sx={{
+                            [theme.breakpoints.down('sm')]: {
+                                fontSize: '1rem'
+                            }
+                        }}>
                             {subtask.title}
                         </Typography>
                     } 
                 />
-                <Typography variant="body1" marginLeft="3.4rem">
+                <Typography 
+                    variant="body1" 
+                    sx={{
+                        [theme.breakpoints.down('sm')]: {
+                            fontSize: '.9rem'
+                        }
+                    }} 
+                    marginLeft="3.4rem"
+                >
                     {subtask.description}
                 </Typography>
             </Stack>
