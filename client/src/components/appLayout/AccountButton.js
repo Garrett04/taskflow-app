@@ -10,14 +10,18 @@ const AccountButton = () => {
     }
 
     return (
-        <IconButton 
+        <Button 
             title='Your account' 
             aria-label='account-button' 
-            color='secondary'
+            color='ochre'
+            variant='contained'
             onClick={handleClick}
+            sx={{ width: '1rem', border: '1px solid black' }}
+            size='small'
+            disableElevation
         >
-            <AccountCircleIcon sx={{ fontSize: '3.5rem' }}/>
-        </IconButton>
+            <AccountCircleIcon color='secondary' sx={{ fontSize: '2.8rem' }}/>
+        </Button>
     )
 }
 

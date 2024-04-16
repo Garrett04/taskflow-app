@@ -23,12 +23,15 @@
   font-size: 1.65rem;
 }
 
-.tasks div:not(.bottom) {
+.tasks .task-container {
   text-align: center;
   border: 2px solid black;
   border-radius: .5rem;
   background: #fff9d9;
   width: 40%;
+  display: flex;
+  flex-flow: column;
+  justify-content: space-between;
 }
 
 .tasks div.bottom {
@@ -41,10 +44,12 @@
   color: red;
 }
 
-.tasks div h4 {
+.tasks div.task-title {
   font-size: 1.2rem;
   background-color: #E9E3A1;
   border-bottom: 1px solid black;
   border-radius: .5rem .5rem 0 0;
+  padding: .5rem;
 }
+
 

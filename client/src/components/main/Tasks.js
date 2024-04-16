@@ -7,6 +7,8 @@ import { toTitleCase } from "../../utils/toTitleCase";
 import PendingActionsIcon from '@mui/icons-material/PendingActions';
 import TaskIcon from '@mui/icons-material/Task';
 import HourglassDisabled from "@mui/icons-material/HourglassDisabled";
+import Subtasks from "./Subtasks";
+import { Typography } from "@mui/material";
 
 const Tasks = () => {
     const tasks = useSelector(selectTasks);
@@ -37,8 +39,11 @@ const Tasks = () => {
 
     const renderAllTasks = () => {
         return tasks.map(task => (
-            <div key={task.id}>
-                <h4>{task.title}</h4>
+            <div className="task-container" key={task.id}>
+                <div className="task-title">
+                    <Typography variant="h5">{task.title}</Typography>
+                </div>
+                <Subtasks task_id={task.id} />
                 <div className="bottom">
                     {renderTaskStatus(task.status)}
                     <p className="deadline-date">{task.deadline_date}</p>
@@ -58,12 +63,12 @@ const Tasks = () => {
 
     return (
         // Show all tasks here
-        <>
-            <div className="tasks">
-            <h2>All Tasks</h2>
-                {content}
-            </div>
-        </>
+        <div className="tasks">
+        <Typography variant="h4" sx={{ width: '100%' }} fontFamily="serif">
+            All Tasks
+        </Typography>
+            {content}
+        </div>
     )
 }
 

@@ -22,6 +22,12 @@ const Root = () => {
         dark: '#ba000d',
         contrastText: '#000',
       },
+      ochre: {
+        main: '#E3D026',
+        light: '#E9DB5D',
+        dark: '#A29415',
+        contrastText: '#242105',
+      },
     },
   });
   
