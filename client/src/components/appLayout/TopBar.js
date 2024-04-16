@@ -2,7 +2,6 @@ import { IconButton, Toolbar, Typography, styled } from "@mui/material";
 import MuiAppBar from '@mui/material/AppBar';
 import MenuIcon from '@mui/icons-material/Menu';
 import AccountButton from "./AccountButton";
-import { useTheme } from "@emotion/react";
 
 const drawerWidth = 240;
 
@@ -24,15 +23,24 @@ const AppBar = styled(MuiAppBar, {
   }),
 }));
 
+const Logo = styled(Typography)(({ theme }) => ({
+  '&.MuiTypography-root': {
+    fontSize: '3rem',
+    fontFamily: 'Special Elite',
+    marginTop: '.5rem',
+    [theme.breakpoints.down('sm')]: {
+      fontSize: '2.2rem'
+    }
+  },
+}));
+
 const TopBar = ({ 
   open, 
   handleDrawerOpen,
   isAuthenticated
 }) => {
-    const theme = useTheme();
-
     return (
-      <AppBar position="fixed" open={open} elevation="0" sx={{ borderBottom: '2px solid black' }}>
+      <AppBar position="fixed" open={open} elevation={0} sx={{ borderBottom: '2px solid black' }}>
         <Toolbar sx={{ display: 'flex', justifyContent: 'space-between' }}>
           {isAuthenticated && <IconButton
             color="inherit"
@@ -46,15 +54,7 @@ const TopBar = ({
           >
             <MenuIcon sx={{ fontSize: '2rem' }} />
           </IconButton>}
-          <Typography 
-            variant="logo" 
-            sx={{
-            [theme.breakpoints.down('sm')]: {
-              fontSize: '2.2rem'
-            }
-          }}>
-            TaskFlow
-          </Typography>
+          <Logo>TaskFlow</Logo>
           <AccountButton />
         </Toolbar>
       </AppBar>

@@ -28,19 +28,7 @@
 }
 
 .tasks div.bottom {
-  display: flex;
-  justify-content: space-between;
+  
   
 }
-
-/* .tasks div.bottom .deadline-date {
-  
-} */
-
-.tasks div.task-title {
-  font-size: 1.2rem;
-  background-color: #E9E3A1;
-  padding: .5rem;
-}
-
 

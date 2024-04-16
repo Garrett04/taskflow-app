@@ -31,19 +31,10 @@ const theme = createTheme({
     },
   },
   typography: {
-    logo: {
-      fontSize: '3rem',
-      fontFamily: 'Special Elite',
-      marginTop: '.5rem',
-    },
     taskTitle: {
       fontSize: '1.5rem',
-      fontFamily: 'Noto Serif, serif',
+      fontFamily: 'sans',
     },
-    deadlineDate: {
-      color: 'red',
-      fontSize: '1.2rem'
-    }
   }
 })
 

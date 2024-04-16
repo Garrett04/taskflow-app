@@ -27,6 +27,7 @@ const Subtasks = ({
                 direction="column" 
                 alignItems="flex-start"
                 marginLeft="1rem"
+                key={subtask.id}
             >
                 <FormControlLabel 
                     control={
@@ -78,7 +79,7 @@ const Subtasks = ({
     }
 
     return (
-        <FormGroup>
+        <FormGroup sx={{ gap: '1rem' }}>
             {content}
         </FormGroup>
     )

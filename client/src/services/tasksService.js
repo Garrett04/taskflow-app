@@ -14,3 +14,13 @@ export const fetchTasksByUserId = createAsyncThunk(
         }
     }
 )
+
+export const deleteTask = async (task_id) => {
+    try {
+        const response = await API.delete(`/tasks/${task_id}`);
+
+        return response.data.deletedTaskId;
+    } catch (err) {
+        throw err.response;
+    }
+}

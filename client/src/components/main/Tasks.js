@@ -1,15 +1,16 @@
 import { useDispatch, useSelector } from "react-redux";
 import { fetchSampleTasks, getTasksError, getTasksStatus, selectTasks } from "../../features/tasks/tasksSlice";
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import { fetchTasksByUserId } from "../../services/tasksService";
 import { selectIsAuthenticated } from "../../features/auth/authSlice";
-import { toTitleCase } from "../../utils/toTitleCase";
 import PendingActionsIcon from '@mui/icons-material/PendingActions';
 import TaskIcon from '@mui/icons-material/Task';
 import HourglassDisabled from "@mui/icons-material/HourglassDisabled";
 import Subtasks from "./Subtasks";
-import { Box, Card, CardActionArea, CardContent, CardHeader, Container, Divider, Grid, Typography } from "@mui/material";
+import { Box, Card, CardActionArea, CardContent, Container, Divider, Grid, Typography, styled } from "@mui/material";
+import MuiCardHeader from '@mui/material/CardHeader';
 import { useTheme } from "@emotion/react";
+import DeleteTaskButton from "./DeleteTaskButton";
 
 const Tasks = () => {
     const theme = useTheme();
@@ -21,6 +22,24 @@ const Tasks = () => {
     
     const dispatch = useDispatch();
 
+    const CardHeader = styled(MuiCardHeader)(({ theme }) => ({
+        backgroundColor: '#E9E3A1',
+        padding: '.5rem',
+        [theme.breakpoints.down('sm')]: {
+            fontSize: '1.2rem',
+        }
+    }));
+
+    const CardBottom = styled(CardContent)(() => ({
+        display: 'flex',
+        justifyContent: 'space-between',
+    }));
+
+    const DeadlineDate = styled(Typography)(() => ({
+        color: 'red',
+        fontSize: '1.2rem'
+    }))
+
     useEffect(() => {
         if (isAuthenticated) {
             dispatch(fetchTasksByUserId());
@@ -31,11 +50,11 @@ const Tasks = () => {
 
     const renderTaskStatus = (taskStatus) => {
         if (taskStatus === 'pending') {
-            return <PendingActionsIcon/>;
+            return <PendingActionsIcon titleAccess="Pending" />;
         } else if (taskStatus === 'completed') {
-            return <TaskIcon/>;
+            return <TaskIcon titleAccess="Completed" />;
         } else if (taskStatus === 'overdue') {
-            return <HourglassDisabled />;
+            return <HourglassDisabled titleAccess="Overdue" />;
         }
     }
 
@@ -43,27 +62,20 @@ const Tasks = () => {
         return tasks.map(task => (
             <Grid item key={task.id} xs={12} md={6} lg={4}>
                 <Card className="task-container">
-                    <CardActionArea>
+                    <Box>
                         <CardHeader 
-                            className="task-title" 
-                            titleTypographyProps={{ 
-                                variant: 'taskTitle',
-                                sx: {
-                                    [theme.breakpoints.down('sm')]: {
-                                        fontSize: '1.2rem',
-                                    }
-                                }
-                            }} 
+                            titleTypographyProps={{ variant: 'taskTitle' }}
                             title={task.title} 
+                            action={ <DeleteTaskButton /> }
                         />
-                        <Divider />
-                        <Subtasks task_id={task.id} />
-                        <Divider />
-                        <CardContent className="bottom">
-                            {renderTaskStatus(task.status)}
-                            <Typography variant="deadlineDate">{task.deadline_date}</Typography>
-                        </CardContent>
-                    </CardActionArea>
+                    </Box>
+                    <Divider />
+                    <Subtasks task_id={task.id} />
+                    <Divider />
+                    <CardBottom>
+                        {renderTaskStatus(task.status)}
+                        <DeadlineDate>{task.deadline_date}</DeadlineDate>
+                    </CardBottom>
                 </Card>
             </Grid>
         ))
@@ -77,6 +89,8 @@ const Tasks = () => {
     } else if (tasksStatus === 'rejected') {
         content = tasksError;
     }
+
+    
 
     return (
         // Show all tasks here
