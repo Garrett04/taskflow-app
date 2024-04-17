@@ -14,6 +14,7 @@ import { useEffect } from "react";
 import { fetchAuthenticationStatus } from "./services/authService";
 import { getIsAuthenticatedStatus } from "./features/auth/authSlice";
 import Register from "./pages/Register";
+import AddTask from "./pages/AddTask";
 
 const router = createBrowserRouter(createRoutesFromElements(
   <>
@@ -22,9 +23,10 @@ const router = createBrowserRouter(createRoutesFromElements(
       <Route element={ <PrivateRoutes/> }>
         {/* <Route path="/tasks/:id"/> */}
       </Route>
+      <Route path='/add-task' element={ <AddTask/> }/>
     </Route>
     <Route path="/login" element={ <Login/> }/> 
-    <Route path="/register" element={ <Register/> }/> 
+    <Route path="/register" element={ <Register/> }/>
   </>
 ))
 

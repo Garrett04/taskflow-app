@@ -11,6 +11,7 @@ export const fetchTasksByUserId = createAsyncThunk(
             if (err.response.status === 401) {
                 throw err.response.status;
             }
+            throw err.response.data.msg;
         }
     }
 )
@@ -21,6 +22,6 @@ export const deleteTask = async (task_id) => {
 
         return response.data;
     } catch (err) {
-        throw err.response;
+        throw err.response.data.msg;
     }
 }

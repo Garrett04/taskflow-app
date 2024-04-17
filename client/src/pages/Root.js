@@ -6,6 +6,7 @@ import AppLayout from "../components/appLayout/AppLayout";
 import { useEffect } from "react";
 import { useDispatch } from "react-redux";
 import { fetchAuthenticationStatus } from "../services/authService";
+import { Main } from "../components/main/MainStyles";
 
 const Root = () => {
 
@@ -13,7 +14,9 @@ const Root = () => {
   return (
     <>
         <AppLayout/>
-        <Outlet/>
+        <Main>
+          <Outlet/>
+        </Main>
     </>
   )
 }

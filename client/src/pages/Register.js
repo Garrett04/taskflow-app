@@ -37,7 +37,7 @@ const Register = () => {
         if (isAuthenticatedStatus === 'fulfilled' && isAuthenticated) {
             navigate('/');
         }
-    }, [dispatch, isAuthenticated])
+    }, [navigate, isAuthenticated, isAuthenticatedStatus])
 
     const handleChange = (e) => {
         const { name, value } = e.target;

@@ -3,16 +3,16 @@ import { fetchSampleTasks, getTasksError, getTasksStatus, selectTasks } from "..
 import { useEffect } from "react";
 import { fetchTasksByUserId } from "../../services/tasksService";
 import { selectIsAuthenticated } from "../../features/auth/authSlice";
-import PendingActionsIcon from '@mui/icons-material/PendingActions';
-import TaskIcon from '@mui/icons-material/Task';
-import HourglassDisabled from "@mui/icons-material/HourglassDisabled";
+
 import Subtasks from "./Subtasks";
-import { Box, Card, CardActionArea, CardContent, Container, Divider, Grid, Typography, styled } from "@mui/material";
-import MuiCardHeader from '@mui/material/CardHeader';
+import { Box, Card, CardContent, Container, Divider, Grid, IconButton, Tooltip, Typography, styled } from "@mui/material";
+
 import { useTheme } from "@emotion/react";
 import DeleteTaskButton from "./DeleteTaskButton";
-import { DrawerHeader } from "../appLayout/MiniDrawer";
+import AddTaskButton from "./AddTaskButton";
 import { Main } from "./MainStyles";
+import Task from "./Task";
+
 
 const Tasks = () => {
     const theme = useTheme();
@@ -24,23 +24,7 @@ const Tasks = () => {
     
     const dispatch = useDispatch();
 
-    const CardHeader = styled(MuiCardHeader)(({ theme }) => ({
-        backgroundColor: '#E9E3A1',
-        padding: '.5rem',
-        [theme.breakpoints.down('sm')]: {
-            fontSize: '1.2rem',
-        }
-    }));
-
-    const CardBottom = styled(CardContent)(() => ({
-        display: 'flex',
-        justifyContent: 'space-between',
-    }));
-
-    const DeadlineDate = styled(Typography)(() => ({
-        color: 'red',
-        fontSize: '1.2rem'
-    }))
+    
 
     useEffect(() => {
         if (isAuthenticated) {
@@ -50,36 +34,11 @@ const Tasks = () => {
         }
     }, [dispatch, isAuthenticated]);
 
-    const renderTaskStatus = (taskStatus) => {
-        if (taskStatus === 'pending') {
-            return <PendingActionsIcon titleAccess="Pending" />;
-        } else if (taskStatus === 'completed') {
-            return <TaskIcon titleAccess="Completed" />;
-        } else if (taskStatus === 'overdue') {
-            return <HourglassDisabled titleAccess="Overdue" />;
-        }
-    }
+    
 
     const renderAllTasks = () => {
         return tasks.map(task => (
-            <Grid item key={task.id} xs={12} md={6} lg={4}>
-                <Card className="task-container">
-                    <Box>
-                        <CardHeader 
-                            titleTypographyProps={{ variant: 'taskTitle' }}
-                            title={task.title} 
-                            action={ <DeleteTaskButton task_id={task.id} /> }
-                        />
-                    </Box>
-                    <Divider />
-                    <Subtasks task_id={task.id} />
-                    <Divider />
-                    <CardBottom>
-                        {renderTaskStatus(task.status)}
-                        <DeadlineDate>{task.deadline_date}</DeadlineDate>
-                    </CardBottom>
-                </Card>
-            </Grid>
+            <Task task={task}/>
         ))
     }
 
@@ -94,17 +53,16 @@ const Tasks = () => {
 
     return (
         // Show all tasks here
-        <Main>
+        <>
             <Typography 
                     paragraph
-                    variant="h4" 
+                    variant="h4"
                     sx={{ 
                         width: '100%',
-                        margin: '6rem 0 1rem',
                         textAlign: 'center',
+                        marginBottom: '2rem',
                         [theme.breakpoints.down('sm')]: {
                             fontSize: '1.5rem',
-                            marginTop: '4rem'
                         } 
                     }} 
                     fontFamily="serif"
@@ -116,7 +74,8 @@ const Tasks = () => {
                     {content}
                 </Grid>
             </Container>
-        </Main>
+            <AddTaskButton />
+        </>
     )
 }
 
