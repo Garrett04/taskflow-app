@@ -13,12 +13,12 @@ export const Logo = styled(Typography)(({ theme }) => ({
     },
 }));
 
-export const Button = styled(MuiButton)(({ theme, backgroundColor }) => ({
+export const Button = styled(MuiButton)(({ theme, backgroundhovercolor }) => ({
     '&.MuiButton-contained': {
         width: '1rem', 
         border: '1px solid black',
         '&:hover': {
-            background: backgroundColor
+            background: backgroundhovercolor
         },
         [theme.breakpoints.down('sm')]: {
             height: '3rem',

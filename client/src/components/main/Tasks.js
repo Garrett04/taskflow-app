@@ -86,7 +86,7 @@ const Tasks = () => {
     let content;
     if (tasksStatus === 'pending') {
         content = 'Loading...'
-    } else if (tasksStatus === 'fulfilled') {
+    } else if (tasksStatus === 'fulfilled' && tasks) {
         content = renderAllTasks();
     } else if (tasksStatus === 'rejected') {
         content = tasksError;
@@ -95,7 +95,6 @@ const Tasks = () => {
     return (
         // Show all tasks here
         <Main>
-            
             <Typography 
                     paragraph
                     variant="h4" 

@@ -13,6 +13,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { useEffect } from "react";
 import { fetchAuthenticationStatus } from "./services/authService";
 import { getIsAuthenticatedStatus } from "./features/auth/authSlice";
+import Register from "./pages/Register";
 
 const router = createBrowserRouter(createRoutesFromElements(
   <>
@@ -23,6 +24,7 @@ const router = createBrowserRouter(createRoutesFromElements(
       </Route>
     </Route>
     <Route path="/login" element={ <Login/> }/> 
+    <Route path="/register" element={ <Register/> }/> 
   </>
 ))
 
