@@ -34,7 +34,7 @@ function App() {
     dispatch(fetchAuthenticationStatus());
   }, [dispatch]);
 
-  if (isAuthenticatedStatus === 'fulfilled' || 'rejected') {
+  if (isAuthenticatedStatus === 'fulfilled' || isAuthenticatedStatus === 'rejected') {
     return (
       <RouterProvider router={router} />
     );

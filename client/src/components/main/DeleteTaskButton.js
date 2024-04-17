@@ -3,7 +3,7 @@ import { IconButton } from '@mui/material';
 import { deleteTask, fetchTasksByUserId } from '../../services/tasksService';
 import { useDispatch } from 'react-redux';
 
-
+// it just updates the task status to deleted in the database
 const DeleteTaskButton = ({
     task_id
 }) => {
@@ -11,7 +11,7 @@ const DeleteTaskButton = ({
 
     const handleDelete = async () => {
         try {
-            const deletedTaskId = await deleteTask(task_id);
+            await deleteTask(task_id);
 
             dispatch(fetchTasksByUserId()); // To update tasks state
         } catch (err) {
