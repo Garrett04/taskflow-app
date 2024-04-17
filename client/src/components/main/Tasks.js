@@ -11,6 +11,8 @@ import { Box, Card, CardActionArea, CardContent, Container, Divider, Grid, Typog
 import MuiCardHeader from '@mui/material/CardHeader';
 import { useTheme } from "@emotion/react";
 import DeleteTaskButton from "./DeleteTaskButton";
+import { DrawerHeader } from "../appLayout/MiniDrawer";
+import { Main } from "./MainStyles";
 
 const Tasks = () => {
     const theme = useTheme();
@@ -92,8 +94,10 @@ const Tasks = () => {
 
     return (
         // Show all tasks here
-        <>
+        <Main>
+            
             <Typography 
+                    paragraph
                     variant="h4" 
                     sx={{ 
                         width: '100%',
@@ -101,7 +105,7 @@ const Tasks = () => {
                         textAlign: 'center',
                         [theme.breakpoints.down('sm')]: {
                             fontSize: '1.5rem',
-                            marginTop: '5rem'
+                            marginTop: '4rem'
                         } 
                     }} 
                     fontFamily="serif"
@@ -113,7 +117,7 @@ const Tasks = () => {
                     {content}
                 </Grid>
             </Container>
-        </>
+        </Main>
     )
 }
 

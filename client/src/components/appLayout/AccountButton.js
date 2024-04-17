@@ -1,6 +1,6 @@
 import MuiAccountCircleIcon from '@mui/icons-material/AccountCircle';
 import { useNavigate } from 'react-router-dom';
-import { Button, ButtonIcon } from './TopBarStyles';
+import { Button, ButtonIcon } from './AppLayoutStyles';
 
 const AccountButton = () => {
     const navigate = useNavigate();

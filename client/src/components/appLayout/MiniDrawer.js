@@ -38,7 +38,7 @@ const closedMixin = (theme) => ({
   },
 });
 
-const DrawerHeader = styled('div')(({ theme }) => ({
+export const DrawerHeader = styled('div')(({ theme }) => ({
   display: 'flex',
   alignItems: 'center',
   justifyContent: 'flex-end',
@@ -79,7 +79,14 @@ const MiniDrawer = ({
               {theme.direction === 'rtl' ? <ChevronRightIcon /> : <ChevronLeftIcon />}
             </IconButton>
           </DrawerHeader>
-          <Divider sx={{ marginTop: '.2rem' }} />
+          <Divider 
+            sx={{ 
+              marginTop: '1rem', 
+              [theme.breakpoints.down('sm')]: {
+                marginTop: '.5rem'
+              }
+            }} 
+          />
           <List>
             {['Completed Tasks', 'Overdue Tasks', 'Trash'].map((text, index) => (
               <ListItem key={text} disablePadding sx={{ display: 'block' }}>

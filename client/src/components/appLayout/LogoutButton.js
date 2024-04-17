@@ -1,4 +1,4 @@
-import { Button, ButtonIcon } from './TopBarStyles';
+import { Button, ButtonIcon } from './AppLayoutStyles';
 import { fetchAuthenticationStatus, logoutUser } from '../../services/authService';
 import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';

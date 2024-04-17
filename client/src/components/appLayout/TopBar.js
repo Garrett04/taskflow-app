@@ -1,8 +1,10 @@
-import { Box, Grid, IconButton, Toolbar, Typography, styled } from "@mui/material";
+import { Box, Grid, IconButton, Toolbar, styled } from "@mui/material";
 import MuiAppBar from '@mui/material/AppBar';
 import MenuIcon from '@mui/icons-material/Menu';
 import AccountButton from "./AccountButton";
 import LogoutButton from "./LogoutButton";
+import { ButtonContainer, Logo } from "./AppLayoutStyles";
+import { useTheme } from "@emotion/react";
 
 const drawerWidth = 240;
 
@@ -24,25 +26,18 @@ const AppBar = styled(MuiAppBar, {
   }),
 }));
 
-const Logo = styled(Typography)(({ theme }) => ({
-  '&.MuiTypography-root': {
-    fontSize: '3rem',
-    fontFamily: 'Special Elite',
-    marginTop: '.5rem',
-    [theme.breakpoints.down('sm')]: {
-      fontSize: '2.2rem'
-    }
-  },
-}));
+
 
 const TopBar = ({ 
   open, 
   handleDrawerOpen,
   isAuthenticated
 }) => {
+    const theme = useTheme();
+
     return (
       <AppBar position="fixed" open={open} elevation={0} sx={{ borderBottom: '2px solid black' }}>
-        <Toolbar sx={{ display: 'flex', justifyContent: 'space-between' }}>
+        <Toolbar>
           {isAuthenticated && <IconButton
             color="inherit"
             aria-label="open drawer"
@@ -55,11 +50,19 @@ const TopBar = ({
           >
             <MenuIcon sx={{ fontSize: '2rem' }} />
           </IconButton>}
-          <Logo>TaskFlow</Logo>
-          <Box display='flex' gap='1.5rem'>
-            <AccountButton />
-            <LogoutButton />
-          </Box>
+          <Grid 
+            container 
+            flexDirection='row'
+            flexWrap='nowrap' 
+            justifyContent='space-between' 
+            alignItems='center'
+          >
+            <Logo>TaskFlow</Logo>
+            <ButtonContainer>
+                <AccountButton />
+                <LogoutButton />
+            </ButtonContainer>
+          </Grid>
         </Toolbar>
       </AppBar>
     )
