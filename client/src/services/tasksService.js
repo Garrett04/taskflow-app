@@ -16,6 +16,16 @@ export const fetchTasksByUserId = createAsyncThunk(
     }
 )
 
+export const createTask = async (data) => {
+    try {
+        const response = await API.post('/tasks', data);
+
+        return response.data;
+    } catch (err) {
+        throw err.response.data.msg;
+    }
+}
+
 export const deleteTask = async (task_id) => {
     try {
         const response = await API.put(`/tasks/${task_id}`, { status: 'deleted' });
