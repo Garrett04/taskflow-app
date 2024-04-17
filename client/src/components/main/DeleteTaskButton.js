@@ -20,7 +20,7 @@ const DeleteTaskButton = ({
     }
 
     return (
-        <IconButton onClick={handleDelete}>
+        <IconButton title='Move to trash' onClick={handleDelete}>
             <DeleteIcon />
         </IconButton>
     )

@@ -1,4 +1,4 @@
-import { IconButton, Toolbar, Typography, styled } from "@mui/material";
+import { Box, Grid, IconButton, Toolbar, Typography, styled } from "@mui/material";
 import MuiAppBar from '@mui/material/AppBar';
 import MenuIcon from '@mui/icons-material/Menu';
 import AccountButton from "./AccountButton";
@@ -56,8 +56,10 @@ const TopBar = ({
             <MenuIcon sx={{ fontSize: '2rem' }} />
           </IconButton>}
           <Logo>TaskFlow</Logo>
-          <AccountButton />
-          <LogoutButton />
+          <Box display='flex' gap='1.5rem'>
+            <AccountButton />
+            <LogoutButton />
+          </Box>
         </Toolbar>
       </AppBar>
     )

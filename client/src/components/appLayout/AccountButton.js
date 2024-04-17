@@ -18,6 +18,7 @@ const AccountButton = () => {
             onClick={handleClick}
             size='small'
             disableElevation
+            backgroundColor='green'
         >
             <ButtonIcon icon={MuiAccountCircleIcon} />
         </Button>

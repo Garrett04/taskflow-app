@@ -26,6 +26,7 @@ const LogoutButton = () => {
                 size='small'
                 disableElevation
                 onClick={handleLogout}
+                backgroundColor='red'
             >
                 <ButtonIcon icon={LogoutIcon} />
             </Button>
