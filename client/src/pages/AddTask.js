@@ -1,14 +1,17 @@
-import { Button, Card, CardHeader, FormGroup, Grid, Grow, Input, TextField } from "@mui/material";
+import { Button, Card, CardHeader, Collapse, FormGroup, Grid, Grow, IconButton, Input, TextField, styled } from "@mui/material";
 import { useEffect, useState } from "react";
-import AddSubtaskButton from "../components/main/AddSubtaskButton";
+import AddSubtaskButton from "../components/main/AddSubtask";
 import { createTask } from "../services/tasksService";
 import { useNavigate } from "react-router-dom";
-
+import AddSubtask from "../components/main/AddSubtask";
 
 const AddTask = () => {
     const [taskData, setTaskData] = useState({
         title: "",
     });
+
+
+    const [expand, setExpand] = useState(false);
 
     const navigate = useNavigate();
 
@@ -27,7 +30,7 @@ const AddTask = () => {
             try {
                 const newTask = await createTask(taskData);
                 console.log(newTask);
-                
+                setExpand(true);
             } catch (err) {
                 console.log(err);
             }
@@ -35,7 +38,9 @@ const AddTask = () => {
     }
 
     return (
-        <Card variant="outlined">
+        <Card variant="outlined" sx={{
+            textAlign: 'center'
+        }}>
             <FormGroup>
                 <Input 
                     placeholder="Task Title"  
@@ -43,7 +48,15 @@ const AddTask = () => {
                     value={taskData.title} 
                     onChange={handleTaskData}
                     onKeyUp={createNewTask}
+                    sx={{
+                        padding: '0 .8rem',
+                        margin: '1rem 0',
+                        fontSize: '2rem'
+                    }}
                 />
+                <Collapse in={expand} timeout="auto" unmountOnExit>
+                    <AddSubtask />
+                </Collapse>
             </FormGroup>
         </Card>
     )
