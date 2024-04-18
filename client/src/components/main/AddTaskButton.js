@@ -7,7 +7,7 @@ const AddTaskButton = () => {
     const navigate = useNavigate();
 
     const handleClick = () => {
-        navigate('/add-task');
+        navigate('/task');
     }
 
     return (

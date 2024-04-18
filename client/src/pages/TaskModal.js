@@ -8,6 +8,7 @@ import { getTaskError, getTaskStatus, selectTask } from "../features/tasks/taskS
 import { useNavigate, useParams } from "react-router-dom"
 import { fetchTaskById } from "../services/tasksService"
 import { renderTaskStatus } from "../utils/renderTaskStatus"
+import AddSubtask from "../components/main/AddSubtask"
 
 
 const TaskModal = () => {
@@ -42,6 +43,7 @@ const TaskModal = () => {
             </Box>
             <Divider />
             <Subtasks task_id={task.id} />
+            <AddSubtask />
             <Divider />
             <CardBottom>
                 {renderTaskStatus(task.status)}

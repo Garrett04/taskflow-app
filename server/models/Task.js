@@ -1,18 +1,15 @@
 const db = require('../config/db/index')
 
 class Task {
-    async create(data) {
+    async create(userId) {
         try {
             // query statement
-            const statement = `INSERT INTO tasks (title, status, user_id)
-                                VALUES ($1, $2, $3)
+            const statement = `INSERT INTO tasks (user_id)
+                                VALUES ($1)
                                 RETURNING *`;
 
-            // values array to insert to statement
-            const values = [data.title, 'pending', data.userId];
-
             // query database
-            const result = await db.query(statement, values);
+            const result = await db.query(statement, [userId]);
 
             if (result.rows.length > 0) {
                 return result.rows[0];

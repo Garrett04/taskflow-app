@@ -13,7 +13,6 @@ const AddTask = () => {
     });
 
     const [open, setOpen] = useState(true);
-    const [expand, setExpand] = useState(false);
 
     const navigate = useNavigate();
     const dispatch = useDispatch();
@@ -33,7 +32,7 @@ const AddTask = () => {
             try {
                 const newTask = await createTask(taskData);
                 console.log(newTask);
-                setExpand(true);
+                navigate(`/task/${newTask.id}`)
                 dispatch(fetchTasksByUserId());
             } catch (err) {
                 console.log(err);
@@ -73,9 +72,7 @@ const AddTask = () => {
                                 fontSize: '2rem'
                             }}
                         />
-                        <Collapse in={expand} timeout="auto" unmountOnExit>
-                            <AddSubtask />
-                        </Collapse>
+                        
                     </FormGroup>
                 </Card>
             </ModalBox>

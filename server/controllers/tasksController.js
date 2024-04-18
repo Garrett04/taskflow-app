@@ -31,14 +31,9 @@ const getTaskById = async (req, res) => {
 }
 
 const createTask = async (req, res) => {
-    const { title } = req.body;
     const userId = req.user.id;
 
-    if (!title) {
-        return res.status(404).json({ success: false, msg: "Please provide task title." });
-    }
-
-    const newTask = await Task.create({ title, userId });
+    const newTask = await Task.create(userId);
 
     res.status(201).json({
         success: true,

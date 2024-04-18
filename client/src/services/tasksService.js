@@ -16,11 +16,11 @@ export const fetchTasksByUserId = createAsyncThunk(
     }
 )
 
-export const createTask = async (data) => {
+export const createTask = async () => {
     try {
-        const response = await API.post('/tasks', data);
+        const response = await API.post('/tasks');
 
-        return response.data;
+        return response.data.task;
     } catch (err) {
         throw err.response.data.msg;
     }

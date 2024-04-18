@@ -25,7 +25,7 @@ const Task = ({
             <CardBottom>
                 {renderTaskStatus(task.status)}
                 <DeadlineDate>{task.deadline_date}</DeadlineDate>
-                <Link to={`tasks/${task.id}`}>View more</Link>
+                <Link to={`task/${task.id}`}>View more</Link>
             </CardBottom>
         </Card>
     )
