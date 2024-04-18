@@ -3,9 +3,7 @@ import { fetchSampleSubtasks, getSubtasksError, getSubtasksStatus, selectSubtask
 import { useEffect } from "react";
 import { Checkbox, FormControlLabel, FormGroup, Stack, Typography } from "@mui/material";
 import { useTheme } from "@emotion/react";
-import { getIsAuthenticatedStatus, selectIsAuthenticated } from "../../features/auth/authSlice";
 import { fetchSubtasksByTaskId } from "../../services/subtasksService";
-import { useParams } from "react-router-dom";
 
 
 const Subtasks = ({ 

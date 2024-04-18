@@ -12,6 +12,7 @@ import DeleteTaskButton from "./DeleteTaskButton";
 import AddTaskButton from "./AddTaskButton";
 import { Main } from "./MainStyles";
 import Task from "./Task";
+import { Outlet } from "react-router-dom";
 
 
 const Tasks = () => {
@@ -35,7 +36,7 @@ const Tasks = () => {
     const renderAllTasks = () => {
         return tasks.map(task => (
             <Grid item key={task.id} xs={12} md={6} lg={4}>
-                <Task task={task}/>
+                <Task task={task} />
             </Grid>
         ))
     }
@@ -72,6 +73,8 @@ const Tasks = () => {
                     {content}
                 </Grid>
             </Container>
+            {/* Render task modal */}
+            <Outlet />
             <AddTaskButton />
         </>
     )

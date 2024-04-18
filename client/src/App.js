@@ -6,7 +6,7 @@ import {
 } from "react-router-dom";
 
 import Root from './pages/Root';
-import Main from "./components/main/Tasks";
+import Main from "./components/main/Main";
 import PrivateRoutes from './utils/PrivateRoutes';
 import Login from "./pages/Login";
 import { useDispatch, useSelector } from "react-redux";
@@ -14,17 +14,19 @@ import { useEffect } from "react";
 import { fetchAuthenticationStatus } from "./services/authService";
 import { getIsAuthenticatedStatus } from "./features/auth/authSlice";
 import Register from "./pages/Register";
-import AddTask from "./pages/AddTask";
-import TaskDetails from "./pages/TaskDetails";
+import AddTask from "./pages/AddTaskModal";
+import TaskModal from "./pages/TaskModal";
 
 const router = createBrowserRouter(createRoutesFromElements(
   <>
     <Route path="/" element={ <Root/> }>
-      <Route index element={ <Main/> }/>
-      <Route element={ <PrivateRoutes/> }>
-        <Route path="/tasks/:id" element={ <TaskDetails/> } />
+      <Route path="/" element={ <Main/> }>
+        <Route element={ <PrivateRoutes/> }>
+
+        </Route>
+        <Route path="/tasks/:id" element={ <TaskModal/> } />
+        <Route path='/add-task' element={ <AddTask/> }/>
       </Route>
-      <Route path='/add-task' element={ <AddTask/> }/>
     </Route>
     <Route path="/login" element={ <Login/> }/> 
     <Route path="/register" element={ <Register/> }/>

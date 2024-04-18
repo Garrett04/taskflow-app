@@ -11,7 +11,7 @@ const AddTaskButton = () => {
     }
 
     return (
-        <Tooltip title='Add new task' placement="bottom-end">
+        <Tooltip title='Add new task' placement="top">
             <Button onClick={handleClick} size="large">
                 <AddTaskIcon />
             </Button> 

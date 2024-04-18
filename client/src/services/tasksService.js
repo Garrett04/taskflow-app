@@ -35,3 +35,16 @@ export const deleteTask = async (task_id) => {
         throw err.response.data.msg;
     }
 }
+
+export const fetchTaskById = createAsyncThunk(
+    'task/fetchTaskById',
+    async (id) => {
+        try {
+            const response = await API.get(`/tasks/${id}`);
+
+            return response.data.task;
+        } catch (err) {
+            throw err.response.data.msg;
+        }
+    }
+)

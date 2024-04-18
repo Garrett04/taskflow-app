@@ -1,6 +1,7 @@
 import AddTask from "@mui/icons-material/AddTask";
-import { Grid, IconButton, styled } from "@mui/material";
+import { Box, CardContent, Grid, IconButton, Typography, styled } from "@mui/material";
 import MuiAddTaskIcon from '@mui/icons-material/AddTask';
+import MuiCardHeader from '@mui/material/CardHeader';
 
 
 export const Main = styled(Grid)(({ theme }) => ({
@@ -26,4 +27,29 @@ export const Button = styled(IconButton)(({ theme }) => ({
 
 export const AddTaskIcon = styled(MuiAddTaskIcon)(({ theme }) => ({
     fontSize: '1.8rem'
+}))
+
+export const CardHeader = styled(MuiCardHeader)(({ theme }) => ({
+    backgroundColor: '#E9E3A1',
+    padding: '.5rem',
+    [theme.breakpoints.down('sm')]: {
+        fontSize: '1.2rem',
+    }
+}));
+
+export const CardBottom = styled(CardContent)(() => ({
+    display: 'flex',
+    justifyContent: 'space-between',
+}));
+
+export const DeadlineDate = styled(Typography)(() => ({
+    color: 'red',
+    fontSize: '1.2rem'
+}))
+
+export const ModalBox = styled(Box)(({ theme }) => ({
+    position: 'absolute',
+    top: '50%',
+    left: '50%',
+    transform: 'translate(-50%, -50%)',
 }))
