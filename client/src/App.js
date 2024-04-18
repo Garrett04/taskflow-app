@@ -15,13 +15,14 @@ import { fetchAuthenticationStatus } from "./services/authService";
 import { getIsAuthenticatedStatus } from "./features/auth/authSlice";
 import Register from "./pages/Register";
 import AddTask from "./pages/AddTask";
+import TaskDetails from "./pages/TaskDetails";
 
 const router = createBrowserRouter(createRoutesFromElements(
   <>
     <Route path="/" element={ <Root/> }>
       <Route index element={ <Main/> }/>
       <Route element={ <PrivateRoutes/> }>
-        {/* <Route path="/tasks/:id"/> */}
+        <Route path="/tasks/:id" element={ <TaskDetails/> } />
       </Route>
       <Route path='/add-task' element={ <AddTask/> }/>
     </Route>

@@ -11,7 +11,6 @@ import { ThemeProvider } from '@emotion/react';
 
 const theme = createTheme({
   palette: {
-    mode: 'dark',
     primary: {
       light: '#757ce8',
       main: '#03a9f4',

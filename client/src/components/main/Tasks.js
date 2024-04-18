@@ -2,7 +2,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { fetchSampleTasks, getTasksError, getTasksStatus, selectTasks } from "../../features/tasks/tasksSlice";
 import { useEffect } from "react";
 import { fetchTasksByUserId } from "../../services/tasksService";
-import { selectIsAuthenticated } from "../../features/auth/authSlice";
+import { getIsAuthenticatedStatus, selectIsAuthenticated } from "../../features/auth/authSlice";
 
 import Subtasks from "./Subtasks";
 import { Box, Card, CardContent, Container, Divider, Grid, IconButton, Tooltip, Typography, styled } from "@mui/material";
@@ -21,24 +21,23 @@ const Tasks = () => {
     const tasksError = useSelector(getTasksError);
     
     const isAuthenticated = useSelector(selectIsAuthenticated);
+    const isAuthenticatedStatus = useSelector(getIsAuthenticatedStatus);
     
     const dispatch = useDispatch();
 
-    
-
     useEffect(() => {
-        if (isAuthenticated) {
+        if (isAuthenticatedStatus === 'fulfilled' && isAuthenticated) {
             dispatch(fetchTasksByUserId());
-        } else {
-            dispatch(fetchSampleTasks());
         }
-    }, [dispatch, isAuthenticated]);
+    }, [dispatch, isAuthenticatedStatus, isAuthenticated]);
 
-    
 
     const renderAllTasks = () => {
+        console.log(tasks);
         return tasks.map(task => (
-            <Task task={task}/>
+            <Grid item key={task.id} xs={12} md={6} lg={4}>
+                <Task task={task}/>
+            </Grid>
         ))
     }
 

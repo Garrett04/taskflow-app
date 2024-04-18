@@ -8,9 +8,12 @@ const AddSubtask = () => {
     }
 
     return (
-        <Box height="15rem" sx={{
-            padding: '1rem'
-        }}>
+        <Box 
+            height="15rem" 
+            sx={{
+                padding: '1rem'
+            }}
+        >
             <Input 
                 placeholder="Subtask Title" 
                 fullWidth

@@ -3,26 +3,23 @@ import { fetchSampleSubtasks, getSubtasksError, getSubtasksStatus, selectSubtask
 import { useEffect } from "react";
 import { Checkbox, FormControlLabel, FormGroup, Stack, Typography } from "@mui/material";
 import { useTheme } from "@emotion/react";
+import { getIsAuthenticatedStatus, selectIsAuthenticated } from "../../features/auth/authSlice";
+import { fetchSubtasksByTaskId } from "../../services/subtasksService";
+import { useParams } from "react-router-dom";
 
 
 const Subtasks = ({ 
-    task_id,
+    subtasks,
+    task_id
 }) => {
     const theme = useTheme();
-    const subtasks = useSelector(selectSubtasks);
     const subtasksStatus = useSelector(getSubtasksStatus);
     const subtasksError = useSelector(getSubtasksError);
-    const dispatch = useDispatch();
-
-    useEffect(() => {
-        dispatch(fetchSampleSubtasks());
-    }, [dispatch])
-    
 
     const renderSubtasks = () => {
-        const foundSubtask = subtasks.filter(subtask => subtask.task_id === task_id);
-    
-        return foundSubtask.map(subtask => (
+        const foundSubtasks = subtasks.filter(subtask => subtask.task_id === task_id);
+
+        return foundSubtasks.map(subtask => (
             <Stack 
                 direction="column" 
                 alignItems="flex-start"
