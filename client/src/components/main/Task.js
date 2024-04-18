@@ -2,16 +2,15 @@ import { Box, Card, CardContent, Divider, Grid, Typography, styled } from "@mui/
 import Subtasks from "./Subtasks"
 import DeleteTaskButton from "./DeleteTaskButton";
 import { Link } from "react-router-dom";
-import { CardBottom, CardHeader, DeadlineDate } from "./MainStyles";
+import { CardBottom, CardHeader, DeadlineDate, TaskCard } from "./MainStyles";
 import { renderTaskStatus } from "../../utils/renderTaskStatus";
 
 
 const Task = ({
     task,
 }) => {
-
     return (
-        <Card className="task-container">
+        <TaskCard >
             <Box>
                 <CardHeader
                     titleTypographyProps={{ variant: 'taskTitle' }}
@@ -27,7 +26,7 @@ const Task = ({
                 <DeadlineDate>{task.deadline_date}</DeadlineDate>
                 <Link to={`task/${task.id}`}>View more</Link>
             </CardBottom>
-        </Card>
+        </TaskCard>
     )
     
 }

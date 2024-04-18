@@ -19,12 +19,7 @@
 }
 
 .tasks .task-container {
-  text-align: center;
   
-  background: #fff9d9;
-  display: flex;
-  flex-flow: column;
-  justify-content: space-between;
 }
 
 .tasks div.bottom {

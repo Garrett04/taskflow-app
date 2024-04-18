@@ -1,5 +1,5 @@
 import AddTask from "@mui/icons-material/AddTask";
-import { Box, CardContent, Grid, IconButton, Input, Typography, styled } from "@mui/material";
+import { Box, Card, CardContent, Grid, IconButton, Input, Typography, styled } from "@mui/material";
 import MuiAddTaskIcon from '@mui/icons-material/AddTask';
 import MuiCardHeader from '@mui/material/CardHeader';
 
@@ -30,7 +30,7 @@ export const AddTaskIcon = styled(MuiAddTaskIcon)(({ theme }) => ({
 }))
 
 export const CardHeader = styled(MuiCardHeader)(({ theme }) => ({
-    backgroundColor: '#E9E3A1',
+    backgroundColor: theme.palette.ochre.main,
     padding: '.5rem',
     [theme.breakpoints.down('sm')]: {
         fontSize: '1.2rem',
@@ -58,4 +58,12 @@ export const TaskTitle = styled(Input)(({ theme }) => ({
     fontSize: '1.5rem',
     fontFamily: 'sans',
     backgroundColor: theme.palette.ochre.main,
+}))
+
+export const TaskCard = styled(Card)(({ theme }) => ({
+    textAlign: 'center',
+    background: theme.palette.ochre.light,
+    display: 'flex',
+    flexFlow: 'column',
+    justifyContent: 'space-between',
 }))

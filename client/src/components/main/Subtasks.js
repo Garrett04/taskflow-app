@@ -24,7 +24,6 @@ const Subtasks = ({
 
     const renderSubtasks = () => {
         const foundSubtasks = subtasks.filter(subtask => subtask.task_id === task_id);
-        console.log(foundSubtasks);
 
         return foundSubtasks.map(subtask => (
             <Stack 
