@@ -33,7 +33,6 @@ const Tasks = () => {
 
 
     const renderAllTasks = () => {
-        console.log(tasks);
         return tasks.map(task => (
             <Grid item key={task.id} xs={12} md={6} lg={4}>
                 <Task task={task}/>

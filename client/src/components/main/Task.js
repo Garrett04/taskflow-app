@@ -32,8 +32,6 @@ const DeadlineDate = styled(Typography)(() => ({
 const Task = ({
     task
 }) => {
-    const subtasks = useSelector(selectSubtasks);
-    const dispatch = useDispatch();
 
     const renderTaskStatus = (taskStatus) => {
         if (taskStatus === 'pending') {
@@ -45,9 +43,7 @@ const Task = ({
         }
     }
 
-    useEffect(() => {
-        dispatch(fetchSubtasksByTaskId(task.id));
-    }, [dispatch, task.id])
+    
 
     return (
         <Card className="task-container">
@@ -59,7 +55,7 @@ const Task = ({
                 />
             </Box>
             <Divider />
-            <Subtasks subtasks={subtasks} task_id={task.id} />
+            <Subtasks task_id={task.id} />
             <Divider />
             <CardBottom>
                 {renderTaskStatus(task.status)}

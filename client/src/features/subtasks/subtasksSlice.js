@@ -32,7 +32,6 @@ const subtasksSlice = createSlice({
             })
             .addCase(fetchSubtasksByTaskId.fulfilled, (state, action) => {
                 state.status = 'fulfilled';
-                console.log(action.payload);
                 state.subtasks = state.subtasks.concat(action.payload);
             })
             .addCase(fetchSubtasksByTaskId.rejected, (state, action) => {

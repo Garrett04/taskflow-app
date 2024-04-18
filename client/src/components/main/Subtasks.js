@@ -9,12 +9,20 @@ import { useParams } from "react-router-dom";
 
 
 const Subtasks = ({ 
-    subtasks,
     task_id
 }) => {
     const theme = useTheme();
+    const subtasks = useSelector(selectSubtasks);
     const subtasksStatus = useSelector(getSubtasksStatus);
     const subtasksError = useSelector(getSubtasksError);
+    const dispatch = useDispatch();
+
+
+    useEffect(() => {
+        if (subtasksStatus === 'idle') {
+            dispatch(fetchSubtasksByTaskId(task_id));
+        }
+    }, [dispatch, task_id, subtasksStatus])
 
     const renderSubtasks = () => {
         const foundSubtasks = subtasks.filter(subtask => subtask.task_id === task_id);

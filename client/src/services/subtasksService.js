@@ -6,7 +6,6 @@ export const fetchSubtasksByTaskId = createAsyncThunk(
     async (task_id) => {
         try {
             const response = await API.get(`/tasks/${task_id}/subtasks`);
-            console.log(response.data.subtasks);
             return response.data.subtasks;
         } catch (err) {
             throw err.response.data.msg;
