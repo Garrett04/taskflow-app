@@ -1,5 +1,5 @@
 import AddTask from "@mui/icons-material/AddTask";
-import { Box, CardContent, Grid, IconButton, Typography, styled } from "@mui/material";
+import { Box, CardContent, Grid, IconButton, Input, Typography, styled } from "@mui/material";
 import MuiAddTaskIcon from '@mui/icons-material/AddTask';
 import MuiCardHeader from '@mui/material/CardHeader';
 
@@ -52,4 +52,10 @@ export const ModalBox = styled(Box)(({ theme }) => ({
     top: '50%',
     left: '50%',
     transform: 'translate(-50%, -50%)',
+}))
+
+export const TaskTitle = styled(Input)(({ theme }) => ({
+    fontSize: '1.5rem',
+    fontFamily: 'sans',
+    backgroundColor: theme.palette.ochre.main,
 }))

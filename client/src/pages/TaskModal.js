@@ -1,7 +1,7 @@
-import { Box, Card, Divider, Modal } from "@mui/material"
+import { Box, Card, Divider, Input, Modal } from "@mui/material"
 import DeleteTaskButton from "../components/main/DeleteTaskButton"
 import Subtasks from "../components/main/Subtasks"
-import { CardBottom, CardHeader, DeadlineDate, ModalBox } from "../components/main/MainStyles"
+import { CardBottom, CardHeader, DeadlineDate, ModalBox, TaskTitle } from "../components/main/MainStyles"
 import { useEffect, useState } from "react"
 import { useDispatch, useSelector } from "react-redux"
 import { getTaskError, getTaskStatus, selectTask } from "../features/tasks/taskSlice"
@@ -35,9 +35,8 @@ const TaskModal = () => {
     const renderTask = () => (
         <Card className="task-container">
             <Box>
-                <CardHeader
-                    titleTypographyProps={{ variant: 'taskTitle' }}
-                    title={task.title} 
+                <TaskTitle
+                    value={task.title} 
                     action={ <DeleteTaskButton task_id={task.id} /> }
                 />
             </Box>

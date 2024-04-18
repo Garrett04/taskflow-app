@@ -24,6 +24,7 @@ const Subtasks = ({
 
     const renderSubtasks = () => {
         const foundSubtasks = subtasks.filter(subtask => subtask.task_id === task_id);
+        console.log(foundSubtasks);
 
         return foundSubtasks.map(subtask => (
             <Stack 
@@ -75,10 +76,8 @@ const Subtasks = ({
     let content;
     if (subtasksStatus === 'pending') {
         content = 'Loading...';
-    } else if (subtasksStatus === 'fulfilled') {
+    } else if (subtasksStatus === 'fulfilled' || subtasks) {
         content = renderSubtasks();
-    } else if (subtasksStatus === 'rejected') {
-        content = subtasksError;
     }
 
     return (
