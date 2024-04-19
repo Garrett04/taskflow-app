@@ -1,9 +1,9 @@
 import { useDispatch, useSelector } from "react-redux";
 import { fetchSampleSubtasks, getSubtasksError, getSubtasksStatus, selectSampleSubtasks, selectSubtasks } from "../../features/subtasks/subtasksSlice";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { Checkbox, FormControlLabel, FormGroup, Stack, Typography } from "@mui/material";
 import { useTheme } from "@emotion/react";
-import { fetchSubtasksByTaskId } from "../../services/subtasksService";
+import { fetchSubtasksByTaskId, updateSubtask } from "../../services/subtasksService";
 import { selectIsAuthenticated } from "../../features/auth/authSlice";
 import { handleTaskExpand } from "../../utils/handleTaskExpand";
 import AddSubtask from "./AddSubtask";
@@ -24,66 +24,76 @@ const Subtasks = ({
     const dispatch = useDispatch();
     const isAuthenticated = useSelector(selectIsAuthenticated);
 
-
     useEffect(() => {
         dispatch(fetchSubtasksByTaskId(task_id));
     }, [dispatch, task_id])
-    
+
+    const updateSubtaskChecked = async (subtaskId, checked) => {
+        try {
+            const data = { task_id, id: subtaskId, checked: !checked };
+            const updatedSubtask = await updateSubtask(data);
+
+            dispatch(fetchSubtasksByTaskId(task_id));
+        } catch (err) {
+            console.log(err);
+        }
+    }
 
     const renderSubtasks = () => {
         // console.log(subtasks[task_id]);
-        const subtasksToRender = isAuthenticated ? subtasks[task_id] : sampleSubtasks[task_id];
-        // const foundSubtasks = subtasksToRender.filter(subtask => subtask.task_id === task_id);
-        // console.log(subtasks);
-
-        if (subtasksToRender) {
-            return subtasksToRender.map(subtask => (
-                <Stack 
-                    direction="column" 
-                    alignItems="flex-start"
-                    marginLeft="1rem"
-                    key={subtask.id}
-                >
-                    <FormControlLabel 
-                        control={
-                            <Checkbox 
-                                color="secondary" 
-                                defaultChecked={subtask.checked}
-                                sx={{
-                                    [theme.breakpoints.down('sm')]: {
-                                        '& .MuiSvgIcon-root': { 
-                                            fontSize: '1.3rem',
-                                            marginTop: '-1px'
-                                        }
-                                    }
-                                }}
-                            />
-                        } 
-                        label={
-                            <Typography variant="h6" sx={{
-                                [theme.breakpoints.down('sm')]: {
-                                    fontSize: '1rem'
-                                }
-                            }}>
-                                {subtask.title}
-                            </Typography>
-                        } 
-                        onClick={handleTaskExpand}
-                    />
-                    <Typography 
-                        variant="body1" 
-                        sx={{
-                            [theme.breakpoints.down('sm')]: {
-                                fontSize: '.9rem'
-                            }
-                        }} 
-                        marginLeft="3.4rem"
+        const subtasksByTaskId = isAuthenticated ? subtasks[task_id] : sampleSubtasks[task_id];
+        
+        if (subtasksByTaskId) {
+            return subtasksByTaskId.map(subtask => {
+                return (
+                    <Stack 
+                        direction="column" 
+                        alignItems="flex-start"
+                        marginLeft="1rem"
+                        key={subtask.id}
                     >
-                        {subtask.description}
-                    </Typography>
-                    <DeleteSubtaskButton task_id={subtask.task_id} id={subtask.id} />
-                </Stack>
-            ))
+                        <FormControlLabel 
+                            control={
+                                <Checkbox 
+                                    color="secondary" 
+                                    defaultChecked={subtask.checked}
+                                    sx={{
+                                        [theme.breakpoints.down('sm')]: {
+                                            '& .MuiSvgIcon-root': { 
+                                                fontSize: '1.3rem',
+                                                marginTop: '-1px'
+                                            }
+                                        }
+                                    }}
+                                    onChange={() => updateSubtaskChecked(subtask.id, subtask.checked)}
+                                />
+                            } 
+                            label={
+                                <Typography variant="h6" sx={{
+                                    [theme.breakpoints.down('sm')]: {
+                                        fontSize: '1rem'
+                                    }
+                                }}>
+                                    {subtask.title}
+                                </Typography>
+                            } 
+                            onClick={handleTaskExpand}
+                        />
+                        <Typography 
+                            variant="body1" 
+                            sx={{
+                                [theme.breakpoints.down('sm')]: {
+                                    fontSize: '.9rem'
+                                }
+                            }} 
+                            marginLeft="3.4rem"
+                        >
+                            {subtask.description}
+                        </Typography>
+                        <DeleteSubtaskButton task_id={subtask.task_id} id={subtask.id} />
+                    </Stack>
+                )
+            })
         }
         return null;
     }
@@ -93,8 +103,6 @@ const Subtasks = ({
         content = 'Loading...';
     } else if (subtasksStatus === 'fulfilled' || sampleSubtasks) {
         content = renderSubtasks();
-    } else if (subtasksStatus === 'rejected') {
-        content = subtasksError;
     }
 
     return (

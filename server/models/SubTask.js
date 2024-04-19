@@ -81,7 +81,7 @@ class SubTask {
                 statement += 'description = $2';
                 values.push(data.description);
                 index++;
-            } else if (data.checked) {
+            } else if (data.checked || !data.checked) {
                 statement += 'checked = $2';
                 values.push(data.checked);
                 index++;

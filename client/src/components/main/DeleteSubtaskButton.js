@@ -3,7 +3,6 @@ import { deleteSubtask, fetchSubtasksByTaskId } from "../../services/subtasksSer
 import { useParams } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import DeleteForeverIcon from '@mui/icons-material/DeleteForever'
-import { fetchTasksByUserId } from "../../services/tasksService";
 
 const DeleteSubtaskButton = ({
     // task_id,
