@@ -4,6 +4,7 @@ import { useEffect } from "react";
 import { Checkbox, FormControlLabel, FormGroup, Stack, Typography } from "@mui/material";
 import { useTheme } from "@emotion/react";
 import { fetchSubtasksByTaskId } from "../../services/subtasksService";
+import { selectIsAuthenticated } from "../../features/auth/authSlice";
 
 
 const Subtasks = ({ 
@@ -14,11 +15,14 @@ const Subtasks = ({
     const subtasksStatus = useSelector(getSubtasksStatus);
     const subtasksError = useSelector(getSubtasksError);
     const dispatch = useDispatch();
+    const isAuthenticated = useSelector(selectIsAuthenticated);
 
 
     useEffect(() => {
-        if (subtasksStatus === 'idle') {
+        if (subtasksStatus === 'idle' && isAuthenticated) {
             dispatch(fetchSubtasksByTaskId(task_id));
+        } else {
+            dispatch(fetchSampleSubtasks());
         }
     }, [dispatch, task_id, subtasksStatus])
 

@@ -12,7 +12,7 @@ const AddTaskButton = () => {
     const handleClick = async () => {
         try {
             const newTask = await createTask();
-            navigate(`/add-task/${newTask.id}`);
+            navigate(`/task/${newTask.id}`);
             dispatch(fetchTasksByUserId());
         } catch (err) {
             console.log(err);

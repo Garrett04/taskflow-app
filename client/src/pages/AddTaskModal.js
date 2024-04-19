@@ -32,11 +32,7 @@ const AddTaskModal = () => {
                 console.log(updatedTask);
 
                 setExpand(true);
-                dispatch(fetchTasksByUserId());
-
-                setTimeout(() => {
-                    navigate(`/task/${id}`);
-                }, 200)
+                
             } catch (err) {
                 console.log(err);
             }
@@ -47,6 +43,7 @@ const AddTaskModal = () => {
         if (e.target === e.currentTarget) {
             setOpen(false);
             navigate('/');
+            dispatch(fetchTasksByUserId());
         }
     }
 

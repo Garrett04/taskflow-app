@@ -29,6 +29,8 @@ const Tasks = () => {
     useEffect(() => {
         if (isAuthenticatedStatus === 'fulfilled' && isAuthenticated) {
             dispatch(fetchTasksByUserId());
+        } else {
+            dispatch(fetchSampleTasks());
         }
     }, [dispatch, isAuthenticatedStatus, isAuthenticated]);
 

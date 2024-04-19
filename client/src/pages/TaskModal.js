@@ -9,6 +9,7 @@ import { useNavigate, useParams } from "react-router-dom"
 import { fetchTaskById } from "../services/tasksService"
 import { renderTaskStatus } from "../utils/renderTaskStatus"
 import AddSubtask from "../components/main/AddSubtask"
+import AddTaskModal from "./AddTaskModal"
 
 
 const TaskModal = () => {
@@ -32,25 +33,31 @@ const TaskModal = () => {
         dispatch(fetchTaskById(id));
     }, [dispatch, id])
 
-    const renderTask = () => (
-        <TaskCard>
-            <Box>
-                <TaskTitle
-                    value={task.title} 
-                    action={ <DeleteTaskButton task_id={task.id} /> }
-                    fullWidth
-                />
-            </Box>
-            <Divider />
-            <Subtasks task_id={task.id} />
-            <AddSubtask />
-            <Divider />
-            <CardBottom>
-                {renderTaskStatus(task.status)}
-                <DeadlineDate>{task.deadline_date}</DeadlineDate>
-            </CardBottom>
-        </TaskCard>
-    )
+    const renderTask = () => {
+        if (!task.title) {
+            return <AddTaskModal />
+        } else {
+            return (
+                <TaskCard>
+                    <Box>
+                        <TaskTitle
+                            value={task.title} 
+                            action={ <DeleteTaskButton task_id={task.id} /> }
+                            fullWidth
+                        />
+                    </Box>
+                    <Divider />
+                    <Subtasks task_id={task.id} />
+                    <AddSubtask />
+                    <Divider />
+                    <CardBottom>
+                        {renderTaskStatus(task.status)}
+                        <DeadlineDate>{task.deadline_date}</DeadlineDate>
+                    </CardBottom>
+                </TaskCard>
+            )
+        }
+    }
 
     let content;
     if (taskStatus === 'pending') {

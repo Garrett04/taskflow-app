@@ -25,7 +25,7 @@ const router = createBrowserRouter(createRoutesFromElements(
 
         </Route>
         <Route path="/task/:id" element={ <TaskModal/> } />
-        <Route path='/add-task/:id' element={ <AddTask/> }/>
+        {/* <Route path='/add-task/:id' element={ <AddTask/> }/> */}
       </Route>
     </Route>
     <Route path="/login" element={ <Login/> }/> 
