@@ -47,14 +47,14 @@ const createSubtask = async (req, res) => {
 }
 
 const updateSubtask = async (req, res) => {
-    const { title, description } = req.body;
+    const { title, description, checked } = req.body;
     const { id } = req.params;
 
     if (!title && !description) {
         return res.status(404).json({ success: false, msg: "Please provide title/description to update subtask" });
     }
 
-    const updatedTask = await Subtask.update({ id, title, description });
+    const updatedTask = await Subtask.update({ id, title, description, checked });
 
     res.json({
         success: true,

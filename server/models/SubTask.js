@@ -81,6 +81,10 @@ class SubTask {
                 statement += 'description = $2';
                 values.push(data.description);
                 index++;
+            } else if (data.checked) {
+                statement += 'checked = $2';
+                values.push(data.checked);
+                index++;
             }
 
             statement += ' WHERE id = $1 RETURNING *';
