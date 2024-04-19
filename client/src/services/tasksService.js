@@ -48,3 +48,14 @@ export const fetchTaskById = createAsyncThunk(
         }
     }
 )
+
+export const updateTask = async (data) => {
+    try {
+        const { id, title } = data;
+        const response = await API.put(`/tasks/${id}`, {title});
+
+        return response.data;
+    } catch (err) {
+        throw err.response.data.msg;
+    }
+}

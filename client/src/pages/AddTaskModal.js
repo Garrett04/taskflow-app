@@ -1,39 +1,42 @@
 import { Button, Card, CardHeader, Collapse, FormGroup, Grid, Grow, IconButton, Input, Modal, TextField, styled } from "@mui/material";
 import { useEffect, useState } from "react";
 import AddSubtaskButton from "../components/main/AddSubtask";
-import { createTask, fetchTasksByUserId } from "../services/tasksService";
-import { useNavigate } from "react-router-dom";
+import { createTask, fetchTasksByUserId, updateTask } from "../services/tasksService";
+import { useNavigate, useParams } from "react-router-dom";
 import AddSubtask from "../components/main/AddSubtask";
-import { ModalBox } from "../components/main/MainStyles";
+import { ModalBox, TaskTitle } from "../components/main/MainStyles";
 import { useDispatch } from "react-redux";
 
-const AddTask = () => {
-    const [taskData, setTaskData] = useState({
-        title: "",
-    });
+const AddTaskModal = () => {
+    const [title, setTitle] = useState("");
+    const [expand, setExpand] = useState(false);
 
     const [open, setOpen] = useState(true);
 
     const navigate = useNavigate();
     const dispatch = useDispatch();
 
-    const handleTaskData = (e) => {
-        const { name, value } = e.target;
+    const { id } = useParams();
+
+    const handleChange = (e) => {
+        const { value } = e.target;
         
-        setTaskData((prev) => ({
-            ...prev,
-            [name]: value 
-        }));
+        setTitle(value);
     }
 
-    const createNewTask = async (e) => {
+    const updateTaskTitle = async (e) => {
         e.preventDefault();
         if (e.key === 'Enter') {
             try {
-                const newTask = await createTask(taskData);
-                console.log(newTask);
-                navigate(`/task/${newTask.id}`)
+                const updatedTask = await updateTask({ id: id, title });
+                console.log(updatedTask);
+
+                setExpand(true);
                 dispatch(fetchTasksByUserId());
+
+                setTimeout(() => {
+                    navigate(`/task/${id}`);
+                }, 200)
             } catch (err) {
                 console.log(err);
             }
@@ -60,24 +63,25 @@ const AddTask = () => {
                     }}
                 >
                     <FormGroup>
-                        <Input 
+                        <TaskTitle 
                             placeholder="Task Title"  
                             name="title" 
-                            value={taskData.title} 
-                            onChange={handleTaskData}
-                            onKeyUp={createNewTask}
-                            sx={{
-                                padding: '0 .8rem',
-                                margin: '1rem 0',
-                                fontSize: '2rem'
-                            }}
+                            value={title} 
+                            onChange={handleChange}
+                            onKeyUp={updateTaskTitle}
                         />
-                        
                     </FormGroup>
+                    <Collapse 
+                        in={expand} 
+                        timeout="auto" 
+                        unmountOnExit
+                    >
+                        <AddSubtask />
+                    </Collapse>
                 </Card>
             </ModalBox>
         </Modal>
     )
 }
 
-export default AddTask;
+export default AddTaskModal;
