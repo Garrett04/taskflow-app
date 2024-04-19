@@ -12,3 +12,15 @@ export const fetchSubtasksByTaskId = createAsyncThunk(
         }
     }
 )
+
+export const createSubtask = async (data) => {
+    try {
+        const { task_id, title, description } = data;
+
+        const response = await API.post(`/tasks/${task_id}/subtasks`, { title, description });
+        console.log(response.data);
+        return response.data;
+    } catch (err) {
+        throw err.response.data.msg;
+    }
+}

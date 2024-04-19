@@ -6,10 +6,12 @@ import { useTheme } from "@emotion/react";
 import { fetchSubtasksByTaskId } from "../../services/subtasksService";
 import { selectIsAuthenticated } from "../../features/auth/authSlice";
 import { handleTaskExpand } from "../../utils/handleTaskExpand";
+import AddSubtask from "./AddSubtask";
 
 
 const Subtasks = ({ 
-    task_id
+    task_id,
+    inTaskModal // Will always come only from TaskModal page 
 }) => {
     const theme = useTheme();
     const subtasks = useSelector(selectSubtasks);
@@ -92,6 +94,7 @@ const Subtasks = ({
     return (
         <FormGroup sx={{ gap: '1rem' }}>
             {content}
+            {inTaskModal && <AddSubtask />}
         </FormGroup>
     )
 }

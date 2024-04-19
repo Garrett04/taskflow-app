@@ -24,7 +24,8 @@ const subtasksSlice = createSlice({
             })
             .addCase(fetchSubtasksByTaskId.fulfilled, (state, action) => {
                 state.status = 'fulfilled';
-                state.subtasks = state.subtasks.concat(action.payload);
+                const newSubtasks = action.payload.filter(newSubtask => !state.subtasks.some(existingSubtask => existingSubtask.id === newSubtask.id));
+                state.subtasks = state.subtasks.concat(newSubtasks);
             })
             .addCase(fetchSubtasksByTaskId.rejected, (state, action) => {
                 state.status = 'rejected';
