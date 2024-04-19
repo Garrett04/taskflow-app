@@ -10,7 +10,7 @@ const Task = ({
     task,
 }) => {
     return (
-        <TaskCard >
+        <TaskCard>
             <Box>
                 <CardHeader
                     titleTypographyProps={{ variant: 'taskTitle' }}
@@ -24,7 +24,6 @@ const Task = ({
             <CardBottom>
                 {renderTaskStatus(task.status)}
                 <DeadlineDate>{task.deadline_date}</DeadlineDate>
-                <Link to={`task/${task.id}`}>View more</Link>
             </CardBottom>
         </TaskCard>
     )

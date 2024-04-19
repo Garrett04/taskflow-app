@@ -19,12 +19,18 @@ const Subtasks = ({
 
 
     useEffect(() => {
+        // Checks if subtasksStatus is idle and isAuthenticated is true
+        // else if isAuthenticated is false
         if (subtasksStatus === 'idle' && isAuthenticated) {
             dispatch(fetchSubtasksByTaskId(task_id));
-        } else {
+        } else if (!isAuthenticated) {
             dispatch(fetchSampleSubtasks());
         }
     }, [dispatch, task_id, subtasksStatus])
+
+    const handleTaskExpand = (e) => {
+        e.stopPropagation();
+    }
 
     const renderSubtasks = () => {
         const foundSubtasks = subtasks.filter(subtask => subtask.task_id === task_id);
@@ -60,6 +66,7 @@ const Subtasks = ({
                             {subtask.title}
                         </Typography>
                     } 
+                    onClick={handleTaskExpand}
                 />
                 <Typography 
                     variant="body1" 
