@@ -90,7 +90,7 @@ const Subtasks = ({
                         >
                             {subtask.description}
                         </Typography>
-                        <DeleteSubtaskButton task_id={subtask.task_id} id={subtask.id} />
+                        <DeleteSubtaskButton taskId={subtask.task_id} id={subtask.id} />
                     </Stack>
                 )
             })

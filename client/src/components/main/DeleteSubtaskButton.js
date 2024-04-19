@@ -5,11 +5,11 @@ import { useDispatch } from "react-redux";
 import DeleteForeverIcon from '@mui/icons-material/DeleteForever'
 
 const DeleteSubtaskButton = ({
-    // task_id,
+    taskId,
     id
 }) => {
     const dispatch = useDispatch();
-    const task_id = useParams().id;
+    const task_id = useParams().id || taskId;
 
     const handleClick = async (e) => {
         e.stopPropagation();
