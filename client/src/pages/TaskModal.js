@@ -40,6 +40,8 @@ const TaskModal = () => {
         // to first set title to the existing title
         if (task.title) {
             setTitle(task.title);
+        } else {
+            setTitle("");
         }
     }, [task.title])
 

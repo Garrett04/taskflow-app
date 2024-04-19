@@ -1,15 +1,23 @@
 import { createSlice } from "@reduxjs/toolkit"
-import { fetchSubtasksByTaskId } from "../../services/subtasksService";
+import { deleteSubtask, fetchSubtasksByTaskId } from "../../services/subtasksService";
 
 const initialState = {
-    sampleSubtasks: [
-        { id: '1', title: 'Water the plants subtask', description: null, task_id: '1', checked: true },
-        { id: '2', title: 'First build the backend using Express', description: 'Plan out the routes for the server', task_id: '2', checked: false },
-        { id: '2', title: 'Second build the frontend using React', description: null, task_id: '3', checked: true },
-        { id: '3', title: 'Learn Dijkstras Path Finding Algorithm', description: null, task_id: '4', checked: true },
-        { id: '4', title: 'Hello World', description: null, task_id: '5', checked: true },
-    ],
-    subtasks: [],
+    sampleSubtasks: {
+        '1': [ 
+            {id: '1', title: 'Water the plants subtask', description: null, task_id: '1', checked: true} 
+        ],
+        '2': [ 
+            {id: '2', title: 'First build the backend using Express', description: 'Plan out the routes for the server', task_id: '2', checked: false},
+            {id: '2', title: 'Second build the frontend using React', description: null, task_id: '2', checked: true }
+        ],
+        '3': [
+            {id: '3', title: 'Learn Dijkstras Path Finding Algorithm', description: null, task_id: '4', checked: true },
+        ],
+        '4': [
+            {id: '4', title: 'Hello World', description: null, task_id: '5', checked: true },
+        ],
+    },
+    subtasks: {},
     status: 'idle',
     error: null
 }
@@ -24,12 +32,19 @@ const subtasksSlice = createSlice({
             })
             .addCase(fetchSubtasksByTaskId.fulfilled, (state, action) => {
                 state.status = 'fulfilled';
-                const newSubtasks = action.payload.filter(newSubtask => !state.subtasks.some(existingSubtask => existingSubtask.id === newSubtask.id));
-                state.subtasks = state.subtasks.concat(newSubtasks);
+                const { task_id, subtasks } = action.payload;
+                state.subtasks[task_id] = subtasks;
             })
             .addCase(fetchSubtasksByTaskId.rejected, (state, action) => {
                 state.status = 'rejected';
-                state.error = action.error.message;
+                state.error = action.payload || action.error.message;
+
+                // gets the asyncThunk's argument value which is task_id.
+                const task_id = action.meta.arg;
+
+                // reassign the subtask with the task id with an empty array
+                // this ensures the last subtask is emptied in the redux state.
+                state.subtasks[task_id] = [];
             })
     }
 })
