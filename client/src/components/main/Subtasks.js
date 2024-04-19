@@ -1,10 +1,11 @@
 import { useDispatch, useSelector } from "react-redux";
-import { fetchSampleSubtasks, getSubtasksError, getSubtasksStatus, selectSubtasks } from "../../features/subtasks/subtasksSlice";
+import { fetchSampleSubtasks, getSubtasksError, getSubtasksStatus, selectSampleSubtasks, selectSubtasks } from "../../features/subtasks/subtasksSlice";
 import { useEffect } from "react";
 import { Checkbox, FormControlLabel, FormGroup, Stack, Typography } from "@mui/material";
 import { useTheme } from "@emotion/react";
 import { fetchSubtasksByTaskId } from "../../services/subtasksService";
 import { selectIsAuthenticated } from "../../features/auth/authSlice";
+import { handleTaskExpand } from "../../utils/handleTaskExpand";
 
 
 const Subtasks = ({ 
@@ -14,26 +15,24 @@ const Subtasks = ({
     const subtasks = useSelector(selectSubtasks);
     const subtasksStatus = useSelector(getSubtasksStatus);
     const subtasksError = useSelector(getSubtasksError);
+    const sampleSubtasks = useSelector(selectSampleSubtasks);
     const dispatch = useDispatch();
     const isAuthenticated = useSelector(selectIsAuthenticated);
 
 
     useEffect(() => {
-        // Checks if subtasksStatus is idle and isAuthenticated is true
-        // else if isAuthenticated is false
-        if (subtasksStatus === 'idle' && isAuthenticated) {
+        // Checks if subtasksStatus is idle
+        // To prevent from rendering subtasks multiple times after any action (Ex: delete button)
+        if (subtasksStatus === 'idle') {
             dispatch(fetchSubtasksByTaskId(task_id));
-        } else if (!isAuthenticated) {
-            dispatch(fetchSampleSubtasks());
         }
     }, [dispatch, task_id, subtasksStatus])
 
-    const handleTaskExpand = (e) => {
-        e.stopPropagation();
-    }
+    
 
     const renderSubtasks = () => {
-        const foundSubtasks = subtasks.filter(subtask => subtask.task_id === task_id);
+        const subtasksToRender = isAuthenticated ? subtasks : sampleSubtasks;
+        const foundSubtasks = subtasksToRender.filter(subtask => subtask.task_id === task_id);
 
         return foundSubtasks.map(subtask => (
             <Stack 
