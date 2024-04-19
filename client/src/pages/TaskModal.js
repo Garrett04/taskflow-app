@@ -28,6 +28,7 @@ const TaskModal = () => {
     const handleClose = (e) => {
         if (e.target === e.currentTarget) {
             setOpen(false);
+            dispatch(fetchTasksByUserId());
             navigate('/');
         }
     };
@@ -40,7 +41,7 @@ const TaskModal = () => {
         // to first set title to the existing title
         if (task.title) {
             setTitle(task.title);
-        } else {
+        } else { // when creating a new task
             setTitle("");
         }
     }, [task.title])
@@ -56,8 +57,6 @@ const TaskModal = () => {
             try {
                 const updatedTask = await updateTask({ id: id, title });
                 console.log(updatedTask);
-
-                dispatch(fetchTasksByUserId());
 
                 setExpand(true);
                 
