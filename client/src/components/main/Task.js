@@ -1,22 +1,21 @@
 import { Box, Card, CardContent, Divider, Grid, Typography, styled } from "@mui/material"
 import Subtasks from "./Subtasks"
-import DeleteTaskButton from "./DeleteTaskButton";
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 import { CardBottom, CardHeader, DeadlineDate, TaskCard } from "./MainStyles";
 import { renderTaskStatus } from "../../utils/renderTaskStatus";
 import { format, formatDate } from "date-fns";
+import MoveToTrashButton from "./MoveToTrashButton";
 
 const Task = ({
     task,
 }) => {
-
     return (
         <TaskCard>
             <Box>
                 <CardHeader
                     titleTypographyProps={{ variant: 'taskTitle' }}
                     title={task.title} 
-                    action={ <DeleteTaskButton task_id={task.id} /> }
+                    action={ <MoveToTrashButton task_id={task.id} /> }
                 />
             </Box>
             <Divider />

@@ -6,7 +6,7 @@ import {
 } from "react-router-dom";
 
 import Root from './pages/Root';
-import Main from "./components/main/Main";
+import Tasks from "./components/main/Tasks";
 import PrivateRoutes from './utils/PrivateRoutes';
 import Login from "./pages/Login";
 import { useDispatch, useSelector } from "react-redux";
@@ -14,19 +14,23 @@ import { useEffect } from "react";
 import { fetchAuthenticationStatus } from "./services/authService";
 import { getIsAuthenticatedStatus } from "./features/auth/authSlice";
 import Register from "./pages/Register";
-import AddTask from "./pages/AddTaskModal";
 import TaskModal from "./pages/TaskModal";
+import CompletedTasks from "./pages/CompletedTasks";
+import OverdueTasks from "./pages/OverdueTasks";
+import Trash from "./pages/Trash";
 
 const router = createBrowserRouter(createRoutesFromElements(
   <>
     <Route path="/" element={ <Root/> }>
-      <Route path="/" element={ <Main/> }>
+      <Route path="/" element={ <Tasks/> }>
         <Route element={ <PrivateRoutes/> }>
 
         </Route>
         <Route path="/task/:id" element={ <TaskModal/> } />
-        {/* <Route path='/add-task/:id' element={ <AddTask/> }/> */}
       </Route>
+      <Route path="/completed-tasks" element={ <CompletedTasks/> } />
+      <Route path="/overdue-tasks" element={ <OverdueTasks /> } />
+      <Route path="/trash" element={ <Trash /> } />
     </Route>
     <Route path="/login" element={ <Login/> }/> 
     <Route path="/register" element={ <Register/> }/>

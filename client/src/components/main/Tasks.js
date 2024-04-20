@@ -12,7 +12,8 @@ import DeleteTaskButton from "./DeleteTaskButton";
 import AddTaskButton from "./AddTaskButton";
 import { Main } from "./MainStyles";
 import Task from "./Task";
-import { Outlet, useNavigate } from "react-router-dom";
+import { Outlet, useLocation, useNavigate } from "react-router-dom";
+import { renderPageTitle } from "../../utils/renderPageTitle";
 
 
 const Tasks = () => {
@@ -23,7 +24,6 @@ const Tasks = () => {
     const sampleTasks = useSelector(selectSampleTasks);
     
     const isAuthenticated = useSelector(selectIsAuthenticated);
-    const isAuthenticatedStatus = useSelector(getIsAuthenticatedStatus);
     
     const dispatch = useDispatch();
 
@@ -33,15 +33,34 @@ const Tasks = () => {
 
     const navigate = useNavigate();
 
+    const location = useLocation();
+
+    let status = null;
+
+    if (location.pathname === '/completed-tasks') {
+        status = 'completed';
+    } else if (location.pathname === '/overdue-tasks') {
+        status = 'overdue';
+    } else if (location.pathname === '/trash') {
+        status = 'deleted';
+    }
+
     const renderAllTasks = () => {
         // Checks if user isAuthenticated then render the users tasks 
         // else just the sampleTasks
         const tasksToRender = isAuthenticated ? tasks : sampleTasks;
-        return tasksToRender.map(task => (
-            <Grid onClick={() => navigate(`/task/${task.id}`)} item key={task.id} xs={12} md={6} lg={4}>
-                <Task task={task} />
-            </Grid>
-        ))
+        
+        return tasksToRender.map(task => {
+            // If task.status === status then return the task component with that status
+            // or if status is null return all tasks
+            if (task.status === status || !status) {
+                return (
+                    <Grid onClick={() => navigate(`/task/${task.id}`)} item key={task.id} xs={12} md={6} lg={4}>
+                        <Task task={task} />
+                    </Grid>
+                )
+            }
+        })
     }
 
     let content;
@@ -57,20 +76,20 @@ const Tasks = () => {
         // Show all tasks here
         <>
             <Typography 
-                    paragraph
-                    variant="h4"
-                    sx={{ 
-                        width: '100%',
-                        textAlign: 'center',
-                        marginBottom: '2rem',
-                        [theme.breakpoints.down('sm')]: {
-                            fontSize: '1.5rem',
-                        } 
-                    }} 
-                    fontFamily="serif"
-                >
-                    All Tasks
-                </Typography>
+                paragraph
+                variant="h4"
+                sx={{ 
+                    width: '100%',
+                    textAlign: 'center',
+                    marginBottom: '2rem',
+                    [theme.breakpoints.down('sm')]: {
+                        fontSize: '1.5rem',
+                    } 
+                }} 
+                fontFamily="serif"
+            >
+                {renderPageTitle(status)}
+            </Typography>
             <Container className="tasks">
                 <Grid container spacing={3}>
                     {content}

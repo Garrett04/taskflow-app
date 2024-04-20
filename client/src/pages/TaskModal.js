@@ -1,5 +1,4 @@
 import { Box, Card, Collapse, Divider, Input, Modal } from "@mui/material"
-import DeleteTaskButton from "../components/main/DeleteTaskButton"
 import Subtasks from "../components/main/Subtasks"
 import { CardBottom, CardHeader, DeadlineDate, ModalBox, TaskCard, TaskTitle } from "../components/main/MainStyles"
 import { useEffect, useState } from "react"
@@ -10,11 +9,8 @@ import { fetchTaskById, fetchTasksByUserId, updateTask } from "../services/tasks
 import { renderTaskStatus } from "../utils/renderTaskStatus"
 import AddSubtask from "../components/main/AddSubtask"
 
-import { DatePicker } from '@mui/x-date-pickers/DatePicker';
-import { LocalizationProvider } from '@mui/x-date-pickers';
-// If you are using date-fns v3.x, please import the v3 adapter
-import { AdapterDateFns } from '@mui/x-date-pickers/AdapterDateFnsV3'
 import DeadlineDatePicker from "../components/main/DeadlineDatePicker"
+import MoveToTrashButton from "../components/main/MoveToTrashButton"
 
 
 const TaskModal = () => {
@@ -83,7 +79,7 @@ const TaskModal = () => {
                 <Box>
                     <TaskTitle
                         value={title} 
-                        action={ <DeleteTaskButton task_id={task.id} /> }
+                        action={ <MoveToTrashButton task_id={task.id} /> }
                         fullWidth
                         onChange={handleChange}
                         onKeyUp={updateTaskTitle}

@@ -4,7 +4,7 @@ import { useParams } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import DeleteForeverIcon from '@mui/icons-material/DeleteForever'
 
-const DeleteSubtaskButton = ({
+const MoveToTrashButton = ({
     taskId,
     id
 }) => {
@@ -30,4 +30,4 @@ const DeleteSubtaskButton = ({
     )
 }
 
-export default DeleteSubtaskButton;
+export default MoveToTrashButton;

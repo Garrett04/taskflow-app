@@ -14,6 +14,7 @@ import HourglassDisabledIcon from '@mui/icons-material/HourglassDisabled';
 import DeleteIcon from '@mui/icons-material/Delete';
 import { useSelector } from "react-redux";
 import { selectIsAuthenticated } from "../../features/auth/authSlice";
+import { useNavigate } from "react-router-dom";
 
 const drawerWidth = 240;
 
@@ -70,6 +71,17 @@ const MiniDrawer = ({
   isAuthenticated
 }) => {
     const theme = useTheme();
+    const navigate = useNavigate();
+
+    const handleClick = (text) => {
+      if (text === 'Completed Tasks') {
+        navigate('/completed-tasks');
+      } else if (text === 'Overdue Tasks') {
+        navigate('/overdue-tasks');
+      } else if (text === 'Trash') {
+        navigate('/trash');
+      }
+    }
     
     if (isAuthenticated) {
       return (
@@ -96,6 +108,7 @@ const MiniDrawer = ({
                     justifyContent: open ? 'initial' : 'center',
                     px: 2.5,
                   }}
+                  onClick={() => handleClick(text)}
                 >
                   <ListItemIcon
                     sx={{

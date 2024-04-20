@@ -57,7 +57,9 @@ const TopBar = ({
             justifyContent='space-between' 
             alignItems='center'
           >
-            <Logo>TaskFlow</Logo>
+            <a href="/" className="logo">
+              <Logo>TaskFlow</Logo>
+            </a>
             <ButtonContainer>
                 <AccountButton />
                 <LogoutButton />
