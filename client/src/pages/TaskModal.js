@@ -9,7 +9,12 @@ import { useNavigate, useParams } from "react-router-dom"
 import { fetchTaskById, fetchTasksByUserId, updateTask } from "../services/tasksService"
 import { renderTaskStatus } from "../utils/renderTaskStatus"
 import AddSubtask from "../components/main/AddSubtask"
-import AddTaskModal from "./AddTaskModal"
+
+import { DatePicker } from '@mui/x-date-pickers/DatePicker';
+import { LocalizationProvider } from '@mui/x-date-pickers';
+// If you are using date-fns v3.x, please import the v3 adapter
+import { AdapterDateFns } from '@mui/x-date-pickers/AdapterDateFnsV3'
+import DeadlineDatePicker from "../components/main/DeadlineDatePicker"
 
 
 const TaskModal = () => {
@@ -96,7 +101,10 @@ const TaskModal = () => {
                     <Divider />
                     <CardBottom>
                         {renderTaskStatus(task.status)}
-                        <DeadlineDate>{task.deadline_date}</DeadlineDate>
+                        <DeadlineDatePicker 
+                            id={task.id}
+                            deadline_date={task.deadline_date} 
+                        />
                     </CardBottom>
                 </Collapse>
             </TaskCard>

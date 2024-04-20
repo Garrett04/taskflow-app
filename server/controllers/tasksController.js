@@ -45,12 +45,12 @@ const updateTask = async (req, res) => {
     const { title, deadline_date, status } = req.body;
     const { id } = req.params;
 
-    if (!title && !deadline_date && !status) {
-        return res.status(404).json({ 
-            success: false, 
-            msg: "Please provide title/deadline_date/status to update task" 
-        });
-    }
+    // if (!title && !deadline_date && !status) {
+    //     return res.status(404).json({ 
+    //         success: false, 
+    //         msg: "Please provide title/deadline_date/status to update task" 
+    //     });
+    // }
 
     const updatedTask = await Task.update({ id, title, deadline_date, status });
 

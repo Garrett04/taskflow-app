@@ -4,11 +4,12 @@ import DeleteTaskButton from "./DeleteTaskButton";
 import { Link } from "react-router-dom";
 import { CardBottom, CardHeader, DeadlineDate, TaskCard } from "./MainStyles";
 import { renderTaskStatus } from "../../utils/renderTaskStatus";
-
+import { format, formatDate } from "date-fns";
 
 const Task = ({
     task,
 }) => {
+
     return (
         <TaskCard>
             <Box>
@@ -23,7 +24,7 @@ const Task = ({
             <Divider />
             <CardBottom>
                 {renderTaskStatus(task.status)}
-                <DeadlineDate>{task.deadline_date}</DeadlineDate>
+                <DeadlineDate>{task.deadline_date && format(new Date(task.deadline_date), "yyyy-MM-dd hh:mm aa")}</DeadlineDate>
             </CardBottom>
         </TaskCard>
     )
