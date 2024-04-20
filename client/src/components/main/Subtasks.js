@@ -7,7 +7,7 @@ import { fetchSubtasksByTaskId, updateSubtask } from "../../services/subtasksSer
 import { selectIsAuthenticated } from "../../features/auth/authSlice";
 import { handleTaskExpand } from "../../utils/handleTaskExpand";
 import AddSubtask from "./AddSubtask";
-import DeleteSubtaskButton from "./MoveToTrashButton";
+import DeleteSubtaskButton from "./DeleteSubtaskButton";
 
 
 const Subtasks = ({ 

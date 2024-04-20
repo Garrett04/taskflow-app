@@ -42,7 +42,7 @@ const createTask = async (req, res) => {
 }
 
 const updateTask = async (req, res) => {
-    const { title, deadline_date, status } = req.body;
+    const { title, deadline_date, status, archived } = req.body;
     const { id } = req.params;
 
     // if (!title && !deadline_date && !status) {
@@ -52,7 +52,7 @@ const updateTask = async (req, res) => {
     //     });
     // }
 
-    const updatedTask = await Task.update({ id, title, deadline_date, status });
+    const updatedTask = await Task.update({ id, title, deadline_date, status, archived });
 
     res.json({
         success: true,

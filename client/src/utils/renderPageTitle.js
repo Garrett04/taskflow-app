@@ -3,7 +3,7 @@ export const renderPageTitle = (status) => {
         return "Completed Tasks";
     } else if (status === 'overdue') {
         return "Overdue Tasks";
-    } else if (status === 'deleted') {
+    } else if (status === 'archived') {
         return "Trash";
     } else {
         return "All Tasks";

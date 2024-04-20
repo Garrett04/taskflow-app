@@ -26,9 +26,10 @@ export const createTask = async () => {
     }
 }
 
-export const deleteTask = async (task_id) => {
+export const updateTaskArchived = async (data) => {
     try {
-        const response = await API.put(`/tasks/${task_id}`, { status: 'deleted' });
+        const { task_id, archived } = data;
+        const response = await API.put(`/tasks/${task_id}`, { archived });
 
         return response.data;
     } catch (err) {

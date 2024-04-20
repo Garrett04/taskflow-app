@@ -40,6 +40,14 @@ class Task {
             } else if (data.status) {
                 statement += 'status = $2';
                 values.push(data.status);
+            } else if (typeof data.archived === 'boolean') {
+                statement += 'archived = $2'
+                if (data.archived) {
+                    statement += ', deleted_at = CURRENT_TIMESTAMP';
+                } else {
+                    statement += ', deleted_at = NULL';
+                }
+                values.push(data.archived);
             }
 
             statement += ' WHERE id = $1 RETURNING *';

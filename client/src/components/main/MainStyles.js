@@ -60,10 +60,13 @@ export const TaskTitle = styled(Input)(({ theme }) => ({
     backgroundColor: theme.palette.ochre.main,
 }))
 
-export const TaskCard = styled(Card)(({ theme }) => ({
+export const TaskCard = styled(Card)(({ theme, task_archived }) => ({
     textAlign: 'center',
     background: theme.palette.ochre.light,
     display: 'flex',
     flexFlow: 'column',
     justifyContent: 'space-between',
+    // Indicating a task which is going to be deleted
+    border: task_archived === 'true' ? '2px dotted red' : null,
+    opacity: task_archived === 'true' ? 0.7 : null,
 }))

@@ -8,7 +8,6 @@ import Subtasks from "./Subtasks";
 import { Box, Card, CardContent, Container, Divider, Grid, IconButton, Tooltip, Typography, styled } from "@mui/material";
 
 import { useTheme } from "@emotion/react";
-import DeleteTaskButton from "./DeleteTaskButton";
 import AddTaskButton from "./AddTaskButton";
 import { Main } from "./MainStyles";
 import Task from "./Task";
@@ -16,7 +15,9 @@ import { Outlet, useLocation, useNavigate } from "react-router-dom";
 import { renderPageTitle } from "../../utils/renderPageTitle";
 
 
-const Tasks = () => {
+const Tasks = ({
+    page
+}) => {
     const theme = useTheme();
     const tasks = useSelector(selectTasks);
     const tasksStatus = useSelector(getTasksStatus);
@@ -36,13 +37,15 @@ const Tasks = () => {
     const location = useLocation();
 
     let status = null;
+    let archived;
 
     if (location.pathname === '/completed-tasks') {
         status = 'completed';
     } else if (location.pathname === '/overdue-tasks') {
         status = 'overdue';
     } else if (location.pathname === '/trash') {
-        status = 'deleted';
+        status = 'archived';
+        archived = true;
     }
 
     const renderAllTasks = () => {
@@ -51,12 +54,12 @@ const Tasks = () => {
         const tasksToRender = isAuthenticated ? tasks : sampleTasks;
         
         return tasksToRender.map(task => {
-            // If task.status === status then return the task component with that status
-            // or if status is null return all tasks
-            if (task.status === status || !status) {
+            // If task.status === status or if task.archived === archived is true then return the task component with that status
+            // or if status is null and !task.archived meaning return all tasks (completed and overdue excluding the ones which are archived)
+            if ((task.status === status || task.archived === archived) || (!status && !task.archived)) {
                 return (
                     <Grid onClick={() => navigate(`/task/${task.id}`)} item key={task.id} xs={12} md={6} lg={4}>
-                        <Task task={task} />
+                        <Task task={task} page={page} />
                     </Grid>
                 )
             }

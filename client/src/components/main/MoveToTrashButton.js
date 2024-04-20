@@ -1,31 +1,29 @@
-import { IconButton } from "@mui/material";
-import { deleteSubtask, fetchSubtasksByTaskId } from "../../services/subtasksService";
-import { useParams } from "react-router-dom";
-import { useDispatch } from "react-redux";
-import DeleteForeverIcon from '@mui/icons-material/DeleteForever'
+import DeleteIcon from '@mui/icons-material/Delete';
+import { IconButton } from '@mui/material';
+import { fetchTasksByUserId, updateTaskArchived } from '../../services/tasksService';
+import { useDispatch } from 'react-redux';
+import { handleTaskExpand } from '../../utils/handleTaskExpand';
 
+// it just updates the task status to deleted in the database
 const MoveToTrashButton = ({
-    taskId,
-    id
+    task_id
 }) => {
     const dispatch = useDispatch();
-    const task_id = useParams().id || taskId;
 
-    const handleClick = async (e) => {
-        e.stopPropagation();
+    const handleArchive = async (e) => {
+        handleTaskExpand(e);
         try {
-            await deleteSubtask({ task_id, id });
-    
-            dispatch(fetchSubtasksByTaskId(task_id));
-            
+            await updateTaskArchived({ task_id, archived: true});
+
+            dispatch(fetchTasksByUserId()); // To update tasks state
         } catch (err) {
             console.log(err);
         }
     }
 
     return (
-        <IconButton onClick={handleClick}>
-            <DeleteForeverIcon />
+        <IconButton title='Move to trash' onClick={handleArchive}>
+            <DeleteIcon />
         </IconButton>
     )
 }
