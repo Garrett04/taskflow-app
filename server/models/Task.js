@@ -62,7 +62,8 @@ class Task {
             // query statement
             const statement = `SELECT *
                                 FROM tasks
-                                WHERE user_id = $1`;
+                                WHERE user_id = $1
+                                ORDER BY created_at ASC`;
             
             // query database
             const result = await db.query(statement, [userId]);

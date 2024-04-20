@@ -6,7 +6,8 @@ class SubTask {
             // query statement
             const statement = `SELECT *
                                 FROM subtasks
-                                WHERE task_id = $1`;
+                                WHERE task_id = $1
+                                ORDER BY created_at ASC`;
 
             // query database
             const result = await db.query(statement, [task_id]);
