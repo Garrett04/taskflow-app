@@ -25,7 +25,6 @@ class Task {
         let statement = `UPDATE tasks
                         SET `;
         let values = [data.id];
-        let index = 0;
 
         try {
             // query statement
@@ -34,15 +33,13 @@ class Task {
             if (data.title) {
                 statement += 'title = $2';
                 values.push(data.title);
-                index++;
             } else if (data.deadline_date) {
-                statement += 'deadline_date = $2';
+                // for every time the deadline is given to update status with it to pending.
+                statement += "deadline_date = $2, status = 'pending'";
                 values.push(data.deadline_date);
-                index++;
             } else if (data.status) {
                 statement += 'status = $2';
                 values.push(data.status);
-                index++;
             }
 
             statement += ' WHERE id = $1 RETURNING *';
@@ -92,6 +89,25 @@ class Task {
 
             if (result.rows.length > 0) {
                 return result.rows[0];
+            }
+
+            return null;
+        } catch (err) {
+            throw new Error(err);
+        }
+    }
+
+    async find() {
+        try {
+            // pg query statement
+            const statement = `SELECT *
+                                FROM tasks`;
+
+            // query database
+            const result = await db.query(statement);
+
+            if (result.rows.length > 0) {
+                return result.rows;
             }
 
             return null;

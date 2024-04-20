@@ -1,33 +1,38 @@
 import { DateCalendar, DatePicker, DatePickerToolbar, DateTimePicker, TimePicker } from "@mui/x-date-pickers";
 import { LocalizationProvider } from "@mui/x-date-pickers";
 import { AdapterDateFns } from "@mui/x-date-pickers/AdapterDateFnsV3";
-import { parseISO } from 'date-fns';
+import { parseISO, isBefore, isAfter } from 'date-fns';
 import { updateSubtask } from "../../services/subtasksService";
 import { updateTask } from "../../services/tasksService";
 import { useDispatch } from "react-redux";
+import { useRef, useState } from "react";
 
 const DeadlineDatePicker = ({
     deadline_date,
     id
 }) => {
-    const dispatch = useDispatch();
+    const currentDate = new Date();
 
     const handleDeadlineDateChange = async (newDate) => {
         try {
-            const data = { id, deadline_date: newDate };
-            await updateTask(data);
+            // If the selected date is after the currentDate only then will you update the deadline
+            if (isAfter(newDate, currentDate)) {
+                const data = { id, deadline_date: newDate };
+            
+                await updateTask(data);
+            }
         } catch (err) {
             console.log(err);
         }
     }
 
-
     return (
         <LocalizationProvider dateAdapter={AdapterDateFns}>
             <DateTimePicker 
                 label="Deadline Date"
-                defaultValue={deadline_date ? parseISO(deadline_date) : null} 
-                onAccept={handleDeadlineDateChange}
+                value={deadline_date && parseISO(deadline_date)}
+                onChange={(newDate) => handleDeadlineDateChange(newDate)}
+                minDateTime={currentDate}
             />
         </LocalizationProvider>
     )

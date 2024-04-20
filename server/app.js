@@ -7,6 +7,9 @@ const cookieParser = require('cookie-parser');
 const session = require('express-session');
 const pgSession = require('connect-pg-simple')(session);
 const pool = require('./config/db/config');
+const cron = require('node-cron');
+const { isAfter } = require('date-fns');
+const Task = require('./models/Task');
 
 const PORT = process.env.PORT || 3000;
 
@@ -39,6 +42,35 @@ app.use(session({
         sameSite: 'none'
     }
 }))
+
+// CRON SETUP
+// Updates the task status to overdue if current time exceeds the deadline date
+const updateTaskStatus = async () => {
+    const currentDate = new Date();
+
+    const tasks = await Task.find();
+
+    tasks.forEach(
+        async ({id, deadline_date, status}) => {
+        if (isAfter(currentDate, deadline_date) && status === 'pending') {
+            // change status of task to overdue
+            const data = { id, status: "overdue" };
+            const updatedTask = await Task.update(data);
+            console.log(updatedTask);
+            // console.log("deadline date:", deadline_date);
+            console.log("current date:", currentDate);
+        }
+    })
+}
+
+// For every 1 minute
+cron.schedule("*/1 * * * *", async () => {
+    try {
+        await updateTaskStatus();
+    } catch (err) {
+        throw err;
+    }
+}) 
 
 // PASSPORT AUTHENTICATION
 require('./config/passport/JWTStrategy')(passport);
