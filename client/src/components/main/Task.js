@@ -6,15 +6,21 @@ import { renderTaskStatus } from "../../utils/renderTaskStatus";
 import { format, formatDate } from "date-fns";
 import MoveToTrashButton from "./MoveToTrashButton";
 import RestoreTaskButton from "./RestoreTaskButton";
+import DeleteTaskButton from "./DeleteTaskButton";
+import { useSelector } from "react-redux";
+import { selectIsAuthenticated } from "../../features/auth/authSlice";
 
 const Task = ({
     task,
     page // Pass down by the pages
 }) => {
+    const isAuthenticated = useSelector(selectIsAuthenticated);
+    const currentDate = new Date();
+
     return (
         // Checks if it is not in the trash page then pass in the task.archived else null
         // Just to indicate that the task is going to be deleted or in the trash section
-        <TaskCard task_archived={page !== 'Trash' ? task.archived.toString() : null}>
+        <TaskCard task_archived={isAuthenticated && page !== 'Trash' ? task.archived.toString() : null}>
             <Box>
                 <CardHeader
                     titleTypographyProps={{ variant: 'taskTitle' }}
@@ -25,7 +31,9 @@ const Task = ({
                                                     task_id={task.id} 
                                                     task_status={task.status} 
                                                 />}
-                            <MoveToTrashButton task_id={task.id} />
+                            {page !== 'Trash' 
+                            ? <MoveToTrashButton task_id={task.id} />
+                            : <DeleteTaskButton task_id={task.id} />}
                         </Stack> 
                     }
                 />

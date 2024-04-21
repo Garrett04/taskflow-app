@@ -69,7 +69,7 @@ const Tasks = ({
     let content;
     if (tasksStatus === 'pending') {
         content = 'Loading...'
-    } else if (tasksStatus === 'fulfilled' || tasks) {
+    } else if (tasksStatus === 'fulfilled' || !isAuthenticated) {
         content = renderAllTasks();
     } else if (tasksStatus === 'rejected') {
         content = tasksError;

@@ -101,7 +101,7 @@ const Subtasks = ({
     let content;
     if (subtasksStatus === 'pending') {
         content = 'Loading...';
-    } else if (subtasksStatus === 'fulfilled' || sampleSubtasks) {
+    } else if (subtasksStatus === 'fulfilled' || subtasks) {
         content = renderSubtasks();
     }
 

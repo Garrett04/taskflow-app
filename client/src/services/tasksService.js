@@ -61,3 +61,13 @@ export const updateTask = async (data) => {
         throw err.response.data.msg;
     }
 }
+
+export const deleteTask = async (id) => {
+    try {
+        const response = await API.delete(`/tasks/${id}`);
+
+        return response.data;
+    } catch (err) {
+        throw err.response.data.msg;
+    }
+}
