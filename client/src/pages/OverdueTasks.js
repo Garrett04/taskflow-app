@@ -4,7 +4,7 @@ import Tasks from "../components/main/Tasks";
 
 const OverdueTasks = () => {
     return (
-      <Tasks />
+      <Tasks page={"Overdue Tasks"} />
     )
 }
 

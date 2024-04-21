@@ -18,19 +18,28 @@ import TaskModal from "./pages/TaskModal";
 import CompletedTasks from "./pages/CompletedTasks";
 import OverdueTasks from "./pages/OverdueTasks";
 import Trash from "./pages/Trash";
+import Main from "./components/main/Main";
 
 const router = createBrowserRouter(createRoutesFromElements(
   <>
     <Route path="/" element={ <Root/> }>
-      <Route path="/" element={ <Tasks/> }>
-        <Route element={ <PrivateRoutes/> }>
+      <Route path="/" element={ <Main/> }>
+        {/* <Route element={ <PrivateRoutes/> }>
 
+        </Route> */}
+        <Route path="/" element={ <Tasks/> }>
+          <Route path="task/:id" element={ <TaskModal/> }/>
         </Route>
-        <Route path="/task/:id" element={ <TaskModal/> } />
+        <Route path="/completed-tasks" element={ <CompletedTasks/> }>
+          <Route path="task/:id" element={ <TaskModal/> }/>
+        </Route>
+        <Route path="/overdue-tasks" element={ <OverdueTasks/> }>
+          <Route path="task/:id" element={ <TaskModal/> }/>
+        </Route>
+        <Route path="trash" element={ <Trash /> }>
+          <Route path="task/:id" element={ <TaskModal/> }/>
+        </Route>
       </Route>
-      <Route path="/completed-tasks" element={ <CompletedTasks/> } />
-      <Route path="/overdue-tasks" element={ <OverdueTasks /> } />
-      <Route path="/trash" element={ <Trash /> } />
     </Route>
     <Route path="/login" element={ <Login/> }/> 
     <Route path="/register" element={ <Register/> }/>

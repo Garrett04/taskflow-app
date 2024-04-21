@@ -108,7 +108,7 @@ const Subtasks = ({
     return (
         <FormGroup sx={{ gap: '1rem' }}>
             {content}
-            {inTaskModal && <AddSubtask />}
+            {inTaskModal && <AddSubtask task_id={task_id} />}
         </FormGroup>
     )
 }

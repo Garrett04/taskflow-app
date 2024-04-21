@@ -4,16 +4,18 @@ import { CardBottom, CardHeader, DeadlineDate, ModalBox, TaskCard, TaskTitle } f
 import { useEffect, useState } from "react"
 import { useDispatch, useSelector } from "react-redux"
 import { getTaskError, getTaskStatus, selectTask } from "../features/tasks/taskSlice"
-import { useNavigate, useParams } from "react-router-dom"
+import { Outlet, useNavigate, useParams } from "react-router-dom"
 import { fetchTaskById, fetchTasksByUserId, updateTask } from "../services/tasksService"
 import { renderTaskStatus } from "../utils/renderTaskStatus"
 import AddSubtask from "../components/main/AddSubtask"
 
 import DeadlineDatePicker from "../components/main/DeadlineDatePicker"
 import MoveToTrashButton from "../components/main/MoveToTrashButton"
+import Tasks from "../components/main/Tasks"
 
 
-const TaskModal = () => {
+const TaskModal = ({
+}) => {
     const task = useSelector(selectTask);
     const taskStatus = useSelector(getTaskStatus);
     const taskError = useSelector(getTaskError);
@@ -22,15 +24,16 @@ const TaskModal = () => {
 
     const [title, setTitle] = useState("");
     const [open, setOpen] = useState(true);
-    const [expand, setExpand] = useState(false);
 
     const { id } = useParams();
+    
+    const [expand, setExpand] = useState(false);
 
     const handleClose = (e) => {
         if (e.target === e.currentTarget) {
             setOpen(false);
             dispatch(fetchTasksByUserId());
-            navigate('/');
+            navigate(-1);
         }
     };
 
@@ -117,15 +120,17 @@ const TaskModal = () => {
     }
 
     return (
-        <Modal 
-            open={open}
-            onClose={handleClose}
-        >
-            <ModalBox>
-                {content}
-            </ModalBox>
-        </Modal> 
+        <>
+            <Modal 
+                open={open}
+                onClose={handleClose}
+            >
+                <ModalBox>
+                    {content}
+                </ModalBox>
+            </Modal>
+        </>
     )
 }
 
-export default TaskModal
+export default TaskModal;

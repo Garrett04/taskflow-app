@@ -1,6 +1,6 @@
 import { useDispatch, useSelector } from "react-redux";
 import { getTasksError, getTasksStatus, selectSampleTasks, selectTasks } from "../../features/tasks/tasksSlice";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { fetchTasksByUserId } from "../../services/tasksService";
 import { getIsAuthenticatedStatus, selectIsAuthenticated } from "../../features/auth/authSlice";
 
@@ -13,6 +13,7 @@ import { Main } from "./MainStyles";
 import Task from "./Task";
 import { Outlet, useLocation, useNavigate } from "react-router-dom";
 import { renderPageTitle } from "../../utils/renderPageTitle";
+import TaskModal from "../../pages/TaskModal";
 
 
 const Tasks = ({
@@ -27,6 +28,7 @@ const Tasks = ({
     const isAuthenticated = useSelector(selectIsAuthenticated);
     
     const dispatch = useDispatch();
+    const [id, setId] = useState("");
 
     useEffect(() => {
         dispatch(fetchTasksByUserId());
@@ -34,16 +36,14 @@ const Tasks = ({
 
     const navigate = useNavigate();
 
-    const location = useLocation();
-
     let status = null;
     let archived;
 
-    if (location.pathname === '/completed-tasks') {
+    if (page === 'Completed Tasks') {
         status = 'completed';
-    } else if (location.pathname === '/overdue-tasks') {
+    } else if (page === 'Overdue Tasks') {
         status = 'overdue';
-    } else if (location.pathname === '/trash') {
+    } else if (page === 'Trash') {
         status = 'archived';
         archived = true;
     }
@@ -58,7 +58,7 @@ const Tasks = ({
             // or if status is null and !task.archived meaning return all tasks (completed and overdue excluding the ones which are archived)
             if ((task.status === status || task.archived === archived) || (!status && !task.archived)) {
                 return (
-                    <Grid onClick={() => navigate(`/task/${task.id}`)} item key={task.id} xs={12} md={6} lg={4}>
+                    <Grid onClick={() => navigate(`task/${task.id}`)} item key={task.id} xs={12} md={6} lg={4}>
                         <Task task={task} page={page} />
                     </Grid>
                 )

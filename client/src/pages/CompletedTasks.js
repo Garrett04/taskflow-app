@@ -8,7 +8,7 @@ const CompletedTasks = () => {
     const tasks = useSelector(selectTasks);
 
     return (
-        <Tasks />
+        <Tasks page={"Completed Tasks"} />
     )
 }
 

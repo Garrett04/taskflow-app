@@ -7,23 +7,23 @@ import { useDispatch } from "react-redux";
 import { fetchTasksByUserId } from "../../services/tasksService";
 
 
-const AddSubtask = () => {
+const AddSubtask = ({
+    task_id
+}) => {
     const theme = useTheme();
     const [title, setTitle] = useState(''); 
     const [description, setDescription] = useState(''); 
     
     const dispatch = useDispatch();
 
-    const { id } = useParams();
-
     const handleSubmit = async (e) => {
         e.preventDefault();
         try {
-            const data = { task_id: id, title, description };
+            const data = { task_id, title, description };
 
             const newSubtask = await createSubtask(data);
 
-            dispatch(fetchSubtasksByTaskId(id));
+            dispatch(fetchSubtasksByTaskId(task_id));
             
         } catch (err) {
             console.log(err);
