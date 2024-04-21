@@ -72,9 +72,9 @@ const deleteTask = async () => {
     tasks.forEach(
         async ({ id, deleted_at, archived }) =>  {
             if (archived) {
-                const difference = differenceInMinutes(currentDate, deleted_at);
+                const difference = differenceInDays(currentDate, deleted_at);
 
-                if (difference >= 1) {
+                if (difference >= 20) {
                     const deletedTask = await Task.deleteById(id);
                     console.log("deletedTask:", deletedTask);
                     console.log("deleted_at:", deleted_at);

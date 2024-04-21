@@ -3,7 +3,7 @@ import Subtasks from "./Subtasks"
 import { Link, useLocation } from "react-router-dom";
 import { CardBottom, CardHeader, DeadlineDate, TaskCard } from "./MainStyles";
 import { renderTaskStatus } from "../../utils/renderTaskStatus";
-import { format, formatDate } from "date-fns";
+import { format, formatDate, differenceInMinutes, differenceInDays, subDays, addDays, formatDistance, formatDistanceStrict, addMinutes, subMinutes, formatDistanceToNow } from "date-fns";
 import MoveToTrashButton from "./MoveToTrashButton";
 import RestoreTaskButton from "./RestoreTaskButton";
 import DeleteTaskButton from "./DeleteTaskButton";
@@ -15,25 +15,27 @@ const Task = ({
     page // Pass down by the pages
 }) => {
     const isAuthenticated = useSelector(selectIsAuthenticated);
-    const currentDate = new Date();
 
     return (
         // Checks if it is not in the trash page then pass in the task.archived else null
         // Just to indicate that the task is going to be deleted or in the trash section
+        // isAuthenticated was put in here to handle sample tasks
         <TaskCard task_archived={isAuthenticated && page !== 'Trash' ? task.archived.toString() : null}>
             <Box>
+                
                 <CardHeader
                     titleTypographyProps={{ variant: 'taskTitle' }}
-                    title={task.title} 
+                    title={task.title}
                     action={
                         <Stack flexDirection="row" alignItems="center"> 
-                            {page === 'Trash' && <RestoreTaskButton 
-                                                    task_id={task.id} 
-                                                    task_status={task.status} 
-                                                />}
+                            {page === 'Trash' 
+                            && <RestoreTaskButton 
+                                    task_id={task.id} 
+                                    task_status={task.status} 
+                                />}
                             {page !== 'Trash' 
                             ? <MoveToTrashButton task_id={task.id} />
-                            : <DeleteTaskButton task_id={task.id} />}
+                            : <DeleteTaskButton task_id={task.id} deleted_at={task.deleted_at} />}
                         </Stack> 
                     }
                 />

@@ -2,11 +2,14 @@ import { IconButton } from "@mui/material";
 import DeleteForeverIcon from '@mui/icons-material/DeleteForever';
 import { deleteTask, fetchTasksByUserId } from "../../services/tasksService";
 import { useDispatch } from "react-redux";
+import { addDays, addMinutes, formatDistanceToNow } from "date-fns";
 
 const DeleteTaskButton = ({
-    task_id
+    task_id,
+    deleted_at
 }) => {
     const dispatch = useDispatch();
+    const days_left = formatDistanceToNow(addDays(deleted_at, 20));
 
     const handleDelete = async (e) => {
         e.stopPropagation();
@@ -19,7 +22,7 @@ const DeleteTaskButton = ({
     }
     
     return (
-        <IconButton title="Delete Forever" onClick={handleDelete}>
+        <IconButton title={`Delete Forever (${days_left} left)`} onClick={handleDelete}>
             <DeleteForeverIcon />
         </IconButton>
     )
