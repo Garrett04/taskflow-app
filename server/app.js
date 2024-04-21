@@ -8,7 +8,7 @@ const session = require('express-session');
 const pgSession = require('connect-pg-simple')(session);
 const pool = require('./config/db/config');
 const cron = require('node-cron');
-const { isAfter } = require('date-fns');
+const { isAfter, differenceInDays, differenceInMinutes } = require('date-fns');
 const Task = require('./models/Task');
 
 const PORT = process.env.PORT || 3000;
@@ -63,10 +63,34 @@ const updateTaskStatus = async () => {
     })
 }
 
+// Permanently deletes a task if the current date exceeds the deleted at date by 20 days.
+const deleteTask = async () => {
+    const currentDate = new Date();
+
+    const tasks = await Task.find();
+
+    tasks.forEach(
+        async ({ id, deleted_at, archived }) =>  {
+            if (archived) {
+                const difference = differenceInMinutes(currentDate, deleted_at);
+
+                if (difference >= 1) {
+                    const deletedTask = await Task.deleteById(id);
+                    console.log("deletedTask:", deletedTask);
+                    console.log("deleted_at:", deleted_at);
+                }
+
+                console.log("difference:", difference);
+            }
+        }
+    )
+}
+
 // For every 1 minute
 cron.schedule("*/1 * * * *", async () => {
     try {
         await updateTaskStatus();
+        await deleteTask();
     } catch (err) {
         throw err;
     }
