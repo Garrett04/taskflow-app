@@ -92,6 +92,7 @@ const TaskModal = () => {
                         onKeyUp={updateTaskTitle}
                         error={!title}
                         placeholder="Task Title"
+                        disabled={task.archived || task.status === 'overdue'}
                     />
                 </Box>
                 <Collapse
