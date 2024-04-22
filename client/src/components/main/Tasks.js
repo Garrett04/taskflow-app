@@ -14,6 +14,7 @@ import Task from "./Task";
 import { Outlet, useLocation, useNavigate } from "react-router-dom";
 import { renderPageTitle } from "../../utils/renderPageTitle";
 import TaskModal from "../../pages/TaskModal";
+import { dispatchFetchTasksByUserId } from "../../utils/dispatchFetchTasksByUserId";
 
 
 const Tasks = ({
@@ -28,10 +29,11 @@ const Tasks = ({
     const isAuthenticated = useSelector(selectIsAuthenticated);
     
     const dispatch = useDispatch();
+    const location = useLocation();
 
     useEffect(() => {
-        dispatch(fetchTasksByUserId());
-    }, [dispatch]);
+        dispatchFetchTasksByUserId(location.pathname);
+    }, [location.pathname]);
 
     let status = null;
     let archived;
@@ -53,13 +55,13 @@ const Tasks = ({
         return tasksToRender.map(task => {
             // If task.status === status or if task.archived === archived is true then return the task component with that status
             // or if status is null and !task.archived meaning return all tasks (completed and overdue excluding the ones which are archived)
-            if ((task.status === status || task.archived === archived) || (!status && !task.archived)) {
+            // if ((task.status === status || task.archived === archived) || (!status && !task.archived)) {
                 return (
                     <Grid item key={task.id} xs={12} md={6} lg={4}>
                         <Task task={task} page={page} />
                     </Grid>
                 )
-            }
+            // }
         })
     }
 

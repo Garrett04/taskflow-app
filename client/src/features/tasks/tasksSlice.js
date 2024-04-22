@@ -34,6 +34,7 @@ const tasksSlice = createSlice({
 })
 
 export const selectSampleTasks = (state) => state.tasks.sampleTasks;
+
 export const selectTasks = (state) => state.tasks.tasks;
 export const getTasksStatus = (state) => state.tasks.status;
 export const getTasksError = (state) => state.tasks.error;

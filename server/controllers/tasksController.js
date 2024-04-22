@@ -2,8 +2,23 @@ const Task = require('../models/Task');
 
 const getAllTasksByUserId = async (req, res) => {
     const userId = req.user.id;
+    const status = req.query.status !== "undefined" ? req.query.status : undefined;
+    const archived = req.query.archived === "true";
+    let tasks;
 
-    const tasks = await Task.findByUserId(userId);
+    const data = {
+        userId,
+        status,
+        archived
+    }
+
+    console.log(data);
+
+    if (status && !archived) {
+        tasks = await Task.findByUserId(data);
+    } else if (archived) {
+        tasks = await Task.findArchivedByUserId(userId);
+    } 
 
     if (!tasks) {
         return res.status(404).json({ success: false, msg: "No tasks found." });

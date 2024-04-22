@@ -4,7 +4,7 @@ import { CardBottom, CardHeader, ModalBox, TaskCard, TaskTitle } from "../compon
 import { useEffect, useState } from "react"
 import { useDispatch, useSelector } from "react-redux"
 import { getTaskError, getTaskStatus, selectTask } from "../features/tasks/taskSlice"
-import { Outlet, useNavigate, useParams } from "react-router-dom"
+import { Outlet, useLocation, useNavigate, useParams } from "react-router-dom"
 import { fetchTaskById, fetchTasksByUserId, updateTask } from "../services/tasksService"
 import { renderTaskStatus } from "../utils/renderTaskStatus"
 import AddSubtask from "../components/main/AddSubtask"
@@ -13,11 +13,10 @@ import DeadlineDatePicker from "../components/main/DeadlineDatePicker"
 import MoveToTrashButton from "../components/main/MoveToTrashButton"
 import Tasks from "../components/main/Tasks"
 import DeadlineDate from "../components/main/DeadlineDate"
+import { dispatchFetchTasksByUserId } from "../utils/dispatchFetchTasksByUserId"
 
 
-const TaskModal = ({
-    page
-}) => {
+const TaskModal = () => {
     const task = useSelector(selectTask);
     const taskStatus = useSelector(getTaskStatus);
     const taskError = useSelector(getTaskError);
@@ -31,10 +30,13 @@ const TaskModal = ({
     
     const [expand, setExpand] = useState(false);
 
+    const location = useLocation();
+
     const handleClose = (e) => {
         if (e.target === e.currentTarget) {
             setOpen(false);
-            dispatch(fetchTasksByUserId());
+            // dispatch(fetchTasksByUserId());
+            dispatchFetchTasksByUserId(location.pathname);
             navigate(-1);
         }
     };

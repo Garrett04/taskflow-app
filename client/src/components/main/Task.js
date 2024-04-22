@@ -15,7 +15,7 @@ import DeadlineDate from "./DeadlineDate";
 
 const Task = ({
     task,
-    page // Pass down by the pages
+    page, // Pass down by the pages
 }) => {
     const isAuthenticated = useSelector(selectIsAuthenticated);
     const navigate = useNavigate();
@@ -28,7 +28,7 @@ const Task = ({
             <TaskCard 
                 onClick={() => navigate(`task/${task.id}`)} 
                 // To change the styling of the task when it is deleted and in a overdue tasks page.
-                task_archived={(isAuthenticated && page === 'Overdue Tasks') && task.archived.toString()}
+                task_archived={(isAuthenticated && page === 'Overdue Tasks') ? task.archived.toString() : null}
             >
                 <Box>
                     <CardHeader

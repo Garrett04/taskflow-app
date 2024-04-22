@@ -34,10 +34,10 @@ const router = createBrowserRouter(createRoutesFromElements(
           <Route path="task/:id" element={ <TaskModal/> }/>
         </Route>
         <Route path="/overdue-tasks" element={ <OverdueTasks/> }>
-          <Route path="task/:id" element={ <TaskModal page={"Overdue Tasks"} /> }/>
+          <Route path="task/:id" element={ <TaskModal/> }/>
         </Route>
         <Route path="trash" element={ <Trash /> }>
-          <Route path="task/:id" element={ <TaskModal page={"Trash"} /> }/>
+          <Route path="task/:id" element={ <TaskModal/> }/>
         </Route>
       </Route>
     </Route>

@@ -65,14 +65,53 @@ class Task {
         }
     }
 
-    async findByUserId(userId) {
+    async findByUserId(data) {
+        // query statement
+        let statement;
+        // values array to insert to statement
+        let values = [data.userId, data.status];
+        
+        try {
+            // status is overdue then return only the tasks with overdue status
+            if (data.status === 'overdue') {
+                statement = `SELECT *
+                                FROM tasks
+                                WHERE user_id = $1
+                                    AND status = $2
+                                ORDER BY created_at ASC`;
+            } else {
+                statement = `SELECT *
+                                FROM tasks
+                                WHERE user_id = $1
+                                    AND status = $2
+                                    AND archived = $3
+                                ORDER BY created_at ASC`;
+                values.push(data.archived);
+            }
+            
+
+            // query database
+            const result = await db.query(statement, values);
+
+            if (result.rows.length > 0) {
+                return result.rows;
+            }
+
+            return null;
+        } catch (err) {
+            throw new Error(err);
+        }
+    }
+
+    async findArchivedByUserId(userId) {
         try {
             // query statement
             const statement = `SELECT *
                                 FROM tasks
                                 WHERE user_id = $1
-                                ORDER BY created_at ASC`;
-            
+                                    AND archived = true
+                                ORDER BY deleted_at ASC`;
+
             // query database
             const result = await db.query(statement, [userId]);
 
