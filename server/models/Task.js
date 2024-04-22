@@ -69,16 +69,23 @@ class Task {
         // query statement
         let statement;
         // values array to insert to statement
-        let values = [data.userId, data.status];
+        let values = [data.userId];
         
         try {
             // status is overdue then return only the tasks with overdue status
-            if (data.status === 'overdue') {
+            if (!data.status && !data.archived) {
+                statement = `SELECT *
+                                FROM tasks
+                                WHERE user_id = $1
+                                    AND archived = false
+                                ORDER BY created_at ASC`;
+            } else if (data.status === 'overdue') {
                 statement = `SELECT *
                                 FROM tasks
                                 WHERE user_id = $1
                                     AND status = $2
                                 ORDER BY created_at ASC`;
+                values.push(data.status);
             } else {
                 statement = `SELECT *
                                 FROM tasks
@@ -86,9 +93,9 @@ class Task {
                                     AND status = $2
                                     AND archived = $3
                                 ORDER BY created_at ASC`;
-                values.push(data.archived);
+                
+                values.push(data.status, data.archived);
             }
-            
 
             // query database
             const result = await db.query(statement, values);

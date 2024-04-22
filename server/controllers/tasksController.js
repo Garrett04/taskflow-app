@@ -14,7 +14,7 @@ const getAllTasksByUserId = async (req, res) => {
 
     console.log(data);
 
-    if (status && !archived) {
+    if ((status || !status) && !archived) {
         tasks = await Task.findByUserId(data);
     } else if (archived) {
         tasks = await Task.findArchivedByUserId(userId);
