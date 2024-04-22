@@ -7,7 +7,7 @@ export const fetchTasksByUserId = createAsyncThunk(
         const { status, archived } = data;
         try {
             const response = await API.get(`/tasks?status=${status}&archived=${archived}`);
-            console.log(response.data);
+            // console.log(response.data);
             return response.data.tasks;
         } catch (err) {
             if (err.response.status === 401) {

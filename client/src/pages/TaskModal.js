@@ -37,7 +37,19 @@ const TaskModal = () => {
             setOpen(false);
             // dispatch(fetchTasksByUserId());
             dispatchFetchTasksByUserId(location.pathname);
-            navigate(-1);
+            
+            // if when adding task and after closing the modal
+            // the location.state.from will be present
+            // then navigate to home page
+            // else when the task has not been added and just opened
+            // then navigate to the page before.
+            if (location.state?.from) {
+                console.log("hello 1");
+                navigate('/');
+            } else {
+                console.log("hello 2");
+                navigate(-1);
+            }
         }
     };
 
