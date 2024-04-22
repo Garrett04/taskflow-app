@@ -1,5 +1,5 @@
 import { useTheme } from "@emotion/react";
-import { IconButton, styled } from "@mui/material";
+import { Icon, IconButton, styled } from "@mui/material";
 import MuiDrawer from '@mui/material/Drawer';
 import ChevronLeftIcon from '@mui/icons-material/ChevronLeft';
 import ChevronRightIcon from '@mui/icons-material/ChevronRight';
@@ -15,6 +15,7 @@ import DeleteIcon from '@mui/icons-material/Delete';
 import { useSelector } from "react-redux";
 import { selectIsAuthenticated } from "../../features/auth/authSlice";
 import { useNavigate } from "react-router-dom";
+import { FaTasks } from "react-icons/fa";
 
 const drawerWidth = 240;
 
@@ -74,7 +75,9 @@ const MiniDrawer = ({
     const navigate = useNavigate();
 
     const handleClick = (text) => {
-      if (text === 'Completed Tasks') {
+      if (text === 'All Tasks') {
+        navigate('/');
+      } else if (text === 'Completed Tasks') {
         navigate('/completed-tasks');
       } else if (text === 'Overdue Tasks') {
         navigate('/overdue-tasks');
@@ -100,7 +103,7 @@ const MiniDrawer = ({
             }} 
           />
           <List>
-            {['Completed Tasks', 'Overdue Tasks', 'Trash'].map((text, index) => (
+            {['All Tasks', 'Completed Tasks', 'Overdue Tasks', 'Trash'].map((text, index) => (
               <ListItem key={text} disablePadding sx={{ display: 'block' }}>
                 <ListItemButton
                   sx={{
@@ -117,9 +120,10 @@ const MiniDrawer = ({
                       justifyContent: 'center',
                     }}
                   >
-                    {index === 0 ? <TaskIcon /> : null}
-                    {index === 1 ? <HourglassDisabledIcon /> : null}
-                    {index === 2 ? <DeleteIcon /> : null}
+                    {index === 0 && <Icon sx={{ fontSize: '1.4rem' }}><FaTasks/></Icon>}
+                    {index === 1 && <TaskIcon />}
+                    {index === 2 && <HourglassDisabledIcon />}
+                    {index === 3 && <DeleteIcon />}
                   </ListItemIcon>
                   <ListItemText primary={text} sx={{ opacity: open ? 1 : 0 }} />
                 </ListItemButton>
