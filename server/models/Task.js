@@ -117,7 +117,7 @@ class Task {
                                 FROM tasks
                                 WHERE user_id = $1
                                     AND archived = true
-                                ORDER BY deleted_at ASC`;
+                                ORDER BY deleted_at DESC`;
 
             // query database
             const result = await db.query(statement, [userId]);

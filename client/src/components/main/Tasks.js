@@ -15,6 +15,9 @@ import { Outlet, useLocation, useNavigate } from "react-router-dom";
 import { renderPageTitle } from "../../utils/renderPageTitle";
 import TaskModal from "../../pages/TaskModal";
 import { dispatchFetchTasksByUserId } from "../../utils/dispatchFetchTasksByUserId";
+import SortByDropdown from "../filterOptions/SortByDropdown";
+import OrderByDropdown from "../filterOptions/OrderByDropdown";
+import FilterDropdowns from "../filterOptions/FilterDropdowns";
 
 
 const Tasks = ({
@@ -28,7 +31,6 @@ const Tasks = ({
     
     const isAuthenticated = useSelector(selectIsAuthenticated);
     
-    const dispatch = useDispatch();
     const location = useLocation();
 
     useEffect(() => {
