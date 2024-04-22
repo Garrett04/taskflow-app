@@ -22,6 +22,9 @@ const AddSubtask = ({
     const handleSubmit = async (e) => {
         e.preventDefault();
         try {
+            if (archived || task_status === 'overdue') {
+                return;
+            }
             const data = { task_id, title, description };
 
             const newSubtask = await createSubtask(data);

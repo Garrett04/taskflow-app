@@ -33,6 +33,11 @@ const Subtasks = ({
 
     const updateSubtaskChecked = async (subtaskId, checked) => {
         try {
+            // Incase the user removes the disabled property of the checkbox in the dev tools
+            if (archived || task_status === 'overdue') {
+                return;
+            }
+
             const data = { task_id, id: subtaskId, checked: !checked };
             const updatedSubtask = await updateSubtask(data);
 
@@ -59,7 +64,7 @@ const Subtasks = ({
                             control={
                                 <Checkbox 
                                     color="secondary" 
-                                    defaultChecked={subtask.checked}
+                                    checked={subtask.checked}
                                     sx={{
                                         [theme.breakpoints.down('sm')]: {
                                             '& .MuiSvgIcon-root': { 
