@@ -1,6 +1,6 @@
 import { Box, Card, CardContent, Divider, Grid, Stack, Typography, styled } from "@mui/material"
 import Subtasks from "./Subtasks"
-import { Link, useLocation } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import { CardBottom, CardHeader, DeadlineDate, TaskCard } from "./MainStyles";
 import { renderTaskStatus } from "../../utils/renderTaskStatus";
 import { format, formatDate, differenceInMinutes, differenceInDays, subDays, addDays, formatDistance, formatDistanceStrict, addMinutes, subMinutes, formatDistanceToNow } from "date-fns";
@@ -17,13 +17,14 @@ const Task = ({
     page // Pass down by the pages
 }) => {
     const isAuthenticated = useSelector(selectIsAuthenticated);
+    const navigate = useNavigate();
 
     return (
         // Checks if it is not in the trash page then pass in the task.archived else null
         // Just to indicate that the task is going to be deleted or in the trash section
         // isAuthenticated was put in here to handle sample tasks
         <>
-            <TaskCard task_archived={isAuthenticated && page !== 'Trash' ? task.archived.toString() : null}>
+            <TaskCard onClick={() => navigate(`task/${task.id}`)} task_archived={isAuthenticated && page !== 'Trash' ? task.archived.toString() : null}>
                 <Box>
                     <CardHeader
                         titleTypographyProps={{ variant: 'taskTitle' }}

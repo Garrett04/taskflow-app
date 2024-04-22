@@ -47,7 +47,7 @@ const Tasks = ({
         status = 'archived';
         archived = true;
     }
-
+    
     const renderAllTasks = () => {
         // Checks if user isAuthenticated then render the users tasks 
         // else just the sampleTasks
@@ -58,7 +58,7 @@ const Tasks = ({
             // or if status is null and !task.archived meaning return all tasks (completed and overdue excluding the ones which are archived)
             if ((task.status === status || task.archived === archived) || (!status && !task.archived)) {
                 return (
-                    <Grid onClick={() => navigate(`task/${task.id}`)} item key={task.id} xs={12} md={6} lg={4}>
+                    <Grid item key={task.id} xs={12} md={6} lg={4}>
                         <Task task={task} page={page} />
                     </Grid>
                 )
