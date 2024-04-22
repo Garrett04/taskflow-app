@@ -6,7 +6,7 @@ import { handleTaskExpand } from '../../utils/handleTaskExpand';
 
 // it just updates the task status to deleted in the database
 const MoveToTrashButton = ({
-    task_id
+    task_id,
 }) => {
     const dispatch = useDispatch();
 

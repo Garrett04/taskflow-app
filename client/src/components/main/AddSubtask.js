@@ -8,7 +8,10 @@ import { fetchTasksByUserId } from "../../services/tasksService";
 
 
 const AddSubtask = ({
-    task_id
+    task_id,
+    page,
+    task_status,
+    archived
 }) => {
     const theme = useTheme();
     const [title, setTitle] = useState(''); 
@@ -46,6 +49,7 @@ const AddSubtask = ({
             sx={{
                 background: theme.palette.ochre.light,
             }}
+            hidden={archived || task_status === 'overdue'}
         >       
             <form onSubmit={handleSubmit}>
                 <TextField 

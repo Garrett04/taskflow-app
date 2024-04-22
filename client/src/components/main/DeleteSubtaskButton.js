@@ -6,7 +6,10 @@ import DeleteForeverIcon from '@mui/icons-material/DeleteForever'
 
 const DeleteSubtaskButton = ({
     taskId,
-    id
+    id,
+    page,
+    task_status,
+    archived
 }) => {
     const dispatch = useDispatch();
     const task_id = useParams().id || taskId;
@@ -24,7 +27,7 @@ const DeleteSubtaskButton = ({
     }
 
     return (
-        <IconButton onClick={handleClick}>
+        <IconButton title="Delete Subtask" onClick={handleClick} disabled={archived || task_status === 'overdue'}>
             <DeleteForeverIcon />
         </IconButton>
     )

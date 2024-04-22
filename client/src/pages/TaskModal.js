@@ -1,6 +1,6 @@
 import { Box, Card, Collapse, Divider, Input, Modal } from "@mui/material"
 import Subtasks from "../components/main/Subtasks"
-import { CardBottom, CardHeader, DeadlineDate, ModalBox, TaskCard, TaskTitle } from "../components/main/MainStyles"
+import { CardBottom, CardHeader, ModalBox, TaskCard, TaskTitle } from "../components/main/MainStyles"
 import { useEffect, useState } from "react"
 import { useDispatch, useSelector } from "react-redux"
 import { getTaskError, getTaskStatus, selectTask } from "../features/tasks/taskSlice"
@@ -12,9 +12,11 @@ import AddSubtask from "../components/main/AddSubtask"
 import DeadlineDatePicker from "../components/main/DeadlineDatePicker"
 import MoveToTrashButton from "../components/main/MoveToTrashButton"
 import Tasks from "../components/main/Tasks"
+import DeadlineDate from "../components/main/DeadlineDate"
 
 
 const TaskModal = ({
+    page
 }) => {
     const task = useSelector(selectTask);
     const taskStatus = useSelector(getTaskStatus);
@@ -96,14 +98,22 @@ const TaskModal = ({
                     unmountOnExit
                 >
                     <Divider />
-                    <Subtasks inTaskModal={true} task_id={task.id} />
+                    <Subtasks   
+                        inTaskModal={true} 
+                        task_id={task.id} 
+                        task_status={task.status} 
+                        archived={task.archived} 
+                    />
                     <Divider />
                     <CardBottom>
                         {renderTaskStatus(task.status)}
-                        <DeadlineDatePicker 
+                        {task.archived || task.status === 'overdue'
+                        ? <DeadlineDate deadline_date={task.deadline_date} />
+                        : <DeadlineDatePicker 
                             id={task.id}
-                            deadline_date={task.deadline_date} 
-                        />
+                            deadline_date={task.deadline_date}
+                          />
+                        }
                     </CardBottom>
                 </Collapse>
             </TaskCard>

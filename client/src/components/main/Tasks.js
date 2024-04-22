@@ -28,13 +28,10 @@ const Tasks = ({
     const isAuthenticated = useSelector(selectIsAuthenticated);
     
     const dispatch = useDispatch();
-    const [id, setId] = useState("");
 
     useEffect(() => {
         dispatch(fetchTasksByUserId());
     }, [dispatch]);
-
-    const navigate = useNavigate();
 
     let status = null;
     let archived;

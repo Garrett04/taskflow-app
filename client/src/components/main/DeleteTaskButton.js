@@ -6,7 +6,7 @@ import { addDays, addMinutes, formatDistanceToNow } from "date-fns";
 
 const DeleteTaskButton = ({
     task_id,
-    deleted_at
+    deleted_at,
 }) => {
     const dispatch = useDispatch();
     const days_left = formatDistanceToNow(addDays(deleted_at, 20));

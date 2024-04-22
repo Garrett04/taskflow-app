@@ -12,7 +12,10 @@ import DeleteSubtaskButton from "./DeleteSubtaskButton";
 
 const Subtasks = ({ 
     task_id,
-    inTaskModal // Will always come only from TaskModal page 
+    inTaskModal, // Will always come only from TaskModal page
+    page,
+    task_status,
+    archived
 }) => {
     const theme = useTheme();
     const subtasks = useSelector(selectSubtasks);
@@ -66,6 +69,7 @@ const Subtasks = ({
                                         }
                                     }}
                                     onChange={() => updateSubtaskChecked(subtask.id, subtask.checked)}
+                                    disabled={archived || task_status === 'overdue'}
                                 />
                             } 
                             label={
@@ -90,7 +94,12 @@ const Subtasks = ({
                         >
                             {subtask.description}
                         </Typography>
-                        <DeleteSubtaskButton taskId={subtask.task_id} id={subtask.id} />
+                        <DeleteSubtaskButton 
+                            taskId={subtask.task_id} 
+                            id={subtask.id} 
+                            task_status={task_status}
+                            archived={archived} 
+                        />
                     </Stack>
                 )
             })
@@ -108,7 +117,7 @@ const Subtasks = ({
     return (
         <FormGroup sx={{ gap: '1rem' }}>
             {content}
-            {inTaskModal && <AddSubtask task_id={task_id} />}
+            {inTaskModal && <AddSubtask task_id={task_id} task_status={task_status} archived={archived} />}
         </FormGroup>
     )
 }
