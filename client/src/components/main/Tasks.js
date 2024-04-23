@@ -1,23 +1,14 @@
-import { useDispatch, useSelector } from "react-redux";
+import { useSelector } from "react-redux";
 import { getTasksError, getTasksStatus, selectSampleTasks, selectTasks } from "../../features/tasks/tasksSlice";
-import { useEffect, useState } from "react";
-import { fetchTasksByUserId } from "../../services/tasksService";
-import { getIsAuthenticatedStatus, selectIsAuthenticated } from "../../features/auth/authSlice";
-
-import Subtasks from "./Subtasks";
-import { Box, Card, CardContent, Container, Divider, Grid, IconButton, Tooltip, Typography, styled } from "@mui/material";
-
+import { useEffect } from "react";
+import { selectIsAuthenticated } from "../../features/auth/authSlice";
+import { Container, Grid, Typography } from "@mui/material";
 import { useTheme } from "@emotion/react";
 import AddTaskButton from "./AddTaskButton";
-import { Main } from "./MainStyles";
 import Task from "./Task";
-import { Outlet, useLocation, useNavigate, useSearchParams } from "react-router-dom";
+import { Outlet, useLocation, useSearchParams } from "react-router-dom";
 import { renderPageTitle } from "../../utils/renderPageTitle";
-import TaskModal from "../../pages/TaskModal";
 import { dispatchFetchTasksByUserId } from "../../utils/dispatchFetchTasksByUserId";
-import SortByDropdown from "../filterOptions/SortByDropdown";
-import OrderByDropdown from "../filterOptions/OrderByDropdown";
-import FilterDropdowns from "../filterOptions/FilterDropdowns";
 
 
 const Tasks = ({
@@ -32,7 +23,6 @@ const Tasks = ({
     const isAuthenticated = useSelector(selectIsAuthenticated);
     
     const location = useLocation();
-    const navigate = useNavigate();
 
     const [searchParams, setSearchParams] = useSearchParams();
     const sort = searchParams.get('sort');
