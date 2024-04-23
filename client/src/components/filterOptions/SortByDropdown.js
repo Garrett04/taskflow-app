@@ -14,7 +14,7 @@ const SortByDropdown = ({
       <Select
         label="sort-by"
         labelId="sort-by"
-        value={sortBy || sort}
+        value={sort || sortBy}
         onChange={handleChange}
         name="sort-by"
       >

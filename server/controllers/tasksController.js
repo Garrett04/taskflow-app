@@ -9,27 +9,17 @@ const getAllTasksByUserId = async (req, res) => {
     const sort = req.query.sort !== 'null' ? req.query.sort : null;
     const order = req.query.order !== 'null' ? req.query.order : null;
 
-    let tasks;
-
     const data = {
         userId,
-        status,
-        archived,
+        status, // null || pending || completed || overdue
+        archived, // true || false
         sort, // deadline
-        order // ascending or descending
+        order // ascending || descending
     }
 
     console.log(data);
 
-    // If task status is present or null and if archived is false then
-    // findByUserId passing in data.
-    // This will work for searching all tasks without the archived ones
-    if ((status || !status) && !archived) {
-        tasks = await Task.findByUserId(data);
-    // For cases where archived ones are only required.
-    } else if (archived) {
-        tasks = await Task.findArchivedByUserId(userId);
-    } 
+    const tasks = await Task.findByUserId(data);
 
     if (!tasks) {
         return res.status(404).json({ success: false, msg: "No tasks found." });

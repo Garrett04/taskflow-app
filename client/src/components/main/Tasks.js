@@ -32,6 +32,7 @@ const Tasks = ({
     const isAuthenticated = useSelector(selectIsAuthenticated);
     
     const location = useLocation();
+    const navigate = useNavigate();
 
     const [searchParams, setSearchParams] = useSearchParams();
     const sort = searchParams.get('sort');

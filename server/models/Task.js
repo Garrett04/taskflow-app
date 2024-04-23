@@ -68,7 +68,9 @@ class Task {
 
     async findByUserId(data) {
         // query statement
-        let statement;
+        let statement = `SELECT *
+                            FROM tasks
+                            WHERE user_id = $1`;
         // values array to insert to statement
         let values = [data.userId];
         
@@ -76,40 +78,26 @@ class Task {
             // if status and archived is not provided
             // then return all tasks where archived is false.
             if (!data.status && !data.archived) {
-                statement = `SELECT *
-                                FROM tasks
-                                WHERE user_id = $1
-                                    AND archived = false`;
-
-            // status is overdue then return only the tasks with overdue status
-            } else if (data.status === 'overdue') {
-                statement = `SELECT *
-                                FROM tasks
-                                WHERE user_id = $1
-                                    AND status = $2
-                                ORDER BY created_at ASC`;
+                statement += ` AND archived = false`;
+            // if data.status then return only the tasks with that specified status
+            } else if (data.status) {
+                statement += ` AND status = $2`;
                 values.push(data.status);
-            // this wont work for any case yet
-            } else {
-                console.log('hello from findByUserId check 3');
-                statement = `SELECT *
-                                FROM tasks
-                                WHERE user_id = $1
-                                    AND status = $2
-                                    AND archived = $3
-                                ORDER BY created_at ASC`;
-                
-                values.push(data.status, data.archived);
+            // if data.archived is true then return only the archived tasks
+            } else if (data.archived) {
+                console.log('hello from archived');
+                statement += ` AND archived = true`;
             }
 
             // if sort and order option is given then
-            if (data.sort && data.order) {
+            if (data.sort) {
                 if (data.sort === 'deadline_date') {
                     statement += ` ORDER BY deadline_date`;
-                    if (data.order === 'ascending') {
-                        statement += ` ASC`;
-                    } else if (data.order === 'descending') {
+                    if (data.order === 'descending') {
                         statement += ` DESC`;
+                    } else {
+                        // default to ASC
+                        statement += ` ASC`;
                     }
                 }
             } else {
@@ -117,7 +105,7 @@ class Task {
                 statement += ` ORDER BY created_at ASC`;
             }
 
-            // console.log(statement);
+            console.log(statement);
 
             // query database
             const result = await db.query(statement, values);
@@ -132,27 +120,27 @@ class Task {
         }
     }
 
-    async findArchivedByUserId(userId) {
-        try {
-            // query statement
-            const statement = `SELECT *
-                                FROM tasks
-                                WHERE user_id = $1
-                                    AND archived = true
-                                ORDER BY deleted_at DESC`;
+    // async findArchivedByUserId(userId) {
+    //     try {
+    //         // query statement
+    //         const statement = `SELECT *
+    //                             FROM tasks
+    //                             WHERE user_id = $1
+    //                                 AND archived = true
+    //                             ORDER BY deleted_at DESC`;
 
-            // query database
-            const result = await db.query(statement, [userId]);
+    //         // query database
+    //         const result = await db.query(statement, [userId]);
 
-            if (result.rows.length > 0) {
-                return result.rows;
-            }
+    //         if (result.rows.length > 0) {
+    //             return result.rows;
+    //         }
 
-            return null;
-        } catch (err) {
-            throw new Error(err);
-        }
-    }
+    //         return null;
+    //     } catch (err) {
+    //         throw new Error(err);
+    //     }
+    // }
 
     async findById(id) {
         try {
