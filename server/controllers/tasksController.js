@@ -2,20 +2,31 @@ const Task = require('../models/Task');
 
 const getAllTasksByUserId = async (req, res) => {
     const userId = req.user.id;
+    // Since it comes from query param its always true and never considered a boolean
+    // So its best to keep a check to see if its true or false.
     const status = req.query.status !== "undefined" ? req.query.status : undefined;
     const archived = req.query.archived === "true";
+    const sort = req.query.sort !== 'null' ? req.query.sort : null;
+    const order = req.query.order !== 'null' ? req.query.order : null;
+
     let tasks;
 
     const data = {
         userId,
         status,
-        archived
+        archived,
+        sort, // deadline
+        order // ascending or descending
     }
 
     console.log(data);
 
+    // If task status is present or null and if archived is false then
+    // findByUserId passing in data.
+    // This will work for searching all tasks without the archived ones
     if ((status || !status) && !archived) {
         tasks = await Task.findByUserId(data);
+    // For cases where archived ones are only required.
     } else if (archived) {
         tasks = await Task.findArchivedByUserId(userId);
     } 

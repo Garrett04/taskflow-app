@@ -1,3 +1,4 @@
+const e = require('express');
 const db = require('../config/db/index')
 
 class Task {
@@ -72,13 +73,15 @@ class Task {
         let values = [data.userId];
         
         try {
-            // status is overdue then return only the tasks with overdue status
+            // if status and archived is not provided
+            // then return all tasks where archived is false.
             if (!data.status && !data.archived) {
                 statement = `SELECT *
                                 FROM tasks
                                 WHERE user_id = $1
-                                    AND archived = false
-                                ORDER BY created_at ASC`;
+                                    AND archived = false`;
+
+            // status is overdue then return only the tasks with overdue status
             } else if (data.status === 'overdue') {
                 statement = `SELECT *
                                 FROM tasks
@@ -86,7 +89,9 @@ class Task {
                                     AND status = $2
                                 ORDER BY created_at ASC`;
                 values.push(data.status);
+            // this wont work for any case yet
             } else {
+                console.log('hello from findByUserId check 3');
                 statement = `SELECT *
                                 FROM tasks
                                 WHERE user_id = $1
@@ -96,6 +101,23 @@ class Task {
                 
                 values.push(data.status, data.archived);
             }
+
+            // if sort and order option is given then
+            if (data.sort && data.order) {
+                if (data.sort === 'deadline_date') {
+                    statement += ` ORDER BY deadline_date`;
+                    if (data.order === 'ascending') {
+                        statement += ` ASC`;
+                    } else if (data.order === 'descending') {
+                        statement += ` DESC`;
+                    }
+                }
+            } else {
+                // default to created_at ASC
+                statement += ` ORDER BY created_at ASC`;
+            }
+
+            // console.log(statement);
 
             // query database
             const result = await db.query(statement, values);

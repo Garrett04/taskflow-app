@@ -11,7 +11,7 @@ import { useTheme } from "@emotion/react";
 import AddTaskButton from "./AddTaskButton";
 import { Main } from "./MainStyles";
 import Task from "./Task";
-import { Outlet, useLocation, useNavigate } from "react-router-dom";
+import { Outlet, useLocation, useNavigate, useSearchParams } from "react-router-dom";
 import { renderPageTitle } from "../../utils/renderPageTitle";
 import TaskModal from "../../pages/TaskModal";
 import { dispatchFetchTasksByUserId } from "../../utils/dispatchFetchTasksByUserId";
@@ -33,9 +33,14 @@ const Tasks = ({
     
     const location = useLocation();
 
+    const [searchParams, setSearchParams] = useSearchParams();
+    const sort = searchParams.get('sort');
+    const order = searchParams.get('order');
+
     useEffect(() => {
-        dispatchFetchTasksByUserId(location.pathname);
-    }, [location.pathname]);
+        console.log(sort, order);
+        dispatchFetchTasksByUserId(location.pathname, { sort: sort, order: order });
+    }, [location.pathname, sort, order]);
 
     let status = null;
     let archived;
@@ -55,15 +60,11 @@ const Tasks = ({
         const tasksToRender = isAuthenticated ? tasks : sampleTasks;
         
         return tasksToRender.map(task => {
-            // If task.status === status or if task.archived === archived is true then return the task component with that status
-            // or if status is null and !task.archived meaning return all tasks (completed and overdue excluding the ones which are archived)
-            // if ((task.status === status || task.archived === archived) || (!status && !task.archived)) {
-                return (
-                    <Grid item key={task.id} xs={12} md={6} lg={4}>
-                        <Task task={task} page={page} />
-                    </Grid>
-                )
-            // }
+            return (
+                <Grid item key={task.id} xs={12} md={6} lg={4}>
+                    <Task task={task} page={page} />
+                </Grid>
+            )
         })
     }
 

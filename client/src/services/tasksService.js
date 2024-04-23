@@ -4,9 +4,11 @@ import API from './client';
 export const fetchTasksByUserId = createAsyncThunk(
     'tasks/fetchTasksByUserId',
     async (data) => {
-        const { status, archived } = data;
+        const { status, archived, sort, order } = data;
         try {
-            const response = await API.get(`/tasks?status=${status}&archived=${archived}`);
+            const response = await API.get(
+                `/tasks?status=${status}&archived=${archived}&sort=${sort}&order=${order}`
+            );
             // console.log(response.data);
             return response.data.tasks;
         } catch (err) {

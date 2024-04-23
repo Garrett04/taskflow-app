@@ -6,6 +6,9 @@ const router = require('express').Router();
 // to get all tasks by user id
 router.get('/', isAuthenticated, tasksController.getAllTasksByUserId)
 
+// to get all tasks by user id and deadline_date
+// router.get('/', isAuthenticated, tasksController.)
+
 // to get a specific task
 router.get('/:id', isAuthenticated, tasksController.getTaskById)
 
