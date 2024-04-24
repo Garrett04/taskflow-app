@@ -90,22 +90,21 @@ class Task {
             }
 
             // if sort and order option is given then
-            if (data.sort) {
-                if (data.sort === 'deadline_date') {
-                    statement += ` ORDER BY deadline_date`;
-                    if (data.order === 'descending') {
-                        statement += ` DESC`;
-                    } else {
-                        // default to ASC
-                        statement += ` ASC`;
-                    }
-                }
+            if (data.sort === 'deadline_date') {
+                statement += ` ORDER BY deadline_date`;
             } else {
                 // default to created_at ASC
-                statement += ` ORDER BY created_at ASC`;
+                statement += ` ORDER BY created_at`;
             }
 
-            console.log(statement);
+            if (data.order === 'descending') {
+                statement += ` DESC`;
+            } else {
+                // default to ASC
+                statement += ` ASC`;
+            }
+
+            // console.log(statement);
 
             // query database
             const result = await db.query(statement, values);

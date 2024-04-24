@@ -16,7 +16,11 @@ import DeadlineDate from "../components/main/DeadlineDate"
 import { dispatchFetchTasksByUserId } from "../utils/dispatchFetchTasksByUserId"
 
 
-const TaskModal = () => {
+const TaskModal = ({
+    isModalOpen,
+    setIsModalOpen,
+    handleClose,
+}) => {
     const task = useSelector(selectTask);
     const taskStatus = useSelector(getTaskStatus);
     const taskError = useSelector(getTaskError);
@@ -24,35 +28,17 @@ const TaskModal = () => {
     const navigate = useNavigate();
     
     const [title, setTitle] = useState("");
-    const [open, setOpen] = useState(true);
+    
     const { id } = useParams();
     const [expand, setExpand] = useState(false);
     const location = useLocation();
 
-    const handleClose = (e) => {
-        if (e.target === e.currentTarget) {
-            setOpen(false);
-            
-            // if when adding task and after closing the modal
-            // the location.state.from will be present
-            // then navigate to home page
-            // else when the task has not been added and just opened
-            // then navigate to the page before.
-            if (location.state?.from) {
-                console.log("hello 1");
-                // update tasks state after adding task.
-                dispatchFetchTasksByUserId(location.pathname);
-                navigate('/', { state: { sort: location.state.sort, order: location.state.order }});
-            } else {
-                console.log("hello 2");
-                navigate(-1, { state: { sort: location.state.sort, order: location.state.order }});
-            }
-        }
-    };
-
     useEffect(() => {
-        dispatch(fetchTaskById(id));
-    }, [dispatch, id])
+        if (location.pathname.includes('/task')) {
+            setIsModalOpen(true);
+            dispatch(fetchTaskById(id));
+        }
+    }, [dispatch, id, location, setIsModalOpen, location.pathname])
 
     useEffect(() => {
         // to first set title to the existing title
@@ -144,7 +130,7 @@ const TaskModal = () => {
     return (
         <>
             <Modal 
-                open={open}
+                open={isModalOpen}
                 onClose={handleClose}
             >
                 <ModalBox>

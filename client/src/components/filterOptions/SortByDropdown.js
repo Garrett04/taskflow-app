@@ -1,5 +1,4 @@
-import { Box, FormControl, InputLabel, MenuItem, Select } from "@mui/material";
-import { useSearchParams } from "react-router-dom";
+import { FormControl, InputLabel, MenuItem, Select } from "@mui/material";
 
 
 const SortByDropdown = ({
@@ -7,7 +6,6 @@ const SortByDropdown = ({
   sortBy,
   sort
 }) => {
-
   return (
     <FormControl fullWidth>
       <InputLabel id="sort-by">Sort By</InputLabel>
@@ -18,6 +16,7 @@ const SortByDropdown = ({
         onChange={handleChange}
         name="sort-by"
       >
+          <MenuItem value="date_created">Date Created</MenuItem>
           <MenuItem value="deadline_date">Deadline Date</MenuItem>
           {/* <MenuItem value="Priority">Priority</MenuItem> */}
       </Select>

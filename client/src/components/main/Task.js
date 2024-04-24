@@ -14,12 +14,25 @@ const Task = ({
     task,
     page, // Pass down by the pages
     sort,
-    order
+    order,
+    setIsModalOpen
 }) => {
     const isAuthenticated = useSelector(selectIsAuthenticated);
     const navigate = useNavigate();
 
     const location = useLocation();
+
+    const handleOpen = (task_id) => {
+        // open is changed to true to prevent another dispatch of fetchTasksByUserId
+        setIsModalOpen(true);
+        navigate(`task/${task_id}`, { 
+            state: { 
+                sort, 
+                order, 
+                background: location 
+            },
+        })
+    }
 
     return (
         // Checks if it is not in the trash page then pass in the task.archived else null
@@ -28,7 +41,7 @@ const Task = ({
         <>
             <TaskCard 
                 // storing  
-                onClick={() => navigate(`task/${task.id}`, { state: { sort: sort, order: order, background: location }})} 
+                onClick={() => handleOpen(task.id)} 
                 // To change the styling of the task when it is deleted and in a overdue tasks page.
                 task_archived={(isAuthenticated && page === 'Overdue Tasks') ? task.archived.toString() : null}
             >

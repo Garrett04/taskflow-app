@@ -1,14 +1,15 @@
 import { useSelector } from "react-redux";
 import { getTasksError, getTasksStatus, selectSampleTasks, selectTasks } from "../../features/tasks/tasksSlice";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { selectIsAuthenticated } from "../../features/auth/authSlice";
 import { Container, Grid, Typography } from "@mui/material";
 import { useTheme } from "@emotion/react";
 import AddTaskButton from "./AddTaskButton";
 import Task from "./Task";
-import { Outlet, useLocation, useSearchParams } from "react-router-dom";
+import { Outlet, useLocation, useNavigate, useSearchParams } from "react-router-dom";
 import { renderPageTitle } from "../../utils/renderPageTitle";
 import { dispatchFetchTasksByUserId } from "../../utils/dispatchFetchTasksByUserId";
+import TaskModal from "../../pages/TaskModal";
 
 
 const Tasks = ({
@@ -23,15 +24,22 @@ const Tasks = ({
     const isAuthenticated = useSelector(selectIsAuthenticated);
     
     const location = useLocation();
+    const navigate = useNavigate();
 
     const [searchParams] = useSearchParams();
     const sort = searchParams.get('sort') || location.state?.sort;
     const order = searchParams.get('order') || location.state?.order;
+    
+    const [isModalOpen, setIsModalOpen] = useState(false);
 
     useEffect(() => {
-        console.log(sort, order);
-        dispatchFetchTasksByUserId(location.pathname, { sort, order });
-    }, [location.pathname, sort, order]);
+        // if isModalOpen is false then dispatch fetchTasksByUserId
+        // this prevents the dispatch from happening again when modal is open.
+        if (!isModalOpen) {
+            console.log(sort, order, location.pathname);
+            dispatchFetchTasksByUserId(location.pathname, { sort, order });
+        }
+    }, [location.pathname, sort, order, isModalOpen]);
 
     let status = null;
     let archived;
@@ -57,7 +65,8 @@ const Tasks = ({
                         task={task} 
                         page={page}
                         sort={sort}
-                        order={order} 
+                        order={order}
+                        setIsModalOpen={setIsModalOpen}
                     />
                 </Grid>
             )
@@ -72,6 +81,28 @@ const Tasks = ({
     } else if (tasksStatus === 'rejected') {
         content = tasksError;
     }
+
+    const handleClose = (e) => {
+        if (e.target === e.currentTarget) {
+            setIsModalOpen(false);
+            
+            // if when adding task and after closing the modal
+            // the location.state.from will be present
+            // then navigate to home page
+            // else when the task has not been added and just isModalOpened
+            // then navigate to the page before.
+            console.log(location);
+            if (location.state?.from) {
+                console.log(location.pathname);
+                // update tasks state after adding task.
+                dispatchFetchTasksByUserId(location.pathname);
+                navigate('/', { state: { sort: location.state.sort, order: location.state.order }});
+            } else {
+                console.log("hello 2");
+                navigate(-1, { state: { sort: location.state.sort, order: location.state.order }});
+            }
+        }
+    };
 
     return (
         // Show all tasks here
@@ -97,7 +128,8 @@ const Tasks = ({
                 </Grid>
             </Container>
             {/* Render task modal */}
-            <Outlet />
+            {/* <Outlet /> */}
+            <TaskModal handleClose={handleClose} isModalOpen={isModalOpen} setIsModalOpen={setIsModalOpen} />
             <AddTaskButton />
         </>
     )
