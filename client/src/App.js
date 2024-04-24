@@ -2,7 +2,11 @@ import {
   createBrowserRouter,
   createRoutesFromElements,
   Route,
-  RouterProvider
+  Router,
+  RouterProvider,
+  Routes,
+  useLocation,
+  useRoutes
 } from "react-router-dom";
 
 import Root from './pages/Root';
@@ -20,35 +24,40 @@ import OverdueTasks from "./pages/OverdueTasks";
 import Trash from "./pages/Trash";
 import Main from "./components/main/Main";
 
-const router = createBrowserRouter(createRoutesFromElements(
-  <>
-    <Route path="/" element={ <Root/> }>
-      <Route path="/" element={ <Main/> }>
-        {/* <Route element={ <PrivateRoutes/> }>
 
-        </Route> */}
-        <Route path="/" element={ <Tasks/> }>
-          <Route path="task/:id" element={ <TaskModal/> }/>
-        </Route>
-        <Route path="/completed-tasks" element={ <CompletedTasks/> }>
-          <Route path="task/:id" element={ <TaskModal/> }/>
-        </Route>
-        <Route path="/overdue-tasks" element={ <OverdueTasks/> }>
-          <Route path="task/:id" element={ <TaskModal/> }/>
-        </Route>
-        <Route path="trash" element={ <Trash /> }>
-          <Route path="task/:id" element={ <TaskModal/> }/>
-        </Route>
-      </Route>
-    </Route>
-    <Route path="/login" element={ <Login/> }/> 
-    <Route path="/register" element={ <Register/> }/>
-  </>
-))
 
 function App() {
   const dispatch = useDispatch();
-  const isAuthenticatedStatus = useSelector(getIsAuthenticatedStatus); 
+  const isAuthenticatedStatus = useSelector(getIsAuthenticatedStatus);
+  const location = useLocation();
+  const background = location.state?.background;
+
+  // const router = createBrowserRouter(createRoutesFromElements(
+  //   <>
+  //       <Route path="/" element={ <Root/> }>
+  //         {/* <Route element={ <PrivateRoutes/> }>
+  
+  //         </Route> */}
+          
+  //           <Route path="/" element={ <Tasks/> }>
+  //             <Route path="task/:id" element={ <TaskModal/> }/>
+  //           </Route>
+  //           <Route path="/completed-tasks" element={ <CompletedTasks/> }>
+  //             <Route path="task/:id" element={ <TaskModal/> }/>
+  //           </Route>
+  //           <Route path="/overdue-tasks" element={ <OverdueTasks/> }>
+  //             <Route path="task/:id" element={ <TaskModal/> }/>
+  //           </Route>
+  //           <Route path="/trash" element={ <Trash /> }>
+  //           <Route path="task/:id" element={ <TaskModal/> }/>
+  //           </Route>
+          
+  //       </Route>
+  //       <Route path="/login" element={ <Login/> }/> 
+  //       <Route path="/register" element={ <Register/> }/>
+  //   </>
+  // ))
+
 
   useEffect(() => {
     dispatch(fetchAuthenticationStatus());
@@ -56,7 +65,29 @@ function App() {
 
   if (isAuthenticatedStatus === 'fulfilled' || isAuthenticatedStatus === 'rejected') {
     return (
-      <RouterProvider router={router} />
+      <>
+        <Routes location={background || location}>
+          <Route path="/" element={ <Root/> }>
+            {/* <Route element={ <PrivateRoutes/> }>
+            </Route> */}
+              <Route path="/" element={ <Tasks/> }/>
+              <Route path="/completed-tasks" element={ <CompletedTasks/> }/>
+              <Route path="/overdue-tasks" element={ <OverdueTasks/> }/>
+              <Route path="/trash" element={ <Trash /> }/>
+          </Route>
+          <Route path="/login" element={ <Login/> }/> 
+          <Route path="/register" element={ <Register/> }/>
+        </Routes>
+
+        {background && (
+        <Routes>
+          <Route path="/task/:id" element={ <TaskModal /> } />
+          <Route path="/trash/task/:id" element={ <TaskModal /> } />
+          <Route path="/completed-tasks/task/:id" element={ <TaskModal /> } />
+          <Route path="/overdue-tasks/task/:id" element={ <TaskModal /> } />
+        </Routes>
+        )}
+      </>
     );
   }
 }

@@ -1,24 +1,25 @@
-import { Box, Card, CardContent, Divider, Grid, Stack, Typography, styled } from "@mui/material"
+import { Box, Divider, Stack } from "@mui/material"
 import Subtasks from "./Subtasks"
-import { Link, useLocation, useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import { CardBottom, CardHeader, TaskCard } from "./MainStyles";
 import { renderTaskStatus } from "../../utils/renderTaskStatus";
-import { format, formatDate, differenceInMinutes, differenceInDays, subDays, addDays, formatDistance, formatDistanceStrict, addMinutes, subMinutes, formatDistanceToNow } from "date-fns";
 import MoveToTrashButton from "./MoveToTrashButton";
 import RestoreTaskButton from "./RestoreTaskButton";
 import DeleteTaskButton from "./DeleteTaskButton";
 import { useSelector } from "react-redux";
 import { selectIsAuthenticated } from "../../features/auth/authSlice";
-import TaskModal from "../../pages/TaskModal";
-import { useState } from "react";
 import DeadlineDate from "./DeadlineDate";
 
 const Task = ({
     task,
     page, // Pass down by the pages
+    sort,
+    order
 }) => {
     const isAuthenticated = useSelector(selectIsAuthenticated);
     const navigate = useNavigate();
+
+    const location = useLocation();
 
     return (
         // Checks if it is not in the trash page then pass in the task.archived else null
@@ -26,7 +27,8 @@ const Task = ({
         // isAuthenticated was put in here to handle sample tasks
         <>
             <TaskCard 
-                onClick={() => navigate(`task/${task.id}`)} 
+                // storing  
+                onClick={() => navigate(`task/${task.id}`, { state: { sort: sort, order: order, background: location }})} 
                 // To change the styling of the task when it is deleted and in a overdue tasks page.
                 task_archived={(isAuthenticated && page === 'Overdue Tasks') ? task.archived.toString() : null}
             >

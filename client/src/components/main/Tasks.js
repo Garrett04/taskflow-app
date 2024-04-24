@@ -24,13 +24,13 @@ const Tasks = ({
     
     const location = useLocation();
 
-    const [searchParams, setSearchParams] = useSearchParams();
-    const sort = searchParams.get('sort');
-    const order = searchParams.get('order');
+    const [searchParams] = useSearchParams();
+    const sort = searchParams.get('sort') || location.state?.sort;
+    const order = searchParams.get('order') || location.state?.order;
 
     useEffect(() => {
         console.log(sort, order);
-        dispatchFetchTasksByUserId(location.pathname, { sort: sort, order: order });
+        dispatchFetchTasksByUserId(location.pathname, { sort, order });
     }, [location.pathname, sort, order]);
 
     let status = null;
@@ -53,7 +53,12 @@ const Tasks = ({
         return tasksToRender.map(task => {
             return (
                 <Grid item key={task.id} xs={12} md={6} lg={4}>
-                    <Task task={task} page={page} />
+                    <Task 
+                        task={task} 
+                        page={page}
+                        sort={sort}
+                        order={order} 
+                    />
                 </Grid>
             )
         })
