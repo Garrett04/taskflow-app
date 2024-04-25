@@ -19,7 +19,7 @@ const initialState = {
     },
     subtasks: {},
     status: 'idle',
-    error: null
+    error: [null]
 }
 
 const subtasksSlice = createSlice({

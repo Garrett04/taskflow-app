@@ -8,6 +8,7 @@ import { selectIsAuthenticated } from "../../features/auth/authSlice";
 import { handleTaskExpand } from "../../utils/handleTaskExpand";
 import AddSubtask from "./AddSubtask";
 import DeleteSubtaskButton from "./DeleteSubtaskButton";
+import { useLocation } from "react-router-dom";
 
 
 const Subtasks = ({ 
@@ -42,6 +43,7 @@ const Subtasks = ({
             const updatedSubtask = await updateSubtask(data);
 
             dispatch(fetchSubtasksByTaskId(task_id));
+            
         } catch (err) {
             console.log(err);
         }
@@ -51,7 +53,7 @@ const Subtasks = ({
         // console.log(subtasks[task_id]);
         const subtasksByTaskId = isAuthenticated ? subtasks[task_id] : sampleSubtasks[task_id];
         
-        if (subtasksByTaskId) {
+        if (subtasksByTaskId?.length > 0) {
             return subtasksByTaskId.map(subtask => {
                 return (
                     <Stack 
@@ -109,7 +111,7 @@ const Subtasks = ({
                 )
             })
         }
-        return null;
+        return subtasksError;
     }
 
     let content;

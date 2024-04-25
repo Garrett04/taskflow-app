@@ -1,13 +1,13 @@
-import { Outlet } from "react-router-dom";
-import Tasks from "./Tasks";
+// import { Outlet } from "react-router-dom";
+// import Tasks from "./Tasks";
 
 
-const Main = () => {
+// const Main = () => {
 
 
-    return (
-        <Outlet />
-    )
-}
+//     return (
+//         <Outlet />
+//     )
+// }
 
-export default Main;
+// export default Main;

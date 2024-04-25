@@ -26,6 +26,7 @@ time, mark, audio, video {
 
 html {
     font-size: 16px;
+	scroll-behavior: auto;
 }
 
 /* HTML5 display-role reset for older browsers */

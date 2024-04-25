@@ -4,8 +4,8 @@ import { CardBottom, CardHeader, ModalBox, TaskCard, TaskTitle } from "../compon
 import { useEffect, useState } from "react"
 import { useDispatch, useSelector } from "react-redux"
 import { getTaskError, getTaskStatus, selectTask } from "../features/tasks/taskSlice"
-import { Outlet, useLocation, useNavigate, useParams } from "react-router-dom"
-import { fetchTaskById, fetchTasksByUserId, updateTask } from "../services/tasksService"
+import { useLocation, useNavigate, useParams } from "react-router-dom"
+import { fetchTaskById, updateTask } from "../services/tasksService"
 import { renderTaskStatus } from "../utils/renderTaskStatus"
 import AddSubtask from "../components/main/AddSubtask"
 
@@ -25,7 +25,7 @@ const TaskModal = ({
     const taskStatus = useSelector(getTaskStatus);
     const taskError = useSelector(getTaskError);
     const dispatch = useDispatch();
-    const navigate = useNavigate();
+
     
     const [title, setTitle] = useState("");
     

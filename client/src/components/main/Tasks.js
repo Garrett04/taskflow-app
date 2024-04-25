@@ -6,7 +6,7 @@ import { Container, Grid, Typography } from "@mui/material";
 import { useTheme } from "@emotion/react";
 import AddTaskButton from "./AddTaskButton";
 import Task from "./Task";
-import { Outlet, useLocation, useNavigate, useSearchParams } from "react-router-dom";
+import { Outlet, ScrollRestoration, useLocation, useNavigate, useSearchParams } from "react-router-dom";
 import { renderPageTitle } from "../../utils/renderPageTitle";
 import { dispatchFetchTasksByUserId } from "../../utils/dispatchFetchTasksByUserId";
 import TaskModal from "../../pages/TaskModal";
@@ -40,6 +40,7 @@ const Tasks = ({
             dispatchFetchTasksByUserId(location.pathname, { sort, order });
         }
     }, [location.pathname, sort, order, isModalOpen]);
+
 
     let status = null;
     let archived;
@@ -107,6 +108,7 @@ const Tasks = ({
     return (
         // Show all tasks here
         <>
+            
             <Typography 
                 paragraph
                 variant="h4"
@@ -131,6 +133,7 @@ const Tasks = ({
             {/* <Outlet /> */}
             <TaskModal handleClose={handleClose} isModalOpen={isModalOpen} setIsModalOpen={setIsModalOpen} />
             <AddTaskButton />
+            
         </>
     )
 }

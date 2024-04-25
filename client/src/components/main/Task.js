@@ -29,9 +29,9 @@ const Task = ({
             state: { 
                 sort, 
                 order, 
-                background: location 
+                background: location,
             },
-        })
+        })   
     }
 
     return (
