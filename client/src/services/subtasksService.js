@@ -36,7 +36,7 @@ export const deleteSubtask = async (data) => {
         const { task_id, id } = data;
         const response = await API.delete(`/tasks/${task_id}/subtasks/${id}`);
         // console.log(response.data);
-        return response.data.subtask_id;
+        return { subtask_id: response.data.subtask_id, task_status: response.data.task_status };
     } catch (err) {
         throw err.response.data.msg;
     }
@@ -47,7 +47,7 @@ export const updateSubtask = async (data) => {
         const { task_id, id, title, description, checked } = data;
         const response = await API.put(`/tasks/${task_id}/subtasks/${id}`, { title, description, checked });
         console.log('Updated subtask:', response.data.subtask);
-        return response.data.subtask;
+        return { subtask: response.data.subtask, task_status: response.data.task_status };
     } catch (err) {
         throw err.response.data.msg;
     }

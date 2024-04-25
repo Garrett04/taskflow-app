@@ -42,6 +42,8 @@ const createSubtask = async (req, res) => {
 
     const newSubtask = await Subtask.create({ title, description, task_id });
 
+    await updateTaskStatus(task_id);
+
     res.status(201).json({
         success: true,
         task: newSubtask
@@ -68,7 +70,7 @@ const updateSubtask = async (req, res) => {
     res.json({
         success: true,
         subtask: updatedTask,
-        task_status: updatedTaskStatus,
+        task_status: updatedTaskStatus.status,
     });
 }
 
@@ -86,7 +88,7 @@ const deleteSubtask = async (req, res) => {
     res.json({
         success: true,
         subtask_id: deletedSubtaskId,
-        task_status: updatedTaskStatus,
+        task_status: updatedTaskStatus.status,
     });
 }
 

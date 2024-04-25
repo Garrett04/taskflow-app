@@ -8,6 +8,8 @@ import DeleteSubtaskButton from "./DeleteSubtaskButton";
 import EditSubtaskButton from "./EditSubtaskButton";
 import { fetchSubtasksByTaskId, updateSubtask } from "../../../services/subtasksService";
 import { handleTaskExpand } from "../../../utils/handleTaskExpand";
+import { dispatchFetchTasksByUserId } from '../../../utils/dispatchFetchTasksByUserId';
+import { useLocation } from "react-router-dom";
 
 
 const Subtask = ({
@@ -23,6 +25,7 @@ const Subtask = ({
     const [description, setDescription] = useState(subtask.description);
     
     const dispatch = useDispatch();
+    const location = useLocation();
 
     const updateSubtaskChecked = async (subtask_id, checked) => {
         try {
@@ -35,6 +38,14 @@ const Subtask = ({
             const updatedSubtask = await updateSubtask(data);
 
             dispatch(fetchSubtasksByTaskId(task_id));
+
+            // console.log(updatedSubtask.task_status, task_status);
+
+            // if updatedTaskStatus is different than the previous task status
+            // then dispatchFetchTasksByUserId to update state.
+            if (updatedSubtask.task_status !== task_status) {
+                dispatchFetchTasksByUserId(location.pathname);
+            }
             
         } catch (err) {
             console.log(err);
