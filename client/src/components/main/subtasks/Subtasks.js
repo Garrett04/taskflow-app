@@ -87,10 +87,9 @@ const Subtasks = ({
                                             fontSize: '1rem'
                                         },
                                         display: 'flex',
-                                        
                                         justifyContent: 'space-between',
                                         alignItems: 'center',
-                                        width: '100%'
+                                        width: '100%',
                                     }}
                                 >
                                     {subtask.title}
@@ -111,7 +110,7 @@ const Subtasks = ({
                                     fontSize: '.9rem'
                                 }
                             }} 
-                            marginLeft="3.4rem"
+                            marginLeft="2rem"
                         >
                             {subtask.description}
                         </Typography>

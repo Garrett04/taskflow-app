@@ -33,6 +33,9 @@ const DeadlineDatePicker = ({
                 value={deadline_date && parseISO(deadline_date)}
                 onChange={(newDate) => handleDeadlineDateChange(newDate)}
                 minDateTime={currentDate}
+                sx={{
+                    marginLeft: 'auto'
+                }}
             />
         </LocalizationProvider>
     )

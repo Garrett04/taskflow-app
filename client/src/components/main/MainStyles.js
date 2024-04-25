@@ -31,7 +31,8 @@ export const AddTaskIcon = styled(MuiAddTaskIcon)(({ theme }) => ({
 
 export const CardHeader = styled(MuiCardHeader)(({ theme }) => ({
     backgroundColor: theme.palette.ochre.main,
-    padding: '.5rem',
+    padding: '.5rem 1.1rem',
+    textWrap: 'nowrap',
     [theme.breakpoints.down('sm')]: {
         fontSize: '1.2rem',
     }
