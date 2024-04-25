@@ -18,10 +18,9 @@ const Subtask = ({
     inTaskModal,
 }) => {
     const theme = useTheme();
-    const [editModeMap, setEditModeMap] = useState({});
-    const [title, setTitle] = useState({});
-    const [description, setDescription] = useState({});
-    const [formData, setFormData] = useState({});
+    const [editModeMap, setEditModeMap] = useState(true);
+    const [title, setTitle] = useState(subtask.title);
+    const [description, setDescription] = useState(subtask.description);
     
     const dispatch = useDispatch();
 
@@ -43,20 +42,18 @@ const Subtask = ({
     }
     
 
-    const toggleEditMode = (subtask_id) => {
-        setEditModeMap(prevState => ({
-            ...prevState,
-            [subtask_id]: !prevState[subtask_id]
-        }));
+    const toggleEditMode = () => {
+        setEditModeMap(!editModeMap);
     }
 
-    const handleChange = (e, subtask_id) => {
+    const handleChange = (e) => {
         const { name, value } = e.target;
         
-        setFormData(prevState => ({
-            ...prevState,
-            [name]: value
-        }));
+        if (name === 'title') {
+            setTitle(value);
+        } else if (name === 'description') {
+            setDescription(value);
+        }
     }
 
         return (
@@ -98,26 +95,28 @@ const Subtask = ({
                             sx={{ 
                                 margin: '1rem 0',
                             }}
-                            value={subtask.title}
+                            value={title}
                             label="Subtask Title"
                             name="title"
                             InputProps={{
-                                readOnly: editModeMap[subtask.id],
+                                readOnly: editModeMap,
                             }}
-                            variant={editModeMap[subtask.id] ? "outlined" : "filled"}
+                            variant={editModeMap ? "filled" : "outlined"}
                             fullWidth
+                            onChange={handleChange}
                         />
                         <TextField
-                            value={subtask.description}
+                            value={description}
                             label="Subtask Description"
                             name="description"
                             InputProps={{
-                                readOnly: editModeMap[subtask.id]
+                                readOnly: editModeMap,
                             }}
-                            variant={editModeMap[subtask.id] ? "outlined" : "filled"}
+                            variant={editModeMap ? "filled" : "outlined"}
                             fullWidth
                             multiline
                             rows={3}
+                            onChange={handleChange}
                         />
                     </Box>
                     <Box
@@ -136,7 +135,7 @@ const Subtask = ({
                             id={subtask.id}
                             task_status={task_status}
                             archived={archived}
-                            setIsEditMode={() => toggleEditMode(subtask.id)}
+                            setIsEditMode={() => toggleEditMode()}
                         />}
                     </Box>
                 </Box>
