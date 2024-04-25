@@ -70,22 +70,21 @@ class SubTask {
         let statement = `UPDATE subtasks
                         SET `;
         let values = [data.id];
-        let index = 0;
 
         try {
             // query statement
-            if (data.title) {
+            if (data.title && data.description) {
+                statement += 'title = $2, description = $3';
+                values.push(data.title, data.description);
+            } else if (data.title) {
                 statement += 'title = $2';
                 values.push(data.title);
-                index++;
             } else if (data.description) {
                 statement += 'description = $2';
                 values.push(data.description);
-                index++;
             } else if (data.checked || !data.checked) {
                 statement += 'checked = $2';
                 values.push(data.checked);
-                index++;
             }
 
             statement += ' WHERE id = $1 RETURNING *';

@@ -44,8 +44,8 @@ export const deleteSubtask = async (data) => {
 
 export const updateSubtask = async (data) => {
     try {
-        const { task_id, id, checked } = data;
-        const response = await API.put(`/tasks/${task_id}/subtasks/${id}`, { checked });
+        const { task_id, id, title, description, checked } = data;
+        const response = await API.put(`/tasks/${task_id}/subtasks/${id}`, { title, description, checked });
         console.log('Updated subtask:', response.data.subtask);
         return response.data.subtask;
     } catch (err) {

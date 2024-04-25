@@ -1,5 +1,6 @@
 import { IconButton } from "@mui/material";
 import Edit from '@mui/icons-material/Edit'
+import DoneIcon from '@mui/icons-material/Done';
 
 const EditSubtaskButton = ({
     taskId,
@@ -7,14 +8,27 @@ const EditSubtaskButton = ({
     task_status,
     archived,
     isEditMode,
-    setIsEditMode
+    setIsEditMode,
+    handleSubtaskUpdate
 }) => {
-    
+    const toggleEditMode = () => {
+        setIsEditMode(!isEditMode);
+    }
 
     return (
-        <IconButton onClick={setIsEditMode}>
-            <Edit />
-        </IconButton>
+        <>
+        {!isEditMode 
+        ? (
+            <IconButton onClick={toggleEditMode}>
+                <Edit titleAccess="Edit Subtask" /> 
+            </IconButton>
+            )
+        : (
+            <IconButton onClick={(e) => handleSubtaskUpdate(e, id)}>
+                <DoneIcon titleAccess="Done" />
+            </IconButton>
+        )}
+        </>
     )
 }
 

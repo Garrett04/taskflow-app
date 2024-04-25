@@ -59,6 +59,8 @@ const updateSubtask = async (req, res) => {
 
     const updatedTask = await Subtask.update({ id, title, description, checked });
     
+    // console.log(title, description, checked);
+
     if (typeof checked === 'boolean') {
         updatedTaskStatus = await updateTaskStatus(task_id);
     }
