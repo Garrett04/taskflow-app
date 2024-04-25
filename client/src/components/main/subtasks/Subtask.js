@@ -72,7 +72,7 @@ const Subtask = ({
         <Stack
             direction="row" 
             alignItems="flex-start"
-            marginLeft="1rem"
+            margin="1rem 0 1rem 1rem"
             key={subtask.id}
         >
             <FormControlLabel
@@ -99,10 +99,11 @@ const Subtask = ({
                 sx={{
                     display: 'inline-flex',
                     flexFlow: 'row nowrap',
+                    justifyContent: 'space-between',
                     width: '100%'
                 }}
             >
-                <Box>
+                <Box sx={{ width: '100%' }}>
                     <TextField
                         sx={{ 
                             margin: '1rem 0',
