@@ -1,19 +1,16 @@
-import { Box, Card, Collapse, Divider, Input, Modal } from "@mui/material"
-import Subtasks from "../components/main/Subtasks"
-import { CardBottom, CardHeader, ModalBox, TaskCard, TaskTitle } from "../components/main/MainStyles"
+import { Box, Collapse, Divider, Modal } from "@mui/material"
+import Subtasks from "../components/main/subtasks/Subtasks"
+import { CardBottom, ModalBox, TaskCard, TaskTitle } from "../components/main/MainStyles"
 import { useEffect, useState } from "react"
 import { useDispatch, useSelector } from "react-redux"
 import { getTaskError, getTaskStatus, selectTask } from "../features/tasks/taskSlice"
-import { useLocation, useNavigate, useParams } from "react-router-dom"
+import { useLocation, useParams } from "react-router-dom"
 import { fetchTaskById, updateTask } from "../services/tasksService"
 import { renderTaskStatus } from "../utils/renderTaskStatus"
-import AddSubtask from "../components/main/AddSubtask"
 
-import DeadlineDatePicker from "../components/main/DeadlineDatePicker"
-import MoveToTrashButton from "../components/main/MoveToTrashButton"
-import Tasks from "../components/main/Tasks"
-import DeadlineDate from "../components/main/DeadlineDate"
-import { dispatchFetchTasksByUserId } from "../utils/dispatchFetchTasksByUserId"
+import DeadlineDatePicker from "../components/main/task/DeadlineDatePicker"
+import MoveToTrashButton from "../components/main/task/MoveToTrashButton"
+import DeadlineDate from "../components/main/task/DeadlineDate"
 
 
 const TaskModal = ({

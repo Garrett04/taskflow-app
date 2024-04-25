@@ -1,9 +1,9 @@
 import { IconButton } from "@mui/material";
 import RestoreIcon from '@mui/icons-material/Restore';
-import { fetchTasksByUserId, updateTaskArchived } from "../../services/tasksService";
+import { fetchTasksByUserId, updateTaskArchived } from "../../../services/tasksService";
 import { useDispatch } from "react-redux";
 import { useLocation } from "react-router-dom";
-import { dispatchFetchTasksByUserId } from "../../utils/dispatchFetchTasksByUserId";
+import { dispatchFetchTasksByUserId } from "../../../utils/dispatchFetchTasksByUserId";
 
 const RestoreTaskButton = ({
     task_id,

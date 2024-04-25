@@ -1,9 +1,9 @@
 import { IconButton } from "@mui/material";
 import DeleteForeverIcon from '@mui/icons-material/DeleteForever';
-import { deleteTask, fetchTasksByUserId } from "../../services/tasksService";
+import { deleteTask, fetchTasksByUserId } from "../../../services/tasksService";
 import { useDispatch } from "react-redux";
 import { addDays, addMinutes, formatDistanceToNow } from "date-fns";
-import { dispatchFetchTasksByUserId } from "../../utils/dispatchFetchTasksByUserId";
+import { dispatchFetchTasksByUserId } from "../../../utils/dispatchFetchTasksByUserId";
 import { useLocation } from "react-router-dom";
 
 const DeleteTaskButton = ({

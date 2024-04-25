@@ -2,8 +2,8 @@ import { DateCalendar, DatePicker, DatePickerToolbar, DateTimePicker, TimePicker
 import { LocalizationProvider } from "@mui/x-date-pickers";
 import { AdapterDateFns } from "@mui/x-date-pickers/AdapterDateFnsV3";
 import { parseISO, isBefore, isAfter } from 'date-fns';
-import { updateSubtask } from "../../services/subtasksService";
-import { updateTask } from "../../services/tasksService";
+import { updateSubtask } from "../../../services/subtasksService";
+import { updateTask } from "../../../services/tasksService";
 import { useDispatch } from "react-redux";
 import { useRef, useState } from "react";
 

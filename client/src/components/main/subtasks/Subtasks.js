@@ -1,11 +1,11 @@
 import { useDispatch, useSelector } from "react-redux";
-import { fetchSampleSubtasks, getSubtasksError, getSubtasksStatus, selectSampleSubtasks, selectSubtasks } from "../../features/subtasks/subtasksSlice";
+import { fetchSampleSubtasks, getSubtasksError, getSubtasksStatus, selectSampleSubtasks, selectSubtasks } from "../../../features/subtasks/subtasksSlice";
 import { useEffect, useState } from "react";
 import { Checkbox, FormControlLabel, FormGroup, Stack, Typography } from "@mui/material";
 import { useTheme } from "@emotion/react";
-import { fetchSubtasksByTaskId, updateSubtask } from "../../services/subtasksService";
-import { selectIsAuthenticated } from "../../features/auth/authSlice";
-import { handleTaskExpand } from "../../utils/handleTaskExpand";
+import { fetchSubtasksByTaskId, updateSubtask } from "../../../services/subtasksService";
+import { selectIsAuthenticated } from "../../../features/auth/authSlice";
+import { handleTaskExpand } from "../../../utils/handleTaskExpand";
 import AddSubtask from "./AddSubtask";
 import DeleteSubtaskButton from "./DeleteSubtaskButton";
 import { useLocation } from "react-router-dom";
@@ -63,6 +63,7 @@ const Subtasks = ({
                         key={subtask.id}
                     >
                         <FormControlLabel 
+                            sx={{ width: '100%' }}
                             control={
                                 <Checkbox 
                                     color="secondary" 
@@ -73,19 +74,32 @@ const Subtasks = ({
                                                 fontSize: '1.3rem',
                                                 marginTop: '-1px'
                                             }
-                                        }
+                                        },
                                     }}
                                     onChange={() => updateSubtaskChecked(subtask.id, subtask.checked)}
                                     disabled={archived || task_status === 'overdue'}
                                 />
                             } 
                             label={
-                                <Typography variant="h6" sx={{
-                                    [theme.breakpoints.down('sm')]: {
-                                        fontSize: '1rem'
-                                    }
-                                }}>
+                                <Typography variant="h6" 
+                                    sx={{
+                                        [theme.breakpoints.down('sm')]: {
+                                            fontSize: '1rem'
+                                        },
+                                        display: 'flex',
+                                        
+                                        justifyContent: 'space-between',
+                                        alignItems: 'center',
+                                        width: '100%'
+                                    }}
+                                >
                                     {subtask.title}
+                                    <DeleteSubtaskButton 
+                                        taskId={subtask.task_id} 
+                                        id={subtask.id} 
+                                        task_status={task_status}
+                                        archived={archived} 
+                                    />
                                 </Typography>
                             } 
                             onClick={handleTaskExpand}
@@ -101,12 +115,7 @@ const Subtasks = ({
                         >
                             {subtask.description}
                         </Typography>
-                        <DeleteSubtaskButton 
-                            taskId={subtask.task_id} 
-                            id={subtask.id} 
-                            task_status={task_status}
-                            archived={archived} 
-                        />
+                        
                     </Stack>
                 )
             })

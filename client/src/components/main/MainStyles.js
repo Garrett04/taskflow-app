@@ -8,7 +8,7 @@ export const MainGrid = styled(Grid)(({ theme }) => ({
     padding: '0 5rem',
     margin: '.5rem auto',
     [theme.breakpoints.down('sm')]: {
-        margin: '3.5rem 2rem 0',
+        marginLeft: '2rem',
         padding: '1rem 2.5rem 0'
     }
 }))
@@ -52,6 +52,10 @@ export const ModalBox = styled(Box)(({ theme }) => ({
     top: '50%',
     left: '50%',
     transform: 'translate(-50%, -50%)',
+    width: '60%',
+    [theme.breakpoints.down('sm')]: {
+        width: '70%',
+    }
 }))
 
 export const TaskTitle = styled(Input)(({ theme }) => ({

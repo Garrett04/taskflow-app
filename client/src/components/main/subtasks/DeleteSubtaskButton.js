@@ -1,5 +1,5 @@
 import { IconButton } from "@mui/material";
-import { deleteSubtask, fetchSubtasksByTaskId } from "../../services/subtasksService";
+import { deleteSubtask, fetchSubtasksByTaskId } from "../../../services/subtasksService";
 import { useParams } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import DeleteForeverIcon from '@mui/icons-material/DeleteForever'

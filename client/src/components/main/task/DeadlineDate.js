@@ -1,5 +1,5 @@
 import { format } from "date-fns";
-import { MuiDeadlineDate } from "./MainStyles";
+import { MuiDeadlineDate } from "../MainStyles";
 
 
 const DeadlineDate = ({

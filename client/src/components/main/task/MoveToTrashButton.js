@@ -1,9 +1,9 @@
 import DeleteIcon from '@mui/icons-material/Delete';
 import { IconButton } from '@mui/material';
-import { fetchTasksByUserId, updateTaskArchived } from '../../services/tasksService';
+import { fetchTasksByUserId, updateTaskArchived } from '../../../services/tasksService';
 import { useDispatch } from 'react-redux';
-import { handleTaskExpand } from '../../utils/handleTaskExpand';
-import { dispatchFetchTasksByUserId } from '../../utils/dispatchFetchTasksByUserId';
+import { handleTaskExpand } from '../../../utils/handleTaskExpand';
+import { dispatchFetchTasksByUserId } from '../../../utils/dispatchFetchTasksByUserId';
 import { useLocation } from 'react-router-dom';
 
 // it just updates the task status to deleted in the database

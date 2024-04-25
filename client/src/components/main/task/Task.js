@@ -1,13 +1,13 @@
 import { Box, Divider, Stack } from "@mui/material"
-import Subtasks from "./Subtasks"
+import Subtasks from "../subtasks/Subtasks";
 import { useLocation, useNavigate } from "react-router-dom";
-import { CardBottom, CardHeader, TaskCard } from "./MainStyles";
-import { renderTaskStatus } from "../../utils/renderTaskStatus";
+import { CardBottom, CardHeader, TaskCard } from "../MainStyles";
+import { renderTaskStatus } from "../../../utils/renderTaskStatus";
 import MoveToTrashButton from "./MoveToTrashButton";
 import RestoreTaskButton from "./RestoreTaskButton";
 import DeleteTaskButton from "./DeleteTaskButton";
 import { useSelector } from "react-redux";
-import { selectIsAuthenticated } from "../../features/auth/authSlice";
+import { selectIsAuthenticated } from "../../../features/auth/authSlice";
 import DeadlineDate from "./DeadlineDate";
 
 const Task = ({
