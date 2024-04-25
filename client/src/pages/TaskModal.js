@@ -103,7 +103,7 @@ const TaskModal = ({
                     <CardBottom>
                         {renderTaskStatus(task.status)}
                         {task.archived || task.status === 'overdue' || task.status === 'completed'
-                        ? <DeadlineDate deadline_date={task.deadline_date} />
+                        ? <DeadlineDate task_status={task.status} deadline_date={task.deadline_date} />
                         : <DeadlineDatePicker 
                             id={task.id}
                             deadline_date={task.deadline_date}

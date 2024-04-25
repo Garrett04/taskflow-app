@@ -43,8 +43,8 @@ export const CardBottom = styled(CardContent)(() => ({
     justifyContent: 'space-between',
 }));
 
-export const MuiDeadlineDate = styled(Typography)(() => ({
-    color: 'red',
+export const MuiDeadlineDate = styled(Typography)(({ theme, is_completed }) => ({
+    color: is_completed === 'true' ? '#32de84' : 'red',
     fontSize: '1.2rem'
 }))
 

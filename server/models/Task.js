@@ -35,9 +35,13 @@ class Task {
                 statement += 'title = $2';
                 values.push(data.title);
             } else if (data.deadline_date) {
-                // for every time the deadline is given to update status with it to pending.
-                statement += "deadline_date = $2, status = 'pending'";
-                values.push(data.deadline_date);
+                if (data.deadline_date === 'null') {
+                    statement += "deadline_date = null, status = 'idle'";
+                } else {
+                    // for every time the deadline is given to update status with it to pending.
+                    statement += "deadline_date = $2, status = 'pending'";
+                    values.push(data.deadline_date);
+                }
             } else if (data.status) {
                 statement += 'status = $2';
                 values.push(data.status);

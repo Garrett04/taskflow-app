@@ -68,7 +68,7 @@ const Task = ({
                 <Divider />
                 <CardBottom>
                     {renderTaskStatus(task.status)}
-                    <DeadlineDate deadline_date={task.deadline_date} />
+                    <DeadlineDate task_status={task.status} deadline_date={task.deadline_date} />
                 </CardBottom>
             </TaskCard>
         </>
