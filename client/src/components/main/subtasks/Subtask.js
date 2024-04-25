@@ -11,17 +11,17 @@ import { handleTaskExpand } from "../../../utils/handleTaskExpand";
 
 
 const Subtask = ({
-    subtasks,
+    subtask,
     task_id,
     archived,
     task_status,
     inTaskModal,
 }) => {
     const theme = useTheme();
-    const isAuthenticated = useSelector(selectIsAuthenticated);
-    const subtasksError = useSelector(getSubtasksError);
-    const sampleSubtasks = useSelector(selectSampleSubtasks);
     const [editModeMap, setEditModeMap] = useState({});
+    const [title, setTitle] = useState({});
+    const [description, setDescription] = useState({});
+    const [formData, setFormData] = useState({});
     
     const dispatch = useDispatch();
 
@@ -41,8 +41,7 @@ const Subtask = ({
             console.log(err);
         }
     }
-
-    const subtasksByTaskId = isAuthenticated ? subtasks[task_id] : sampleSubtasks[task_id];
+    
 
     const toggleEditMode = (subtask_id) => {
         setEditModeMap(prevState => ({
@@ -50,94 +49,100 @@ const Subtask = ({
             [subtask_id]: !prevState[subtask_id]
         }));
     }
+
+    const handleChange = (e, subtask_id) => {
+        const { name, value } = e.target;
         
-    if (subtasksByTaskId?.length > 0) {
-        return subtasksByTaskId.map(subtask => {
-            return (
-                <Stack
-                    direction="row" 
-                    alignItems="flex-start"
-                    marginLeft="1rem"
-                    key={subtask.id}
-                >
-                    <FormControlLabel
-                        control={
-                            <Checkbox
-                                color="secondary" 
-                                checked={subtask.checked}
-                                sx={{
-                                    [theme.breakpoints.down('sm')]: {
-                                        '& .MuiSvgIcon-root': { 
-                                            fontSize: '1.3rem',
-                                            marginTop: '-1px'
-                                        }
-                                    },
-                                    margin: '1.4rem 0'
-                                }}
-                                onChange={() => updateSubtaskChecked(subtask.id, subtask.checked)}
-                                disabled={archived || task_status === 'overdue'}
-                            />
-                        } 
-                        onClick={handleTaskExpand}
-                    />
-                    <Box
-                        sx={{
-                            display: 'inline-flex',
-                            flexFlow: 'row nowrap',
-                            width: '100%'
-                        }}
-                    >
-                        <Box>
-                            <TextField
-                                sx={{ 
-                                    margin: '1rem 0',
-                                }}
-                                value={subtask.title}
-                                label="Subtask Title"
-                                InputProps={{
-                                    readOnly: editModeMap[subtask.id],
-                                }}
-                                variant={editModeMap[subtask.id] ? "outlined" : "filled"}
-                                fullWidth
-                            />
-                            <TextField
-                                value={subtask.description}
-                                label="Subtask Description"
-                                InputProps={{
-                                    readOnly: editModeMap[subtask.id]
-                                }}
-                                variant={editModeMap[subtask.id] ? "outlined" : "filled"}
-                                fullWidth
-                                multiline
-                                rows={3}
-                            />
-                        </Box>
-                        <Box
-                            sx={{ margin: '1rem 0' }}
-                        >
-                            <DeleteSubtaskButton
-                                taskId={subtask.task_id} 
-                                id={subtask.id} 
-                                task_status={task_status}
-                                archived={archived} 
-                            />
-                            {inTaskModal 
-                            && 
-                            <EditSubtaskButton
-                                taskId={subtask.task_id}
-                                id={subtask.id}
-                                task_status={task_status}
-                                archived={archived}
-                                
-                                setIsEditMode={() => toggleEditMode(subtask.id)}
-                            />}
-                        </Box>
-                    </Box>
-                </Stack>
-            )
-        })
+        setFormData(prevState => ({
+            ...prevState,
+            [name]: value
+        }));
     }
-    return subtasksError;
+
+        return (
+            <Stack
+                direction="row" 
+                alignItems="flex-start"
+                marginLeft="1rem"
+                key={subtask.id}
+            >
+                <FormControlLabel
+                    control={
+                        <Checkbox
+                            color="secondary" 
+                            checked={subtask.checked}
+                            sx={{
+                                [theme.breakpoints.down('sm')]: {
+                                    '& .MuiSvgIcon-root': { 
+                                        fontSize: '1.3rem',
+                                        marginTop: '-1px'
+                                    }
+                                },
+                                margin: '1.4rem 0'
+                            }}
+                            onChange={() => updateSubtaskChecked(subtask.id, subtask.checked)}
+                            disabled={archived || task_status === 'overdue'}
+                        />
+                    } 
+                    onClick={handleTaskExpand}
+                />
+                <Box
+                    sx={{
+                        display: 'inline-flex',
+                        flexFlow: 'row nowrap',
+                        width: '100%'
+                    }}
+                >
+                    <Box>
+                        <TextField
+                            sx={{ 
+                                margin: '1rem 0',
+                            }}
+                            value={subtask.title}
+                            label="Subtask Title"
+                            name="title"
+                            InputProps={{
+                                readOnly: editModeMap[subtask.id],
+                            }}
+                            variant={editModeMap[subtask.id] ? "outlined" : "filled"}
+                            fullWidth
+                        />
+                        <TextField
+                            value={subtask.description}
+                            label="Subtask Description"
+                            name="description"
+                            InputProps={{
+                                readOnly: editModeMap[subtask.id]
+                            }}
+                            variant={editModeMap[subtask.id] ? "outlined" : "filled"}
+                            fullWidth
+                            multiline
+                            rows={3}
+                        />
+                    </Box>
+                    <Box
+                        sx={{ margin: '1rem 0' }}
+                    >
+                        <DeleteSubtaskButton
+                            taskId={subtask.task_id} 
+                            id={subtask.id} 
+                            task_status={task_status}
+                            archived={archived} 
+                        />
+                        {inTaskModal 
+                        && 
+                        <EditSubtaskButton
+                            taskId={subtask.task_id}
+                            id={subtask.id}
+                            task_status={task_status}
+                            archived={archived}
+                            setIsEditMode={() => toggleEditMode(subtask.id)}
+                        />}
+                    </Box>
+                </Box>
+            </Stack>
+        )
+    
 }
 
 export default Subtask;
