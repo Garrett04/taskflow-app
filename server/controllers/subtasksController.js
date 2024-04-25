@@ -70,7 +70,7 @@ const updateSubtask = async (req, res) => {
     res.json({
         success: true,
         subtask: updatedTask,
-        task_status: updatedTaskStatus.status,
+        task_status: updatedTaskStatus?.status,
     });
 }
 

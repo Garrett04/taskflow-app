@@ -10,5 +10,5 @@ export const store = configureStore({
         tasks: tasksReducer,
         subtasks: subtasksReducer,
         task: taskReducer,
-    }
+    },
 })
