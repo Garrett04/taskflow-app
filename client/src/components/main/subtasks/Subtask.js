@@ -23,12 +23,15 @@ const Subtask = ({
     const [isEditMode, setIsEditMode] = useState(false);
     const [title, setTitle] = useState(subtask.title);
     const [description, setDescription] = useState(subtask.description);
+    const [checked, setChecked] = useState(subtask.checked);
     
     const dispatch = useDispatch();
     const location = useLocation();
 
-    const updateSubtaskChecked = async (subtask_id, checked) => {
+    const updateSubtaskChecked = async (subtask_id) => {
         try {
+            setChecked(!checked);
+
             // Incase the user removes the disabled property of the checkbox in the dev tools
             if (archived || task_status === 'overdue') {
                 return;
@@ -37,15 +40,15 @@ const Subtask = ({
             const data = { task_id, id: subtask_id, checked: !checked };
             const updatedSubtask = await updateSubtask(data);
 
-            dispatch(fetchSubtasksByTaskId(task_id));
+            // dispatch(fetchSubtasksByTaskId(task_id));
 
             // console.log(updatedSubtask.task_status, task_status);
 
             // if updatedTaskStatus is different than the previous task status
             // then dispatchFetchTasksByUserId to update state.
-            if (updatedSubtask.task_status !== task_status) {
-                dispatchFetchTasksByUserId(location.pathname);
-            }
+            // if (updatedSubtask.task_status !== task_status) {
+            //     dispatchFetchTasksByUserId(location.pathname);
+            // }
             
         } catch (err) {
             console.log(err);
@@ -152,7 +155,7 @@ const Subtask = ({
                 control={
                     <Checkbox
                         color="secondary" 
-                        checked={subtask.checked}
+                        checked={checked}
                         sx={{
                             [theme.breakpoints.down('sm')]: {
                                 '& .MuiSvgIcon-root': { 
@@ -162,7 +165,7 @@ const Subtask = ({
                             },
                             marginLeft: '1rem'
                         }}
-                        onChange={() => updateSubtaskChecked(subtask.id, subtask.checked)}
+                        onChange={() => updateSubtaskChecked(subtask.id)}
                         disabled={archived || task_status === 'overdue'}
                         size="small"
                     />
