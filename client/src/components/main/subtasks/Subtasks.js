@@ -81,8 +81,7 @@ const Subtasks = ({
                 >
                     {content}
                 </Box>
-            : content
-            }
+            : content}
             {inTaskModal && <AddSubtask task_id={task_id} task_status={task_status} archived={archived} />}
         </Box>
     )
