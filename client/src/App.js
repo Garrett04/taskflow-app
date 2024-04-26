@@ -15,6 +15,7 @@ import OverdueTasks from "./pages/OverdueTasks";
 import Trash from "./pages/Trash";
 import Login from './pages/Login';
 import Register from './pages/Register';
+import AccountInfo from "./pages/AccountInfo";
 
 
 function App() {
@@ -26,6 +27,10 @@ function App() {
       path: '/',
       element: <Root />,
       children: [
+        {
+          path: '/account-info',
+          element: <AccountInfo />,
+        },
         {
           path: '/',
           element: <Tasks />,
