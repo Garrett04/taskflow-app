@@ -64,10 +64,25 @@ const Subtasks = ({
                 display: 'flex', 
                 flexFlow: 'column', 
                 gap: '1.2rem', 
-                margin: '0' 
+                margin: '0',
+                
             }}
         >
-            {content}
+            {inTaskModal 
+            ? <Box 
+                    sx={{
+                        display: 'flex',
+                        flexFlow: 'column',
+                        overflowY: 'auto',
+                        maxHeight: '20rem',
+                        overflowX: 'hidden',
+                        gap: '1.2rem',
+                    }}
+                >
+                    {content}
+                </Box>
+            : content
+            }
             {inTaskModal && <AddSubtask task_id={task_id} task_status={task_status} archived={archived} />}
         </Box>
     )

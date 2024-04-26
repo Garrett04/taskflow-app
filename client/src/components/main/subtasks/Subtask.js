@@ -145,7 +145,7 @@ const Subtask = ({
             direction="row"
             flexWrap="wrap" 
             alignItems="center"
-            margin="0 0 0 1rem"
+            width='100%'
             key={subtask.id}
         >
             <FormControlLabel
@@ -160,7 +160,7 @@ const Subtask = ({
                                     marginTop: '-1px'
                                 }
                             },
-                            // margin: '2rem 0 0'
+                            marginLeft: '1rem'
                         }}
                         onChange={() => updateSubtaskChecked(subtask.id, subtask.checked)}
                         disabled={archived || task_status === 'overdue'}
@@ -175,12 +175,15 @@ const Subtask = ({
                     flexFlow: 'row wrap',
                     justifyContent: 'space-between',
                     alignItems: 'center',
-                    width: '85%'
+                    width: inTaskModal ? "90%" : "80%",
                 }}
             >
                 {renderSubtaskDataFields()}
                 <Box
-                    sx={{ width: '6%' }}
+                    sx={{  
+                        display: 'flex',
+                        flexFlow: 'column wrap'
+                    }}
                 >
                     <DeleteSubtaskButton
                         taskId={subtask.task_id} 
