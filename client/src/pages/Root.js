@@ -9,9 +9,8 @@ const Root = () => {
 
   return (
     <>
-        
         <AppLayout/>
-        <FilterDropdowns />
+        
         <MainGrid>
           <Outlet/>
         </MainGrid>

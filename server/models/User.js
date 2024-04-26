@@ -27,10 +27,7 @@ class User {
     async findById(id) {
         try {
             // query statement
-            const statement = `SELECT id,
-                                    username,
-                                    first_name,
-                                    last_name
+            const statement = `SELECT *
                                 FROM users
                                 WHERE id = $1`
             
@@ -68,20 +65,23 @@ class User {
     }
 
     async update(data) {
-        let statement = 'UPDATE users SET ';
-        let values = [data.id];
+        let statement = 'UPDATE users SET pw_hash = $2, pw_salt = $3, ';
+        let values = [data.id, data.pw_hash, data.pw_salt];
 
         try {
             // query statement
-            if (data.first_name && data.last_name) {
-                statement += 'first_name = $2, last_name = $3';
-                values.push(data.first_name, data.last_name);
+            if (data.first_name && data.last_name && data.username) {
+                statement += 'username = $4, first_name = $5, last_name = $6';
+                values.push(data.username, data.first_name, data.last_name);
             } else if (data.first_name) {
-                statement += 'first_name = $2';
+                statement += 'first_name = $4';
                 values.push(data.first_name);
             } else if (data.last_name) {
-                statement += 'last_name = $2';
+                statement += 'last_name = $4';
                 values.push(data.last_name);
+            } else if (data.username) {
+                statement += 'username = $4'
+                values.push(data.username);
             }
 
             statement += ' WHERE id = $1 RETURNING id, username, first_name, last_name';

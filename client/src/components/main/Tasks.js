@@ -10,6 +10,7 @@ import { Outlet, ScrollRestoration, useLocation, useNavigate, useSearchParams } 
 import { renderPageTitle } from "../../utils/renderPageTitle";
 import { dispatchFetchTasksByUserId } from "../../utils/dispatchFetchTasksByUserId";
 import TaskModal from "../../pages/TaskModal";
+import FilterDropdowns from "../filterOptions/FilterDropdowns";
 
 
 const Tasks = ({
@@ -108,7 +109,7 @@ const Tasks = ({
     return (
         // Show all tasks here
         <>
-            
+            <FilterDropdowns />
             <Typography 
                 paragraph
                 variant="h4"

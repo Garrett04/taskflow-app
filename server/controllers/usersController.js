@@ -1,4 +1,5 @@
 const User = require("../models/User");
+const utils = require('../lib/utils');
 
 const getUserById = async (req, res) => {
     const userId = req.user.id;
@@ -18,14 +19,56 @@ const getUserById = async (req, res) => {
 }
 
 const updateUser = async (req, res) => {
-    const { first_name, last_name } = req.body;
+    const { username, first_name, last_name, old_password, new_password } = req.body;
     const userId = req.user.id;
 
-    if (!first_name && !last_name) {
-        return res.status(404).json({ success: false, msg: "Please provide first_name/last_name to update user info" });
+    // Username Exists
+    if (username) {
+        const userExists = await User.findByUsername(username);
+
+        if (userExists) {
+            return res.status(400).json({
+                success: false,
+                reason: 'username exists',
+                msg: "User with username already exists. Please try again."
+            })
+        }
     }
 
-    const updatedUser = await User.update({ id: userId, first_name, last_name });
+    // Password Validation
+    const user = await User.findById(userId);
+    const { pw_hash, pw_salt } = user;
+
+    const isPasswordValid = utils.validatePassword(old_password, pw_hash, pw_salt);
+
+    // if old password is not equal to the old password passed from the request body
+    if (!isPasswordValid) {
+        return res.status(401).json({ 
+            success: false, 
+            msg: "Invalid old password. Please try again." 
+        });
+    }
+
+    // if new password is same as old password
+    if (new_password === old_password) {
+        return res.status(400).json({ 
+            success: false, 
+            msg: "New password is same as old password." 
+        });
+    }
+    
+    const { salt, hash } = utils.genPassword(new_password);
+
+    const updatedUser = await User.update({ 
+        id: userId, 
+        username: username || user.username, 
+        first_name: first_name || user.first_name, 
+        last_name: last_name || user.last_name, 
+        pw_hash: hash, 
+        pw_salt: salt, 
+    });
+
+    console.log(updatedUser);
 
     res.json({ 
         success: true,
