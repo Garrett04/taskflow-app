@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { getSubtasksError, getSubtasksStatus, selectSampleSubtasks } from "../../../features/subtasks/subtasksSlice";
+import { getSubtasksError, getSubtasksStatus, selectSampleSubtasks, selectSubtasks } from "../../../features/subtasks/subtasksSlice";
 import { selectIsAuthenticated } from "../../../features/auth/authSlice";
 import { useTheme } from "@emotion/react";
 import { Box, Checkbox, FormControlLabel, Stack, TextField, Typography } from "@mui/material";
@@ -10,6 +10,7 @@ import { fetchSubtasksByTaskId, updateSubtask } from "../../../services/subtasks
 import { handleTaskExpand } from "../../../utils/handleTaskExpand";
 import { dispatchFetchTasksByUserId } from '../../../utils/dispatchFetchTasksByUserId';
 import { useLocation } from "react-router-dom";
+import { updateTaskStatus } from "../../../features/tasks/tasksSlice";
 
 
 const Subtask = ({
@@ -23,10 +24,11 @@ const Subtask = ({
     const [isEditMode, setIsEditMode] = useState(false);
     const [title, setTitle] = useState(subtask.title);
     const [description, setDescription] = useState(subtask.description);
-    const [checked, setChecked] = useState(subtask.checked);
+    const [checked, setChecked] = useState(subtask.checked || false);
     
     const dispatch = useDispatch();
     const location = useLocation();
+
 
     const updateSubtaskChecked = async (subtask_id) => {
         try {
@@ -40,20 +42,21 @@ const Subtask = ({
             const data = { task_id, id: subtask_id, checked: !checked };
             const updatedSubtask = await updateSubtask(data);
 
-            // dispatch(fetchSubtasksByTaskId(task_id));
-
             // console.log(updatedSubtask.task_status, task_status);
 
             // if updatedTaskStatus is different than the previous task status
             // then dispatchFetchTasksByUserId to update state.
-            // if (updatedSubtask.task_status !== task_status) {
-            //     dispatchFetchTasksByUserId(location.pathname);
-            // }
+            if (updatedSubtask.task_status !== task_status) {
+                // dispatch(fetchSubtasksByTaskId(task_id));
+                // dispatchFetchTasksByUserId(location.pathname);
+                dispatch(updateTaskStatus({ id: task_id, task_status: updatedSubtask.task_status }));
+            }
             
         } catch (err) {
             console.log(err);
         }
     }
+    
     
     const handleSubtaskUpdate = async (e, subtask_id) => {
         e.preventDefault();

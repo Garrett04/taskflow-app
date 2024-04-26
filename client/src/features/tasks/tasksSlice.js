@@ -17,6 +17,13 @@ const initialState = {
 const tasksSlice = createSlice({
     name: 'tasks',
     initialState,
+    reducers: {
+        updateTaskStatus: (state, action) => {
+            const taskIndex = state.tasks.findIndex(task => task.id === action.payload.id);
+
+            state.tasks[taskIndex].status = action.payload.task_status;
+        }
+    },
     extraReducers: (builder) => {
         builder
             .addCase(fetchTasksByUserId.pending, (state) => {
@@ -34,6 +41,9 @@ const tasksSlice = createSlice({
 })
 
 export const selectSampleTasks = (state) => state.tasks.sampleTasks;
+
+
+export const { updateTaskStatus } = tasksSlice.actions;
 
 export const selectTasks = (state) => state.tasks.tasks;
 export const getTasksStatus = (state) => state.tasks.status;

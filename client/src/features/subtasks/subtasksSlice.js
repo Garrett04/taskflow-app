@@ -1,5 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit"
-import { deleteSubtask, fetchSubtasksByTaskId } from "../../services/subtasksService";
+import { fetchSubtasksByTaskId } from "../../services/subtasksService";
 
 const initialState = {
     sampleSubtasks: {
@@ -25,6 +25,12 @@ const initialState = {
 const subtasksSlice = createSlice({
     name: 'subtasks',
     initialState,
+    reducers: {
+        deleteSubtaskAction: (state, action) => {
+            const { task_id, id } = action.payload;
+            state.subtasks[task_id] = state.subtasks[task_id].filter(subtask => subtask.id !== id);
+        }
+    },
     extraReducers: (builder) => {
         builder
             .addCase(fetchSubtasksByTaskId.pending, (state) => {
@@ -50,6 +56,8 @@ const subtasksSlice = createSlice({
 })
 
 export const selectSampleSubtasks = (state) => state.subtasks.sampleSubtasks;
+
+export const { deleteSubtaskAction } = subtasksSlice.actions;
 export const selectSubtasks = (state) => state.subtasks.subtasks;
 export const getSubtasksStatus = (state) => state.subtasks.status;
 export const getSubtasksError = (state) => state.subtasks.error;
