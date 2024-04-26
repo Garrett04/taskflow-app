@@ -24,7 +24,7 @@ const EditSubtaskButton = ({
             </IconButton>
             )
         : (
-            <IconButton onClick={(e) => handleSubtaskUpdate(e, id)}>
+            <IconButton onClick={handleSubtaskUpdate}>
                 <DoneIcon titleAccess="Done" />
             </IconButton>
         )}

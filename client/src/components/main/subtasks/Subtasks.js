@@ -59,10 +59,17 @@ const Subtasks = ({
     }
 
     return (
-        <FormGroup sx={{ gap: '1rem' }}>
+        <Box 
+            sx={{ 
+                display: 'flex', 
+                flexFlow: 'column', 
+                gap: '1.2rem', 
+                margin: '0' 
+            }}
+        >
             {content}
             {inTaskModal && <AddSubtask task_id={task_id} task_status={task_status} archived={archived} />}
-        </FormGroup>
+        </Box>
     )
 }
 

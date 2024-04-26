@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { getSubtasksError, getSubtasksStatus, selectSampleSubtasks } from "../../../features/subtasks/subtasksSlice";
 import { selectIsAuthenticated } from "../../../features/auth/authSlice";
 import { useTheme } from "@emotion/react";
-import { Box, Checkbox, FormControlLabel, Stack, TextField } from "@mui/material";
+import { Box, Checkbox, FormControlLabel, Stack, TextField, Typography } from "@mui/material";
 import DeleteSubtaskButton from "./DeleteSubtaskButton";
 import EditSubtaskButton from "./EditSubtaskButton";
 import { fetchSubtasksByTaskId, updateSubtask } from "../../../services/subtasksService";
@@ -61,8 +61,9 @@ const Subtask = ({
 
             // console.log(updatedSubtask);
 
-            dispatch(fetchSubtasksByTaskId(task_id));
             setIsEditMode(false);
+
+            dispatch(fetchSubtasksByTaskId(task_id));
         } catch (err) {
             console.log(err);
         }
@@ -79,42 +80,14 @@ const Subtask = ({
         }
     }
 
-    return (
-        <Stack
-            direction="row" 
-            alignItems="flex-start"
-            margin="1rem 0 1rem 1rem"
-            key={subtask.id}
-        >
-            <FormControlLabel
-                control={
-                    <Checkbox
-                        color="secondary" 
-                        checked={subtask.checked}
-                        sx={{
-                            [theme.breakpoints.down('sm')]: {
-                                '& .MuiSvgIcon-root': { 
-                                    fontSize: '1.3rem',
-                                    marginTop: '-1px'
-                                }
-                            },
-                            margin: '1.4rem 0'
-                        }}
-                        onChange={() => updateSubtaskChecked(subtask.id, subtask.checked)}
-                        disabled={archived || task_status === 'overdue'}
-                    />
-                } 
-                onClick={handleTaskExpand}
-            />
-            <Box
-                sx={{
-                    display: 'inline-flex',
-                    flexFlow: 'row nowrap',
-                    justifyContent: 'space-between',
-                    width: '100%'
-                }}
-            >
-                <Box sx={{ width: '100%' }}>
+    const renderSubtaskDataFields = () => {
+        if (isEditMode) {
+            return (
+                <Box
+                    sx={{
+                        width: '85%'
+                    }}
+                >
                     <TextField
                         sx={{ 
                             margin: '1rem 0',
@@ -143,8 +116,71 @@ const Subtask = ({
                         onChange={handleChange}
                     />
                 </Box>
+            )
+        } else {
+            return (
                 <Box
-                    sx={{ margin: '1rem 0' }}
+                    sx={{
+                        textAlign: 'start',
+                        display: 'flex',
+                        flexFlow: 'column',
+                        justifyContent: 'center',
+                        overflowWrap: 'break-word',
+                        width: '85%',
+                    }}
+                >
+                    <Typography variant="h6">
+                        {title}
+                    </Typography>
+                    <Typography>
+                        {description}
+                    </Typography>
+                </Box>
+            )
+        }
+    }
+
+    return (
+        <Stack
+            direction="row"
+            flexWrap="wrap" 
+            alignItems="center"
+            margin="0 0 0 1rem"
+            key={subtask.id}
+        >
+            <FormControlLabel
+                control={
+                    <Checkbox
+                        color="secondary" 
+                        checked={subtask.checked}
+                        sx={{
+                            [theme.breakpoints.down('sm')]: {
+                                '& .MuiSvgIcon-root': { 
+                                    fontSize: '1.3rem',
+                                    marginTop: '-1px'
+                                }
+                            },
+                            // margin: '2rem 0 0'
+                        }}
+                        onChange={() => updateSubtaskChecked(subtask.id, subtask.checked)}
+                        disabled={archived || task_status === 'overdue'}
+                        size="small"
+                    />
+                } 
+                onClick={handleTaskExpand}
+            />
+            <Box
+                sx={{
+                    display: 'inline-flex',
+                    flexFlow: 'row wrap',
+                    justifyContent: 'space-between',
+                    alignItems: 'center',
+                    width: '85%'
+                }}
+            >
+                {renderSubtaskDataFields()}
+                <Box
+                    sx={{ width: '6%' }}
                 >
                     <DeleteSubtaskButton
                         taskId={subtask.task_id} 
@@ -161,7 +197,7 @@ const Subtask = ({
                         archived={archived}
                         isEditMode={isEditMode}
                         setIsEditMode={setIsEditMode}
-                        handleSubtaskUpdate={handleSubtaskUpdate}
+                        handleSubtaskUpdate={(e) => handleSubtaskUpdate(e, subtask.id)}
                     />}
                 </Box>
             </Box>
