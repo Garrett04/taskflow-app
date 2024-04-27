@@ -22,6 +22,11 @@ const tasksSlice = createSlice({
             const taskIndex = state.tasks.findIndex(task => task.id === action.payload.id);
 
             state.tasks[taskIndex].status = action.payload.task_status;
+        },
+        filterTasksBySearchTerm: (state, action) => {
+            const { term } = action.payload;
+            
+            state.tasks = state.tasks.filter(task => task.title.toLowerCase().includes(term));
         }
     },
     extraReducers: (builder) => {
@@ -43,7 +48,7 @@ const tasksSlice = createSlice({
 export const selectSampleTasks = (state) => state.tasks.sampleTasks;
 
 
-export const { updateTaskStatus } = tasksSlice.actions;
+export const { updateTaskStatus, filterTasksBySearchTerm } = tasksSlice.actions;
 
 export const selectTasks = (state) => state.tasks.tasks;
 export const getTasksStatus = (state) => state.tasks.status;

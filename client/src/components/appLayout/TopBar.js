@@ -5,6 +5,7 @@ import AccountButton from "./AccountButton";
 import LogoutButton from "./LogoutButton";
 import { ButtonContainer, Logo } from "./AppLayoutStyles";
 import { useTheme } from "@emotion/react";
+import SearchBar from "./SearchBar";
 
 const drawerWidth = 240;
 
@@ -60,6 +61,7 @@ const TopBar = ({
             <a href="/" className="logo">
               <Logo>TaskFlow</Logo>
             </a>
+            <SearchBar />
             <ButtonContainer>
                 <AccountButton />
                 <LogoutButton />

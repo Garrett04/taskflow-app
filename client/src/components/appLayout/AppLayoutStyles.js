@@ -1,4 +1,4 @@
-import { Box, Container, Grid, Typography, styled } from "@mui/material";
+import { Box, Container, Grid, Paper, TextField, Typography, styled } from "@mui/material";
 import MuiButton from '@mui/material/Button';
 
 export const Logo = styled(Typography)(({ theme }) => ({
@@ -47,5 +47,19 @@ export const ButtonContainer = styled(Box)(({ theme }) => ({
     padding: '.5rem 0',
     [theme.breakpoints.down('sm')]: {
         gap: '.5rem',
+    }
+}))
+
+
+export const SearchBarContainer = styled(Paper)(({ theme }) => ({
+    width: '35%',
+    padding: '.3rem .8rem',
+    display: 'flex',
+    alignItems: 'center',
+    transition: 'width .1s',
+    background: theme.palette.primary.contrastText,
+    '&:focus-within': {
+        width: '45%',
+        transition: 'width .1s'
     }
 }))

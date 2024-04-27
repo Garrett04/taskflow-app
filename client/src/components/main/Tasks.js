@@ -1,12 +1,12 @@
-import { useSelector } from "react-redux";
-import { getTasksError, getTasksStatus, selectSampleTasks, selectTasks } from "../../features/tasks/tasksSlice";
+import { useDispatch, useSelector } from "react-redux";
+import { filterTasksBySearchTerm, getTasksError, getTasksStatus, selectSampleTasks, selectTasks } from "../../features/tasks/tasksSlice";
 import { useEffect, useState } from "react";
 import { selectIsAuthenticated } from "../../features/auth/authSlice";
 import { Container, Grid, Typography } from "@mui/material";
 import { useTheme } from "@emotion/react";
 import AddTaskButton from "./task/AddTaskButton";
 import Task from "./task/Task";
-import { Outlet, ScrollRestoration, useLocation, useNavigate, useSearchParams } from "react-router-dom";
+import { useLocation, useNavigate, useSearchParams } from "react-router-dom";
 import { renderPageTitle } from "../../utils/renderPageTitle";
 import { dispatchFetchTasksByUserId } from "../../utils/dispatchFetchTasksByUserId";
 import TaskModal from "../../pages/TaskModal";
@@ -30,6 +30,8 @@ const Tasks = ({
     const [searchParams] = useSearchParams();
     const sort = searchParams.get('sort') || location.state?.sort;
     const order = searchParams.get('order') || location.state?.order;
+    const search = searchParams.get('search');
+    const dispatch = useDispatch();
     
     const [isModalOpen, setIsModalOpen] = useState(false);
 
@@ -42,6 +44,13 @@ const Tasks = ({
         }
     }, [location.pathname, sort, order, isModalOpen]);
 
+    useEffect(() => {
+        // if tasksStatus is fulfilled and the search term is present
+        // then dispatch filterTasksBySearch action
+        if (tasksStatus === 'fulfilled' && search) {
+            dispatch(filterTasksBySearchTerm({ term: search }));
+        }
+    }, [dispatch, search, tasksStatus]);
 
     let status = null;
     let archived;
