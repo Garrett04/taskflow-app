@@ -26,7 +26,19 @@ const tasksSlice = createSlice({
         filterTasksBySearchTerm: (state, action) => {
             const { term } = action.payload;
             
-            state.tasks = state.tasks.filter(task => task.title.toLowerCase().includes(term));
+            const filteredTasks = state.tasks.filter(task => task.title.toLowerCase().includes(term));
+            
+            // if there is no tasks by the search term
+            // then update state.error state and state.tasks.
+            // Else update state,tasks to the filteredTasks
+            if (filteredTasks.length === 0) {
+                state.error = `No tasks found by search term: "${term}"`;
+                state.tasks = [];
+            } else {
+                state.tasks = filteredTasks;
+            }
+
+            // console.log(filteredTasks.length); 
         }
     },
     extraReducers: (builder) => {
@@ -37,6 +49,7 @@ const tasksSlice = createSlice({
             .addCase(fetchTasksByUserId.fulfilled, (state, action) => {
                 state.status = 'fulfilled';
                 state.tasks = action.payload;
+                state.error = null;
             })
             .addCase(fetchTasksByUserId.rejected, (state, action) =>{
                 state.status = 'rejected';

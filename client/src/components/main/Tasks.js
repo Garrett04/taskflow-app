@@ -85,12 +85,12 @@ const Tasks = ({
     }
 
     let content;
-    if (tasksStatus === 'pending') {
+    if (tasksStatus === 'rejected' || tasksError) {
+        content = tasksError;
+    } else if (tasksStatus === 'pending') {
         content = 'Loading...'
     } else if (tasksStatus === 'fulfilled' || !isAuthenticated) {
         content = renderAllTasks();
-    } else if (tasksStatus === 'rejected') {
-        content = tasksError;
     }
 
     const handleClose = (e) => {

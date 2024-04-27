@@ -6,6 +6,7 @@ import LogoutButton from "./LogoutButton";
 import { ButtonContainer, Logo } from "./AppLayoutStyles";
 import { useTheme } from "@emotion/react";
 import SearchBar from "./SearchBar";
+import { useLocation } from "react-router-dom";
 
 const drawerWidth = 240;
 
@@ -34,7 +35,7 @@ const TopBar = ({
   handleDrawerOpen,
   isAuthenticated
 }) => {
-    const theme = useTheme();
+    const { pathname } = useLocation();
 
     return (
       <AppBar position="fixed" open={open} elevation={0} sx={{ borderBottom: '2px solid black' }}>
@@ -61,7 +62,7 @@ const TopBar = ({
             <a href="/" className="logo">
               <Logo>TaskFlow</Logo>
             </a>
-            <SearchBar />
+            {!pathname.includes('/account-info') && <SearchBar />}
             <ButtonContainer>
                 <AccountButton />
                 <LogoutButton />
