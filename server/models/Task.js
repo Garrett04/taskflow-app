@@ -95,7 +95,7 @@ class Task {
 
             // if sort and order option is given then
             if (data.sort === 'deadline_date') {
-                statement += ` ORDER BY deadline_date`;
+                statement += ` AND deadline_date IS NOT NULL ORDER BY deadline_date`;
             } else {
                 // default to created_at ASC
                 statement += ` ORDER BY created_at`;

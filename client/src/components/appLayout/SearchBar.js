@@ -3,7 +3,7 @@ import SearchIcon from "@mui/icons-material/Search"
 import ClearIcon from "@mui/icons-material/Clear"
 import { SearchBarContainer } from "./AppLayoutStyles";
 import { useState } from "react";
-import { useLocation, useNavigate, useSearchParams } from "react-router-dom";
+import { createSearchParams, useLocation, useNavigate, useSearchParams } from "react-router-dom";
 import { dispatchFetchTasksByUserId } from "../../utils/dispatchFetchTasksByUserId";
 
 
@@ -11,6 +11,9 @@ const SearchBar = () => {
     const [searchParams] = useSearchParams();
 
     const search = searchParams.get('search');
+    const sort = searchParams.get('sort');
+    const order = searchParams.get('order');
+
     const [term, setTerm] = useState(search || "");
     const navigate = useNavigate();
     const location = useLocation();
@@ -26,14 +29,23 @@ const SearchBar = () => {
         if (!term) {
             navigate(location.pathname);
         } else {
-            navigate(`?search=${term}`);
+            if (sort && order) {
+                const queryParams = createSearchParams({
+                    sort,
+                    order,
+                    search: term,
+                })
+                navigate({search: `?${queryParams}`});
+            } else {
+                navigate(`?search=${term}`);
+            }
         }
         setTerm("");
 
         // to just fetch in tasks first by the location 
         // before the dispatch of filtering tasks by search term or not
         // this also prevents from removing tasks when searching multiple times.
-        dispatchFetchTasksByUserId(location.pathname);
+        dispatchFetchTasksByUserId(location.pathname, { sort, order });
     }
 
     const handleKeyUp = (e) => {
