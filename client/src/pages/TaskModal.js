@@ -7,7 +7,6 @@ import { getTaskError, getTaskStatus, selectTask } from "../features/tasks/taskS
 import { useLocation, useParams } from "react-router-dom"
 import { fetchTaskById, updateTask } from "../services/tasksService"
 import { renderTaskStatus } from "../utils/renderTaskStatus"
-
 import DeadlineDatePicker from "../components/main/task/DeadlineDatePicker"
 import MoveToTrashButton from "../components/main/task/MoveToTrashButton"
 import DeadlineDate from "../components/main/task/DeadlineDate"
@@ -22,7 +21,6 @@ const TaskModal = ({
     const taskStatus = useSelector(getTaskStatus);
     const taskError = useSelector(getTaskError);
     const dispatch = useDispatch();
-
     
     const [title, setTitle] = useState("");
     

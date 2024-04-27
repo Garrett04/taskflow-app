@@ -10,7 +10,7 @@ import { useLocation, useNavigate, useSearchParams } from "react-router-dom";
 import { renderPageTitle } from "../../utils/renderPageTitle";
 import { dispatchFetchTasksByUserId } from "../../utils/dispatchFetchTasksByUserId";
 import TaskModal from "../../pages/TaskModal";
-import FilterDropdowns from "../filterOptions/FilterDropdowns";
+import FilterDropdowns from "./filterOptions/FilterDropdowns";
 
 
 const Tasks = ({
@@ -36,18 +36,20 @@ const Tasks = ({
     const [isModalOpen, setIsModalOpen] = useState(false);
 
     useEffect(() => {
-        // if isModalOpen is false then dispatch fetchTasksByUserId
-        // this prevents the dispatch from happening again when modal is open.
-        if (!isModalOpen) {
+        // if isModalOpen and search term is false then dispatch fetchTasksByUserId
+        // this prevents the dispatch from happening again when modal is open or search term is not included.
+        if (!isModalOpen && !search) {
             console.log(sort, order, location.pathname);
             dispatchFetchTasksByUserId(location.pathname, { sort, order });
         }
-    }, [location.pathname, sort, order, isModalOpen]);
+    }, [location.pathname, sort, order, isModalOpen, search]);
 
     useEffect(() => {
         // if tasksStatus is fulfilled and the search term is present
         // then dispatch filterTasksBySearch action
+        console.log(tasksStatus, search);
         if (tasksStatus === 'fulfilled' && search) {
+            console.log('hello');
             dispatch(filterTasksBySearchTerm({ term: search }));
         }
     }, [dispatch, search, tasksStatus]);

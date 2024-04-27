@@ -1,14 +1,15 @@
 import SortByDropdown from "./SortByDropdown";
 import OrderByDropdown from "./OrderByDropdown";
 import { Box } from "./FilterDropdownsStyles";
-import { createSearchParams, useNavigate, useSearchParams } from "react-router-dom";
+import { createSearchParams, useLocation, useNavigate, useSearchParams } from "react-router-dom";
 import { useEffect, useState } from "react";
 
 const FilterDropdowns = () => {
   const [searchParams] = useSearchParams();
+  const location = useLocation();
 
-  const sort = searchParams.get('sort');
-  const order = searchParams.get('order');
+  const sort = searchParams.get('sort') || location.state?.sort;
+  const order = searchParams.get('order') || location.state?.order;
 
   const [sortBy, setSortBy] = useState(sort || "");
   const [orderBy, setOrderBy] = useState(order || "");
@@ -21,7 +22,7 @@ const FilterDropdowns = () => {
       if (sort && !order) {
           navigate(`?sort=${sort}&order=ascending`);
       } else {
-      // Reset sortBy and orderBy when navigatig between pages
+      // Reset sortBy and orderBy when navigating between pages
       // so if like the url is /?sort={SORT}&order={ORDER}
       // and when navigating to a different page like trash
       // to avoid having both the filter dropdowns and instead just the sortBy dropdown

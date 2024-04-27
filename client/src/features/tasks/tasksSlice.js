@@ -26,7 +26,7 @@ const tasksSlice = createSlice({
         filterTasksBySearchTerm: (state, action) => {
             const { term } = action.payload;
             
-            const filteredTasks = state.tasks.filter(task => task.title.toLowerCase().includes(term));
+            const filteredTasks = state.tasks.filter(task => task.title.toLowerCase().includes(term.toLowerCase()));
             
             // if there is no tasks by the search term
             // then update state.error state and state.tasks.
