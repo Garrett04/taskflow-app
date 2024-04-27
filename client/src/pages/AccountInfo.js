@@ -266,13 +266,6 @@ const AccountInfo = () => {
         )
     }
 
-    let content;
-    if (userDataStatus === 'pending') {
-        content = 'Loading...';
-    } else if (userDataStatus === 'fulfilled') {
-        content = renderUserData();
-    }
-
     return (
       <Box margin="7rem 1rem"
         sx={{
@@ -287,7 +280,7 @@ const AccountInfo = () => {
         >
             Account Information
         </Typography>
-        {content}
+        {renderUserData()}
       </Box>
     )
 }
