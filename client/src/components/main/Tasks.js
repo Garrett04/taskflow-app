@@ -11,6 +11,8 @@ import { renderPageTitle } from "../../utils/renderPageTitle";
 import { dispatchFetchTasksByUserId } from "../../utils/dispatchFetchTasksByUserId";
 import TaskModal from "../../pages/TaskModal";
 import FilterDropdowns from "./filterOptions/FilterDropdowns";
+import { deleteTask } from "../../services/tasksService";
+import { fetchSubtasksByTaskId } from "../../services/subtasksService";
 
 
 const Tasks = ({
@@ -95,8 +97,14 @@ const Tasks = ({
         content = renderAllTasks();
     }
 
-    const handleClose = (e) => {
+    const handleClose = async (e, task_title, task_id) => {
         if (e.target === e.currentTarget) {
+            console.log(e.currentTarget);
+            // To delete task if there is no task title.
+            if (!task_title) {
+                await deleteTask(task_id);
+            }
+
             setIsModalOpen(false);
             
             // if when adding task and after closing the modal
@@ -104,9 +112,8 @@ const Tasks = ({
             // then navigate to home page
             // else when the task has not been added and just isModalOpened
             // then navigate to the page before.
-            console.log(location);
             if (location.state?.from) {
-                console.log(location.pathname);
+                console.log("hello", location.pathname);
                 // update tasks state after adding task.
                 dispatchFetchTasksByUserId(location.pathname);
                 navigate('/', { state: { sort: location.state.sort, order: location.state.order }});

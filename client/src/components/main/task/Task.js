@@ -9,6 +9,8 @@ import DeleteTaskButton from "./DeleteTaskButton";
 import { useSelector } from "react-redux";
 import { selectIsAuthenticated } from "../../../features/auth/authSlice";
 import DeadlineDate from "./DeadlineDate";
+import { useEffect } from "react";
+import { deleteTask } from "../../../services/tasksService";
 
 const Task = ({
     task,
@@ -44,6 +46,7 @@ const Task = ({
                 onClick={() => handleOpen(task.id)} 
                 // To change the styling of the task when it is deleted and in a overdue tasks page.
                 task_archived={(isAuthenticated && page === 'Overdue Tasks') ? task.archived.toString() : null}
+                data-testid="task-card"
             >
                 <Box>
                     <CardHeader

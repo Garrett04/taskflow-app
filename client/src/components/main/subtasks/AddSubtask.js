@@ -29,6 +29,9 @@ const AddSubtask = ({
             const newSubtask = await createSubtask(data);
 
             dispatch(fetchSubtasksByTaskId(task_id));
+
+            setTitle("");
+            setDescription("");
             
         } catch (err) {
             console.log(err);

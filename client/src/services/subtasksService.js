@@ -11,7 +11,7 @@ export const fetchSubtasksByTaskId = createAsyncThunk(
         } catch (err) {
             if (err.response && err.response.status === 404) {
                 // rejectWithValue is from the thunkAPI which attaches a custom error message to action.payload
-                return rejectWithValue("Add new subtasks by clicking here");
+                return rejectWithValue("Add new subtasks");
             } else {
                 throw err.response.data.msg;
             }

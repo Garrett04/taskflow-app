@@ -26,7 +26,11 @@ const MoveToTrashButton = ({
     }
 
     return (
-        <IconButton title='Move to trash' onClick={handleArchive}>
+        <IconButton 
+            data-testid="trash-button" 
+            title='Move to trash' 
+            onClick={handleArchive}
+        >
             <DeleteIcon />
         </IconButton>
     )

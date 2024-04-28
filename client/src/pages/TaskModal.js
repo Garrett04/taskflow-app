@@ -10,6 +10,9 @@ import { renderTaskStatus } from "../utils/renderTaskStatus"
 import DeadlineDatePicker from "../components/main/task/DeadlineDatePicker"
 import MoveToTrashButton from "../components/main/task/MoveToTrashButton"
 import DeadlineDate from "../components/main/task/DeadlineDate"
+import RestoreTaskButton from "../components/main/task/RestoreTaskButton"
+import DeleteTaskButton from "../components/main/task/DeleteTaskButton"
+import { dispatchFetchTasksByUserId } from "../utils/dispatchFetchTasksByUserId"
 
 
 const TaskModal = ({
@@ -36,13 +39,13 @@ const TaskModal = ({
     }, [dispatch, id, location, setIsModalOpen, location.pathname])
 
     useEffect(() => {
-        // to first set title to the existing title
-        if (task.title) {
-            setTitle(task.title);
-        } else { // when creating a new task
+        if (location.state?.isNewTask) { // when creating a new task
             setTitle("");
+            setExpand(false);
+        } else if (task.title) { // to first set title to the existing title
+            setTitle(task.title);
         }
-    }, [task.title])
+    }, [location.state?.isNewTask, task.title])
 
     const updateTaskTitle = async (e) => {
         e.preventDefault();
@@ -57,6 +60,8 @@ const TaskModal = ({
                 console.log(updatedTask);
 
                 setExpand(true);
+
+                dispatchFetchTasksByUserId(location.pathname);
                 
             } catch (err) {
                 console.log(err);
@@ -73,17 +78,29 @@ const TaskModal = ({
     const renderTask = () => {
         return (
             <TaskCard>
-                <Box>
+                <Box
+                    sx={{
+                        display: 'flex'
+                    }}
+                >
                     <TaskTitle
-                        value={title} 
-                        action={ <MoveToTrashButton task_id={task.id} /> }
+                        value={title}
                         fullWidth
                         onChange={handleChange}
                         onKeyUp={updateTaskTitle}
                         error={!title}
                         placeholder="Task Title"
+                        name="task-title"
                         disabled={task.archived || task.status === 'overdue'}
                     />
+                    {task.archived
+                    && <RestoreTaskButton 
+                            task_id={task.id} 
+                            task_status={task.status} 
+                        />}
+                    {task.archived
+                    ? <DeleteTaskButton task_id={task.id} deleted_at={task.deleted_at} />
+                    : <MoveToTrashButton task_id={task.id} />}
                 </Box>
                 <Collapse
                     in={task.title ? true : expand} 
@@ -126,9 +143,9 @@ const TaskModal = ({
         <>
             <Modal 
                 open={isModalOpen}
-                onClose={handleClose}
+                onClose={(e) => handleClose(e, title, task.id)}
             >
-                <ModalBox>
+                <ModalBox data-testid="task-modal">
                     {content}
                 </ModalBox>
             </Modal>

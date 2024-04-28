@@ -135,10 +135,10 @@ const Subtask = ({
                         width: '85%',
                     }}
                 >
-                    <Typography variant="h6">
+                    <Typography variant="h6" data-testid="subtask-title">
                         {title}
                     </Typography>
-                    <Typography>
+                    <Typography data-testid="subtask-description">
                         {description}
                     </Typography>
                 </Box>

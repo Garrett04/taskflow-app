@@ -12,7 +12,7 @@ const AddTaskButton = () => {
         try {
             const newTask = await createTask();
             
-            navigate(`/task/${newTask.id}`, { state: { from: location.pathname, background: location } });
+            navigate(`/task/${newTask.id}`, { state: { from: location.pathname, isNewTask: true } });
         } catch (err) {
             console.log(err);
         }
