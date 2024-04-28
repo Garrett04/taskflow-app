@@ -39,7 +39,8 @@ const tasksSlice = createSlice({
             }
 
             // console.log(filteredTasks.length); 
-        }
+        },
+        
     },
     extraReducers: (builder) => {
         builder
@@ -62,6 +63,7 @@ export const selectSampleTasks = (state) => state.tasks.sampleTasks;
 
 
 export const { updateTaskStatus, filterTasksBySearchTerm } = tasksSlice.actions;
+
 
 export const selectTasks = (state) => state.tasks.tasks;
 export const getTasksStatus = (state) => state.tasks.status;

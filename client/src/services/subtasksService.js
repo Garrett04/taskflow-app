@@ -46,7 +46,7 @@ export const updateSubtask = async (data) => {
     try {
         const { task_id, id, title, description, checked } = data;
         const response = await API.put(`/tasks/${task_id}/subtasks/${id}`, { title, description, checked });
-        console.log('Updated subtask:', response.data.subtask);
+        console.log('Updated subtask:', response.data);
         return { subtask: response.data.subtask, task_status: response.data.task_status };
     } catch (err) {
         throw err.response.data.msg;

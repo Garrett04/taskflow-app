@@ -16,7 +16,6 @@ import Subtask from "./Subtask";
 const Subtasks = ({ 
     task_id,
     inTaskModal, // Will always come only from TaskModal page
-    page,
     task_status,
     archived
 }) => {

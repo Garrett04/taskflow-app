@@ -42,7 +42,8 @@ const Subtask = ({
             const data = { task_id, id: subtask_id, checked: !checked };
             const updatedSubtask = await updateSubtask(data);
 
-            // console.log(updatedSubtask.task_status, task_status);
+            // update subtasks state
+            // dispatch(fetchSubtasksByTaskId(task_id));
 
             // if updatedTaskStatus is different than the previous task status
             // then dispatchFetchTasksByUserId to update state.

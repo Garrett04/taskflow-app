@@ -104,6 +104,7 @@ const Tasks = ({
             if (!task_title) {
                 await deleteTask(task_id);
             }
+            dispatch(fetchSubtasksByTaskId(task_id));
 
             setIsModalOpen(false);
             
@@ -150,7 +151,11 @@ const Tasks = ({
             </Container>
             {/* Render task modal */}
             {/* <Outlet /> */}
-            <TaskModal handleClose={handleClose} isModalOpen={isModalOpen} setIsModalOpen={setIsModalOpen} />
+            <TaskModal 
+                handleClose={handleClose} 
+                isModalOpen={isModalOpen} 
+                setIsModalOpen={setIsModalOpen} 
+            />
             <AddTaskButton />
             
         </>

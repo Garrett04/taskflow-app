@@ -2,7 +2,6 @@ import { configureStore } from "@reduxjs/toolkit";
 import authReducer from "../features/auth/authSlice";
 import tasksReducer from "../features/tasks/tasksSlice";
 import subtasksReducer from "../features/subtasks/subtasksSlice";
-import taskReducer from "../features/tasks/taskSlice";
 import userReducer from "../features/user/userSlice";
 
 export const store = configureStore({
@@ -11,6 +10,5 @@ export const store = configureStore({
         user: userReducer,
         tasks: tasksReducer,
         subtasks: subtasksReducer,
-        task: taskReducer,
     },
 })

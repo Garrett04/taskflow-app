@@ -13,6 +13,8 @@ import DeadlineDate from "../components/main/task/DeadlineDate"
 import RestoreTaskButton from "../components/main/task/RestoreTaskButton"
 import DeleteTaskButton from "../components/main/task/DeleteTaskButton"
 import { dispatchFetchTasksByUserId } from "../utils/dispatchFetchTasksByUserId"
+import { fetchSubtasksByTaskId } from "../services/subtasksService"
+import { getTasksError, getTasksStatus, selectTasks } from "../features/tasks/tasksSlice"
 
 
 const TaskModal = ({
@@ -20,32 +22,34 @@ const TaskModal = ({
     setIsModalOpen,
     handleClose,
 }) => {
-    const task = useSelector(selectTask);
-    const taskStatus = useSelector(getTaskStatus);
-    const taskError = useSelector(getTaskError);
-    const dispatch = useDispatch();
-    
-    const [title, setTitle] = useState("");
-    
     const { id } = useParams();
+    const tasks = useSelector(selectTasks);
+    const tasksStatus = useSelector(getTasksStatus);
+    const tasksError = useSelector(getTasksError);
+    const dispatch = useDispatch();
+
     const [expand, setExpand] = useState(false);
     const location = useLocation();
+
+    const taskById = tasks.find(task => task.id === id);
+
+    const [title, setTitle] = useState("");
 
     useEffect(() => {
         if (location.pathname.includes('/task')) {
             setIsModalOpen(true);
-            dispatch(fetchTaskById(id));
+            // dispatch(fetchTaskById(id));
         }
-    }, [dispatch, id, location, setIsModalOpen, location.pathname])
+    }, [setIsModalOpen, location.pathname])
 
     useEffect(() => {
         if (location.state?.isNewTask) { // when creating a new task
             setTitle("");
             setExpand(false);
-        } else if (task.title) { // to first set title to the existing title
-            setTitle(task.title);
+        } else if (taskById?.title) { // to first set title to the existing title
+            setTitle(taskById?.title);
         }
-    }, [location.state?.isNewTask, task.title])
+    }, [location.state?.isNewTask, taskById?.title])
 
     const updateTaskTitle = async (e) => {
         e.preventDefault();
@@ -61,7 +65,7 @@ const TaskModal = ({
 
                 setExpand(true);
 
-                dispatchFetchTasksByUserId(location.pathname);
+                // dispatchFetchTasksByUserId(location.pathname);
                 
             } catch (err) {
                 console.log(err);
@@ -76,74 +80,87 @@ const TaskModal = ({
     }
 
     const renderTask = () => {
-        return (
-            <TaskCard>
-                <Box
-                    sx={{
-                        display: 'flex'
-                    }}
-                >
-                    <TaskTitle
-                        value={title}
-                        fullWidth
-                        onChange={handleChange}
-                        onKeyUp={updateTaskTitle}
-                        error={!title}
-                        placeholder="Task Title"
-                        name="task-title"
-                        disabled={task.archived || task.status === 'overdue'}
-                    />
-                    {task.archived
-                    && <RestoreTaskButton 
-                            task_id={task.id} 
-                            task_status={task.status} 
-                        />}
-                    {task.archived
-                    ? <DeleteTaskButton task_id={task.id} deleted_at={task.deleted_at} />
-                    : <MoveToTrashButton task_id={task.id} />}
-                </Box>
-                <Collapse
-                    in={task.title ? true : expand} 
-                    timeout="auto" 
-                    unmountOnExit
-                >
-                    <Divider />
-                    <Subtasks   
-                        inTaskModal={true} 
-                        task_id={task.id} 
-                        task_status={task.status} 
-                        archived={task.archived} 
-                    />
-                    <Divider />
-                    <CardBottom>
-                        {renderTaskStatus(task.status)}
-                        {task.archived || task.status === 'overdue' || task.status === 'completed'
-                        ? <DeadlineDate task_status={task.status} deadline_date={task.deadline_date} />
-                        : <DeadlineDatePicker 
-                            id={task.id}
-                            deadline_date={task.deadline_date}
+        if (taskById) {
+            return (
+                <TaskCard>
+                    <Box
+                        sx={{
+                            display: 'flex'
+                        }}
+                    >
+                        <TaskTitle
+                            value={title}
+                            fullWidth
+                            onChange={handleChange}
+                            onKeyUp={updateTaskTitle}
+                            error={!title}
+                            placeholder="Task Title"
+                            name="task-title"
+                            disabled={taskById.archived || taskById.status === 'overdue'}
+                        />
+                        {taskById.archived
+                        && <RestoreTaskButton 
+                                task_id={taskById.id} 
+                                task_status={tasks.status}
+                                setIsModalOpen={setIsModalOpen}
+                                inTaskModal
+                            />}
+                        {taskById.archived
+                        ? <DeleteTaskButton 
+                            task_id={taskById.id} 
+                            deleted_at={taskById.deleted_at}
+                            setIsModalOpen={setIsModalOpen}
+                            inTaskModal 
                           />
-                        }
-                    </CardBottom>
-                </Collapse>
-            </TaskCard>
-        )     
+                        : <MoveToTrashButton 
+                            task_id={taskById.id} 
+                            setIsModalOpen={setIsModalOpen}
+                            inTaskModal  
+                          />}
+                    </Box>
+                    <Collapse
+                        in={taskById.title ? true : expand} 
+                        timeout="auto" 
+                        unmountOnExit
+                    >
+                        <Divider />
+                        <Subtasks   
+                            inTaskModal={true} 
+                            task_id={taskById.id} 
+                            task_status={taskById.status} 
+                            archived={taskById.archived} 
+                        />
+                        <Divider />
+                        <CardBottom>
+                            {renderTaskStatus(taskById.status)}
+                            {taskById.archived || taskById.status === 'overdue' || taskById.status === 'completed'
+                            ? <DeadlineDate task_status={taskById.status} deadline_date={taskById.deadline_date} />
+                            : <DeadlineDatePicker 
+                                id={taskById.id}
+                                deadline_date={taskById.deadline_date}
+                              />
+                            }
+                        </CardBottom>
+                    </Collapse>
+                </TaskCard>
+            )
+        }     
     }
 
     let content;
-    if (taskStatus === 'pending') {
+    if (tasksStatus === 'pending') {
         content = 'Loading...';
-    } else if (taskStatus === 'fulfilled') {
+    } else if (tasksStatus === 'fulfilled') {
         content = renderTask();
-    } else if (taskStatus === 'rejected') {
-        content = taskError;
+    } else if (tasksStatus === 'rejected') {
+        content = tasksError;
     }
 
     return (
         <>
             <Modal 
                 open={isModalOpen}
-                onClose={(e) => handleClose(e, title, task.id)}
+                onClose={(e) => handleClose(e, title, id)}
             >
                 <ModalBox data-testid="task-modal">
                     {content}
