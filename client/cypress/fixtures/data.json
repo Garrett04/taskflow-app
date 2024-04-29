@@ -17,6 +17,16 @@
                 { "title": "Deployment Phase", "description": "Deploy the website to the production server and ensure it's accessible to users." },
                 { "title": "Maintenance Phase", "description": "Regularly update and maintain the website to keep it secure and up-to-date with the latest content and features." }
             ]
+        },
+        {
+            "title": "Organize a Birthday Party",
+            "subtasks": [
+                { "title": "Choose a Theme", "description": "Decide on a theme for the birthday party, considering the preferences and interests of the person celebrating." },
+                { "title": "Create Guest List", "description": "Compile a list of guests to invite to the party, including friends, family, and any other relevant individuals." },
+                { "title": "Plan Activities", "description": "Plan fun activities and games for the party, ensuring there's entertainment for guests of all ages." },
+                { "title": "Arrange Food and Drinks", "description": "Organize catering or plan the menu for the party, including snacks, refreshments, and the birthday cake." },
+                { "title": "Decorate Venue", "description": "Decorate the party venue according to the chosen theme, including balloons, banners, and any other decorations to create a festive atmosphere." }
+            ]
         }
     ] 
 }

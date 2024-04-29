@@ -8,7 +8,7 @@ const DeadlineDate = ({
 }) => {
 
     return (
-        <MuiDeadlineDate is_completed={task_status === 'completed' ? 'true' : 'false'}>
+        <MuiDeadlineDate data-testid="deadline-date" is_completed={task_status === 'completed' ? 'true' : 'false'}>
             {deadline_date && format(new Date(deadline_date), "yyyy-MM-dd hh:mm aa")}
         </MuiDeadlineDate>
     )

@@ -106,3 +106,20 @@ Cypress.Commands.add('closeModal', () => {
   // Click outside the task modal
   cy.get('div.MuiBackdrop-root').scrollIntoView().click({ force: true });
 })
+
+Cypress.Commands.add('checkTask', (task_title, subtasks, options) => {
+  const { deadline_date } = options ?? {};
+
+  cy.get('div.MuiPaper-root')
+    .get('span.MuiTypography-root').contains(task_title);
+
+    
+  cy.get('[data-testid="subtask-container"]').each(($el, idx) => {
+    cy.get($el).get('[data-testid="subtask-title"]').contains(subtasks[idx].title);
+    cy.get($el).get('[data-testid="subtask-description"]').contains(subtasks[idx].description);
+  })
+
+  if (deadline_date) {
+    cy.get('[data-testid="deadline-date"]').contains(deadline_date);
+  }
+})

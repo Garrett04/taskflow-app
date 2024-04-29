@@ -54,7 +54,6 @@ const DeadlineDatePicker = ({
                 sx={{
                     marginLeft: 'auto'
                 }}
-                
             />
             <IconButton title="Remove Deadline Date" onClick={removeDeadlineDate}>
                 <RemoveCircleIcon />
