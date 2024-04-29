@@ -7,11 +7,9 @@ const cookieParser = require('cookie-parser');
 const session = require('express-session');
 const pgSession = require('connect-pg-simple')(session);
 const pool = require('./config/db/config');
-const cron = require('node-cron');
+
 const { isAfter, differenceInDays, differenceInMinutes } = require('date-fns');
 const Task = require('./models/Task');
-
-const PORT = process.env.PORT || 3000;
 
 // Useful middlewares
 app.use(express.json());
@@ -44,56 +42,7 @@ app.use(session({
 }))
 
 // CRON SETUP
-// Updates the task status to overdue if current time exceeds the deadline date
-const updateTaskStatus = async () => {
-    const currentDate = new Date();
-
-    const tasks = await Task.find();
-
-    tasks.forEach(
-        async ({id, deadline_date, status}) => {
-        if (isAfter(currentDate, deadline_date) && status === 'pending') {
-            // change status of task to overdue
-            const data = { id, status: "overdue" };
-            const updatedTask = await Task.update(data);
-            console.log(updatedTask);
-            // console.log("deadline date:", deadline_date);
-            console.log("current date:", currentDate);
-        }
-    })
-}
-
-// Permanently deletes a task if the current date exceeds the deleted at date by 20 days.
-const deleteTask = async () => {
-    const currentDate = new Date();
-
-    const tasks = await Task.find();
-
-    tasks.forEach(
-        async ({ id, deleted_at, archived }) =>  {
-            if (archived) {
-                const difference = differenceInDays(currentDate, deleted_at);
-
-                if (difference >= 20) {
-                    const deletedTask = await Task.deleteById(id);
-                    console.log("deletedTask:", deletedTask);
-                    console.log("deleted_at:", deleted_at);
-                }
-                console.log("difference:", difference);
-            }
-        }
-    )
-}
-
-// For every 1 minute
-cron.schedule("*/1 * * * *", async () => {
-    try {
-        await updateTaskStatus();
-        await deleteTask();
-    } catch (err) {
-        throw err;
-    }
-}) 
+require('./config/cronJob');
 
 // PASSPORT AUTHENTICATION
 require('./config/passport/JWTStrategy')(passport);
@@ -103,6 +52,4 @@ app.use(passport.session());
 
 app.use('/api', require('./routes/index'));
 
-app.listen(PORT, () => {
-    console.log(`Server listening on port ${PORT}`);
-})
+module.exports = app;

@@ -45,7 +45,7 @@ const registerUser = async (req, res) => {
     const userExists = await User.findByUsername(username);
 
     if (userExists) {
-        return res.status(400).json({ success: false, msg: "User with username already exists." });
+        return res.status(400).json({ success: false, msg: "User already exists." });
     }
 
     const saltHash = utils.genPassword(password);
@@ -63,7 +63,7 @@ const registerUser = async (req, res) => {
         secure: true
     })
 
-    res.json({
+    res.status(201).json({
         success: true,
         user: {
             id: newUser.id,
