@@ -68,7 +68,7 @@ const updateUser = async (req, res) => {
         pw_salt: salt, 
     });
 
-    console.log(updatedUser);
+    // console.log(updatedUser);
 
     res.json({ 
         success: true,

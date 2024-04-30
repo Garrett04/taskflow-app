@@ -270,7 +270,5 @@ describe('DELETE', () => {
             // console.log(res.body);
             expect(res.statusCode).toEqual(404);
         })
-
-        
     })
 })
