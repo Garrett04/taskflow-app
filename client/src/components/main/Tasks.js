@@ -15,9 +15,7 @@ import { deleteTask } from "../../services/tasksService";
 import { fetchSubtasksByTaskId } from "../../services/subtasksService";
 
 
-const Tasks = ({
-    page
-}) => {
+const Tasks = () => {
     const theme = useTheme();
     const tasks = useSelector(selectTasks);
     const tasksStatus = useSelector(getTasksStatus);
@@ -61,18 +59,6 @@ const Tasks = ({
             dispatch(filterTasksBySearchTerm({ term: search }));
         }
     }, [dispatch, search, tasksStatus]);
-
-    let status = null;
-    let archived;
-
-    if (page === 'Completed Tasks') {
-        status = 'completed';
-    } else if (page === 'Overdue Tasks') {
-        status = 'overdue';
-    } else if (page === 'Trash') {
-        status = 'archived';
-        archived = true;
-    }
     
     const renderAllTasks = () => {
         // Checks if user isAuthenticated then render the users tasks 
@@ -83,8 +69,7 @@ const Tasks = ({
             return (
                 <Grid item key={task.id} xs={12} md={6} lg={4}>
                     <Task 
-                        task={task} 
-                        page={page}
+                        task={task}
                         sort={sort}
                         order={order}
                         setIsModalOpen={setIsModalOpen}
@@ -120,12 +105,12 @@ const Tasks = ({
             // else when the task has not been added and just isModalOpened
             // then navigate to the page before.
             if (location.state?.from) {
-                console.log("hello", location.pathname);
+                // console.log("hello", location.pathname);
                 // update tasks state after adding task.
                 dispatchFetchTasksByUserId(location.pathname);
                 navigate('/', { state: { sort: location.state.sort, order: location.state.order }});
             } else {
-                console.log("hello 2");
+                // console.log("hello 2");
                 navigate(-1, { state: { sort: location.state.sort, order: location.state.order }});
             }
         }
@@ -148,22 +133,19 @@ const Tasks = ({
                 }} 
                 fontFamily="serif"
             >
-                {renderPageTitle(status)}
+                {renderPageTitle(location.pathname)}
             </Typography>
             <Container className="tasks">
                 <Grid container spacing={3}>
                     {content}
                 </Grid>
             </Container>
-            {/* Render task modal */}
-            {/* <Outlet /> */}
             <TaskModal 
                 handleClose={handleClose} 
                 isModalOpen={isModalOpen} 
                 setIsModalOpen={setIsModalOpen} 
             />
             <AddTaskButton />
-            
         </>
     )
 }

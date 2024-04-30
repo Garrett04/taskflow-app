@@ -2,18 +2,15 @@ import { Box, Collapse, Divider, Modal } from "@mui/material"
 import Subtasks from "../components/main/subtasks/Subtasks"
 import { CardBottom, ModalBox, TaskCard, TaskTitle } from "../components/main/MainStyles"
 import { useEffect, useState } from "react"
-import { useDispatch, useSelector } from "react-redux"
-import { getTaskError, getTaskStatus, selectTask } from "../features/tasks/taskSlice"
+import { useSelector } from "react-redux"
 import { useLocation, useParams } from "react-router-dom"
-import { fetchTaskById, updateTask } from "../services/tasksService"
+import { updateTask } from "../services/tasksService"
 import { renderTaskStatus } from "../utils/renderTaskStatus"
 import DeadlineDatePicker from "../components/main/task/DeadlineDatePicker"
 import MoveToTrashButton from "../components/main/task/MoveToTrashButton"
 import DeadlineDate from "../components/main/task/DeadlineDate"
 import RestoreTaskButton from "../components/main/task/RestoreTaskButton"
 import DeleteTaskButton from "../components/main/task/DeleteTaskButton"
-import { dispatchFetchTasksByUserId } from "../utils/dispatchFetchTasksByUserId"
-import { fetchSubtasksByTaskId } from "../services/subtasksService"
 import { getTasksError, getTasksStatus, selectTasks } from "../features/tasks/tasksSlice"
 
 
@@ -26,7 +23,6 @@ const TaskModal = ({
     const tasks = useSelector(selectTasks);
     const tasksStatus = useSelector(getTasksStatus);
     const tasksError = useSelector(getTasksError);
-    const dispatch = useDispatch();
 
     const [expand, setExpand] = useState(false);
     const location = useLocation();

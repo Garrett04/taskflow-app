@@ -1,8 +1,7 @@
 import { IconButton } from "@mui/material";
 import DeleteForeverIcon from '@mui/icons-material/DeleteForever';
-import { deleteTask, fetchTasksByUserId } from "../../../services/tasksService";
-import { useDispatch } from "react-redux";
-import { addDays, addMinutes, formatDistanceToNow } from "date-fns";
+import { deleteTask } from "../../../services/tasksService";
+import { addDays, formatDistanceToNow } from "date-fns";
 import { dispatchFetchTasksByUserId } from "../../../utils/dispatchFetchTasksByUserId";
 import { useLocation, useNavigate } from "react-router-dom";
 
@@ -12,7 +11,6 @@ const DeleteTaskButton = ({
     setIsModalOpen,
     inTaskModal
 }) => {
-    const dispatch = useDispatch();
     const days_left = formatDistanceToNow(addDays(deleted_at, 20));
     const location = useLocation();
     const navigate = useNavigate();

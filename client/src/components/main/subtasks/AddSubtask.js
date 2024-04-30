@@ -1,14 +1,12 @@
 import { useTheme } from "@emotion/react";
-import { Box, Button, Collapse, FormControl, FormGroup, Input, TextField } from "@mui/material";
+import { Box, Button, TextField } from "@mui/material";
 import { useState } from "react";
 import { createSubtask, fetchSubtasksByTaskId } from "../../../services/subtasksService";
-import { useParams } from "react-router-dom";
 import { useDispatch } from "react-redux";
 
 
 const AddSubtask = ({
     task_id,
-    page,
     task_status,
     archived
 }) => {
@@ -26,7 +24,7 @@ const AddSubtask = ({
             }
             const data = { task_id, title, description };
 
-            const newSubtask = await createSubtask(data);
+            await createSubtask(data);
 
             dispatch(fetchSubtasksByTaskId(task_id));
 

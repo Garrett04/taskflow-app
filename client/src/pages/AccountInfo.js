@@ -1,7 +1,7 @@
-import { Box, Button, IconButton, Input, InputAdornment, TextField, Typography } from "@mui/material";
+import { Box, Button, IconButton, InputAdornment, TextField, Typography } from "@mui/material";
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { getUserDataStatus, selectUserData } from "../features/user/userSlice";
+import { selectUserData } from "../features/user/userSlice";
 import { fetchUserData, updateUser } from "../services/userService";
 import Edit from "@mui/icons-material/Edit";
 import Done from "@mui/icons-material/Done";
@@ -10,7 +10,6 @@ import VisibilityOff from "@mui/icons-material/VisibilityOff";
 
 const AccountInfo = () => {
     const userData = useSelector(selectUserData);
-    const userDataStatus = useSelector(getUserDataStatus);
     const [editUsername, setEditUsername] = useState(false);
     const [isEditMode, setIsEditMode] = useState(false);
     const [formData, setFormData] = useState({

@@ -1,11 +1,10 @@
-import { DateCalendar, DatePicker, DatePickerToolbar, DateTimePicker, TimePicker } from "@mui/x-date-pickers";
+import { DateTimePicker } from "@mui/x-date-pickers";
 import { LocalizationProvider } from "@mui/x-date-pickers";
 import { AdapterDateFns } from "@mui/x-date-pickers/AdapterDateFnsV3";
-import { parseISO, isBefore, isAfter } from 'date-fns';
-import { updateSubtask } from "../../../services/subtasksService";
+import { parseISO, isAfter } from 'date-fns';
 import { fetchTaskById, updateTask } from "../../../services/tasksService";
 import { useDispatch } from "react-redux";
-import { useRef, useState } from "react";
+import { useState } from "react";
 import { IconButton } from "@mui/material";
 import RemoveCircleIcon from '@mui/icons-material/RemoveCircle';
 

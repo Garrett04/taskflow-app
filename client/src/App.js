@@ -1,6 +1,5 @@
 import {
   RouterProvider,
-  ScrollRestoration,
   createBrowserRouter,
 } from "react-router-dom";
 
@@ -10,9 +9,6 @@ import { useDispatch, useSelector } from "react-redux";
 import { useEffect } from "react";
 import { fetchAuthenticationStatus } from "./services/authService";
 import { getIsAuthenticatedStatus } from "./features/auth/authSlice";
-import CompletedTasks from "./pages/CompletedTasks";
-import OverdueTasks from "./pages/OverdueTasks";
-import Trash from "./pages/Trash";
 import Login from './pages/Login';
 import Register from './pages/Register';
 import AccountInfo from "./pages/AccountInfo";
@@ -43,7 +39,7 @@ function App() {
         },
         {
           path: '/completed-tasks',
-          element: <CompletedTasks />,
+          element: <Tasks />,
           children: [
             {
               path: 'task/:id',
@@ -53,7 +49,7 @@ function App() {
         },
         {
           path: '/overdue-tasks',
-          element: <OverdueTasks />,
+          element: <Tasks />,
           children: [
             {
               path: 'task/:id',
@@ -63,7 +59,7 @@ function App() {
         },
         {
           path: '/trash',
-          element: <Trash />,
+          element: <Tasks />,
           children: [
             {
               path: 'task/:id',

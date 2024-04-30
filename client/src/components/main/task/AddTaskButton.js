@@ -1,7 +1,7 @@
 import { Tooltip } from "@mui/material"
 import { AddTaskIcon, Button } from "../MainStyles"
 import { useLocation, useNavigate } from "react-router-dom"
-import { createTask, fetchTasksByUserId } from "../../../services/tasksService";
+import { createTask } from "../../../services/tasksService";
 
 
 const AddTaskButton = () => {

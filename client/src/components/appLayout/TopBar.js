@@ -1,10 +1,9 @@
-import { Box, Grid, IconButton, Toolbar, styled } from "@mui/material";
+import { Grid, IconButton, Toolbar, styled } from "@mui/material";
 import MuiAppBar from '@mui/material/AppBar';
 import MenuIcon from '@mui/icons-material/Menu';
 import AccountButton from "./AccountButton";
 import LogoutButton from "./LogoutButton";
 import { ButtonContainer, Logo } from "./AppLayoutStyles";
-import { useTheme } from "@emotion/react";
 import SearchBar from "./SearchBar";
 import { useLocation } from "react-router-dom";
 

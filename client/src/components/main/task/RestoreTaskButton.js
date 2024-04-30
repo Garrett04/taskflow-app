@@ -1,14 +1,12 @@
 import { IconButton } from "@mui/material";
 import RestoreIcon from '@mui/icons-material/Restore';
-import { fetchTasksByUserId, updateTaskArchived } from "../../../services/tasksService";
+import { updateTaskArchived } from "../../../services/tasksService";
 import { useDispatch } from "react-redux";
 import { useLocation, useNavigate } from "react-router-dom";
-import { dispatchFetchTasksByUserId } from "../../../utils/dispatchFetchTasksByUserId";
 import { restoreTask } from "../../../features/tasks/tasksSlice";
 
 const RestoreTaskButton = ({
     task_id,
-    task_status,
     inTaskModal,
     setIsModalOpen
 }) => {

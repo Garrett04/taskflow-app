@@ -1,15 +1,10 @@
 import { useDispatch, useSelector } from "react-redux";
-import { fetchSampleSubtasks, getSubtasksError, getSubtasksStatus, selectSampleSubtasks, selectSubtasks } from "../../../features/subtasks/subtasksSlice";
-import { useEffect, useState } from "react";
-import { Box, Checkbox, FormControlLabel, FormGroup, Stack, TextField, Typography } from "@mui/material";
-import { useTheme } from "@emotion/react";
-import { fetchSubtasksByTaskId, updateSubtask } from "../../../services/subtasksService";
+import { getSubtasksError, getSubtasksStatus, selectSampleSubtasks, selectSubtasks } from "../../../features/subtasks/subtasksSlice";
+import { useEffect } from "react";
+import { Box } from "@mui/material";
+import { fetchSubtasksByTaskId } from "../../../services/subtasksService";
 import { selectIsAuthenticated } from "../../../features/auth/authSlice";
-import { handleTaskExpand } from "../../../utils/handleTaskExpand";
 import AddSubtask from "./AddSubtask";
-import DeleteSubtaskButton from "./DeleteSubtaskButton";
-import { useLocation } from "react-router-dom";
-import EditSubtaskButton from "./EditSubtaskButton";
 import Subtask from "./Subtask";
 
 

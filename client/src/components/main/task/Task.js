@@ -1,7 +1,7 @@
-import { Box, Divider, Stack, Typography } from "@mui/material"
+import { Box, Divider, Typography } from "@mui/material"
 import Subtasks from "../subtasks/Subtasks";
 import { useLocation, useNavigate } from "react-router-dom";
-import { CardBottom, CardHeader, TaskCard, TaskHeader, TaskHeaderButtonGroup } from "../MainStyles";
+import { CardBottom, TaskCard, TaskHeader, TaskHeaderButtonGroup } from "../MainStyles";
 import { renderTaskStatus } from "../../../utils/renderTaskStatus";
 import MoveToTrashButton from "./MoveToTrashButton";
 import RestoreTaskButton from "./RestoreTaskButton";
@@ -9,12 +9,9 @@ import DeleteTaskButton from "./DeleteTaskButton";
 import { useSelector } from "react-redux";
 import { selectIsAuthenticated } from "../../../features/auth/authSlice";
 import DeadlineDate from "./DeadlineDate";
-import { useEffect } from "react";
-import { deleteTask } from "../../../services/tasksService";
 
 const Task = ({
     task,
-    page, // Pass down by the pages
     sort,
     order,
     setIsModalOpen
@@ -22,7 +19,7 @@ const Task = ({
     const isAuthenticated = useSelector(selectIsAuthenticated);
     const navigate = useNavigate();
 
-    const location = useLocation();
+    const { pathname } = useLocation();
 
     const handleOpen = (task_id) => {
         // open is changed to true to prevent another dispatch of fetchTasksByUserId
@@ -30,8 +27,7 @@ const Task = ({
         navigate(`task/${task_id}`, { 
             state: { 
                 sort, 
-                order, 
-                background: location,
+                order,
             },
         })   
     }
@@ -46,7 +42,7 @@ const Task = ({
                 // To change the styling of the task when it is deleted and in a overdue tasks page or completed tasks page.
                 task_archived={
                     (isAuthenticated 
-                        && (page === 'Overdue Tasks' || page === 'Completed Tasks')
+                        && (pathname.includes('/overdue-tasks') || pathname.includes('/completed-tasks'))
                     ) 
                         ? task.archived.toString() 
                         : null

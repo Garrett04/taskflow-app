@@ -1,14 +1,11 @@
-import { useEffect, useRef, useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
-import { getSubtasksError, getSubtasksStatus, selectSampleSubtasks, selectSubtasks } from "../../../features/subtasks/subtasksSlice";
-import { selectIsAuthenticated } from "../../../features/auth/authSlice";
+import { useState } from "react";
+import { useDispatch } from "react-redux";
 import { useTheme } from "@emotion/react";
 import { Box, Checkbox, FormControlLabel, Stack, TextField, Typography } from "@mui/material";
 import DeleteSubtaskButton from "./DeleteSubtaskButton";
 import EditSubtaskButton from "./EditSubtaskButton";
 import { fetchSubtasksByTaskId, updateSubtask } from "../../../services/subtasksService";
 import { handleTaskExpand } from "../../../utils/handleTaskExpand";
-import { dispatchFetchTasksByUserId } from '../../../utils/dispatchFetchTasksByUserId';
 import { useLocation } from "react-router-dom";
 import { updateTaskStatus } from "../../../features/tasks/tasksSlice";
 
@@ -65,9 +62,7 @@ const Subtask = ({
         try {
             const data = { task_id, id: subtask_id, title, description };
 
-            const updatedSubtask = await updateSubtask(data);
-
-            // console.log(updatedSubtask);
+            await updateSubtask(data);
 
             setIsEditMode(false);
 
