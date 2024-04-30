@@ -46,7 +46,7 @@ const createSubtask = async (req, res) => {
 
     res.status(201).json({
         success: true,
-        task: newSubtask
+        subtask: newSubtask
     });
 }
 
@@ -62,6 +62,10 @@ const updateSubtask = async (req, res) => {
     const updatedTask = await Subtask.update({ id, title, description, checked });
     
     // console.log(title, description, checked);
+
+    if (!updatedTask) {
+        return res.status(404).json({ success: false, msg: "subtask not found by id" });
+    }
 
     if (typeof checked === 'boolean') {
         updatedTaskStatus = await updateTaskStatus(task_id);

@@ -20,7 +20,7 @@ const updateTaskStatus = async (task_id) => {
     
     const isTaskSubtasksChecked = taskSubtasks.every(subtask => subtask.checked === true);
 
-    console.log(isTaskSubtasksChecked);
+    // console.log(isTaskSubtasksChecked);
 
     if (isTaskSubtasksChecked) {
         task_status = await Task.update({ id: task_id, status: 'completed' });
