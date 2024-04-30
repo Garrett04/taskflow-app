@@ -29,14 +29,23 @@ export const AddTaskIcon = styled(MuiAddTaskIcon)(({ theme }) => ({
     fontSize: '1.8rem'
 }))
 
-export const CardHeader = styled(MuiCardHeader)(({ theme }) => ({
+export const TaskHeader = styled(Box)(({ theme }) => ({
     backgroundColor: theme.palette.ochre.main,
     padding: '.5rem 1.1rem',
-    textWrap: 'nowrap',
+    overflowWrap: 'break-word',
+    textAlign: 'left',
+    display: "flex", 
+    justifyContent: "space-between",
     [theme.breakpoints.down('sm')]: {
         fontSize: '1.2rem',
-    }
+    },
 }));
+
+export const TaskHeaderButtonGroup = styled(Box)(({ theme }) => ({
+    display: 'flex',
+    flexFlow: 'row',
+    alignItems: 'center',
+}))
 
 export const CardBottom = styled(CardContent)(() => ({
     display: 'flex',
