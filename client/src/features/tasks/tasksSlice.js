@@ -37,11 +37,13 @@ const tasksSlice = createSlice({
             // if there is no tasks by the search term
             // then update state.error state and state.tasks.
             // Else update state,tasks to the filteredTasks
-            if (filteredTasks.length === 0) {
-                state.error = `No tasks found by search term: "${term}"`;
-                state.tasks = [];
-            } else {
-                state.tasks = filteredTasks;
+            if (state.status === 'fulfilled') {
+                if (filteredTasks.length === 0) {
+                    state.error = `No tasks found by search term: "${term}"`;
+                    state.tasks = [];
+                } else {
+                    state.tasks = filteredTasks;
+                }
             }
 
             // console.log(filteredTasks.length); 

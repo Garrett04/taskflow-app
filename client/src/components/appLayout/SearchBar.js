@@ -4,7 +4,6 @@ import ClearIcon from "@mui/icons-material/Clear"
 import { SearchBarContainer } from "./AppLayoutStyles";
 import { useState } from "react";
 import { useLocation, useNavigate, useSearchParams } from "react-router-dom";
-import { dispatchFetchTasksByUserId } from "../../utils/dispatchFetchTasksByUserId";
 
 
 const SearchBar = () => {
@@ -33,7 +32,8 @@ const SearchBar = () => {
         // to just fetch in tasks first by the location 
         // before the dispatch of filtering tasks by search term or not
         // this also prevents from removing tasks when searching multiple times.
-        dispatchFetchTasksByUserId(location.pathname);
+
+        // dispatchFetchTasksByUserId(location.pathname);
     }
 
     const handleKeyUp = (e) => {
@@ -43,6 +43,13 @@ const SearchBar = () => {
             handleSearch();
         }
     }
+
+    // useEffect(() => {
+    //     console.log(location);
+    //     if (!term) {
+    //         dispatchFetchTasksByUserId(location.pathname);
+    //     }
+    // }, [term, location.pathname, location.search]);
 
     return (
         <SearchBarContainer>
