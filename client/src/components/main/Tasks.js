@@ -41,7 +41,7 @@ const Tasks = ({
         // if isModalOpen and search term is false then dispatch fetchTasksByUserId
         // this prevents the dispatch from happening again when modal is open or search term is not included.
         if (!isModalOpen && !search) {
-            console.log(sort, order, location.pathname);
+            // console.log(sort, order, location.pathname);
             dispatchFetchTasksByUserId(location.pathname, { sort, order });
         }
     }, [location.pathname, sort, order, isModalOpen, search]);
@@ -49,9 +49,9 @@ const Tasks = ({
     useEffect(() => {
         // if tasksStatus is fulfilled and the search term is present
         // then dispatch filterTasksBySearch action
-        console.log(tasksStatus, search);
+        // console.log(tasksStatus, search);
         if (tasksStatus === 'fulfilled' && search) {
-            console.log('hello');
+            // console.log('hello');
             dispatch(filterTasksBySearchTerm({ term: search }));
         }
     }, [dispatch, search, tasksStatus]);

@@ -27,7 +27,7 @@ const Subtask = ({
     const [checked, setChecked] = useState(subtask.checked || false);
     
     const dispatch = useDispatch();
-    const location = useLocation();
+    const { pathname } = useLocation();
 
 
     const updateSubtaskChecked = async (subtask_id) => {
@@ -48,9 +48,10 @@ const Subtask = ({
             // if updatedTaskStatus is different than the previous task status
             // then dispatchFetchTasksByUserId to update state.
             if (updatedSubtask.task_status !== task_status) {
-                // dispatch(fetchSubtasksByTaskId(task_id));
-                // dispatchFetchTasksByUserId(location.pathname);
-                dispatch(updateTaskStatus({ id: task_id, task_status: updatedSubtask.task_status }));
+                
+                dispatch(fetchSubtasksByTaskId(task_id));
+
+                dispatch(updateTaskStatus({ id: task_id, task_status: updatedSubtask.task_status, pathname }));
             }
             
         } catch (err) {

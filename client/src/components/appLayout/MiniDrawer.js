@@ -12,10 +12,11 @@ import List from '@mui/material/List';
 import TaskIcon from '@mui/icons-material/Task';
 import HourglassDisabledIcon from '@mui/icons-material/HourglassDisabled';
 import DeleteIcon from '@mui/icons-material/Delete';
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { selectIsAuthenticated } from "../../features/auth/authSlice";
 import { useNavigate } from "react-router-dom";
 import { FaTasks } from "react-icons/fa";
+import { fetchTasksByUserId } from "../../services/tasksService";
 
 const drawerWidth = 240;
 

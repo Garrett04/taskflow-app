@@ -19,9 +19,15 @@ const tasksSlice = createSlice({
     initialState,
     reducers: {
         updateTaskStatus: (state, action) => {
-            const taskIndex = state.tasks.findIndex(task => task.id === action.payload.id);
+            const { id, task_status, pathname } = action.payload;
 
-            state.tasks[taskIndex].status = action.payload.task_status;
+            const taskIndex = state.tasks.findIndex(task => task.id === id);
+
+            state.tasks[taskIndex].status = task_status;
+
+            if (pathname.includes('/completed-tasks')) {
+                state.tasks = state.tasks.filter(task => task.status === 'completed');
+            }
         },
         filterTasksBySearchTerm: (state, action) => {
             const { term } = action.payload;
