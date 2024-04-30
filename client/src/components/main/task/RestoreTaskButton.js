@@ -4,6 +4,7 @@ import { fetchTasksByUserId, updateTaskArchived } from "../../../services/tasksS
 import { useDispatch } from "react-redux";
 import { useLocation, useNavigate } from "react-router-dom";
 import { dispatchFetchTasksByUserId } from "../../../utils/dispatchFetchTasksByUserId";
+import { restoreTask } from "../../../features/tasks/tasksSlice";
 
 const RestoreTaskButton = ({
     task_id,
@@ -12,7 +13,7 @@ const RestoreTaskButton = ({
     setIsModalOpen
 }) => {
     const dispatch = useDispatch();
-    const location = useLocation();
+    const { pathname } = useLocation();
     const navigate = useNavigate();
 
     const handleRestore = async (e) => {
@@ -24,7 +25,9 @@ const RestoreTaskButton = ({
             });
 
             // dispatch(fetchTasksByUserId());
-            dispatchFetchTasksByUserId(location.pathname);
+            // dispatchFetchTasksByUserId(location.pathname);
+
+            dispatch(restoreTask({ id: task_id, pathname }));
 
             if (inTaskModal) {
                 setIsModalOpen(false);

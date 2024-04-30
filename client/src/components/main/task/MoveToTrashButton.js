@@ -5,6 +5,7 @@ import { useDispatch } from 'react-redux';
 import { handleTaskExpand } from '../../../utils/handleTaskExpand';
 import { dispatchFetchTasksByUserId } from '../../../utils/dispatchFetchTasksByUserId';
 import { useLocation, useNavigate } from 'react-router-dom';
+import { moveTaskToTrash } from '../../../features/tasks/tasksSlice';
 
 // it just updates the task status to deleted in the database
 const MoveToTrashButton = ({
@@ -13,16 +14,20 @@ const MoveToTrashButton = ({
     setIsModalOpen
 }) => {
     const dispatch = useDispatch();
-    const location = useLocation();
+    const { pathname } = useLocation();
     const navigate = useNavigate();
 
     const handleArchive = async (e) => {
         handleTaskExpand(e);
         try {
-            await updateTaskArchived({ task_id, archived: true});
+            const archivedTask = await updateTaskArchived({ task_id, archived: true});
 
             // dispatch(fetchTasksByUserId()); // To update tasks state
-            dispatchFetchTasksByUserId(location.pathname);
+            // dispatchFetchTasksByUserId(location.pathname);
+
+            // console.log(archivedTask);
+
+            dispatch(moveTaskToTrash({ id: task_id, deleted_at: archivedTask.deleted_at, pathname }));
 
             if (inTaskModal) {
                 setIsModalOpen(false);
