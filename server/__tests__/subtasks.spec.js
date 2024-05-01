@@ -46,8 +46,6 @@ afterEach(async () => {
 
 describe('POST', () => {
     describe('/tasks/:task_id/subtasks', () => {
-        
-
         it('returns a status code of 201 when a subtask is created', async () => {
             const res = await request(app)
                                 .post(`/api/tasks/${task_id}/subtasks`)
@@ -75,7 +73,51 @@ describe('POST', () => {
 })
 
 describe('GET', () => {
-    describe('/tasks/:task_id/subtasks', () => {
+    describe('/tasks/:task_id/subtasks (find by user id)', () => {
+        let subtask_id;
+
+        beforeAll(async () => {
+            const res = await request(app)
+                                .post(`/api/tasks/${task_id}/subtasks`)
+                                .send({ 
+                                    title: subtasks[0].title, 
+                                    description: subtasks[0].description
+                                })
+                                .set("Cookie", accessToken);
+            
+            subtask_id = res.body.subtask.id;
+        })
+
+        afterEach(async () => {
+            await Subtask.delete(subtask_id);
+        })
+
+        it('returns a status code of 200 when subtasks found by user id', async () => {
+            const res = await request(app)
+                                .get(`/api/tasks/${task_id}/subtasks?find_by_user_id=true`)
+                                .set('Cookie', accessToken);
+
+            // console.log(res.body);
+            expect(res.statusCode).toEqual(200);
+        })
+
+        it('returns a status code of 401 when unauthorized', async () => {
+            const res = await request(app)
+                                .get(`/api/tasks/${task_id}/subtasks?find_by_user_id=true`)
+            
+            expect(res.statusCode).toEqual(401);
+        })
+
+        it('returns a status code of 404 when subtasks not found by user id', async () => {
+            const res = await request(app)
+                                .get(`/api/tasks/${task_id}/subtasks?find_by_user_id=true`)
+                                .set("Cookie", accessToken);
+
+            expect(res.statusCode).toEqual(404);
+        })
+    })
+
+    describe('/tasks/:task_id/subtasks (find by task id)', () => {
         let subtask_id;
 
         beforeAll(async () => {

@@ -3,6 +3,9 @@ const subtasksController = require('../controllers/subtasksController');
 const { isAuthenticated } = require('../middlewares/authMiddleware');
 
 // GET ROUTES
+// get all subtasks by user_id.
+router.get('/', isAuthenticated, subtasksController.getAllSubtasksByUserId);
+
 // get all subtasks by task_id.
 router.get('/', isAuthenticated, subtasksController.getAllSubtasksByTaskId)
 
