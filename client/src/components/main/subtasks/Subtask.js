@@ -4,7 +4,7 @@ import { useTheme } from "@emotion/react";
 import { Box, Checkbox, FormControlLabel, Stack, TextField, Typography } from "@mui/material";
 import DeleteSubtaskButton from "./DeleteSubtaskButton";
 import EditSubtaskButton from "./EditSubtaskButton";
-import { fetchSubtasksByTaskId, updateSubtask } from "../../../services/subtasksService";
+import { fetchSubtasksByTaskId, fetchSubtasksByUserId, updateSubtask } from "../../../services/subtasksService";
 import { handleTaskExpand } from "../../../utils/handleTaskExpand";
 import { useLocation } from "react-router-dom";
 import { updateTaskStatus } from "../../../features/tasks/tasksSlice";
@@ -67,6 +67,8 @@ const Subtask = ({
             setIsEditMode(false);
 
             dispatch(fetchSubtasksByTaskId(task_id));
+
+            dispatch(fetchSubtasksByUserId(task_id));
         } catch (err) {
             console.log(err);
         }

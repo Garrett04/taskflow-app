@@ -113,9 +113,7 @@ const AddSubtask = ({
                     />
                     <Button 
                         type="submit"
-                        sx={{
-                            width: '60%'
-                        }}
+                        fullWidth
                     >
                         Add Subtask
                     </Button>

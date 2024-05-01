@@ -29,6 +29,8 @@ const userSubtasksSlice = createSlice({
             .addCase(fetchSubtasksByUserId.rejected, (state, action) => {
                 state.status = 'rejected';
                 state.error = action.error.message;
+
+                state.userSubtasks = [];
             })
     }
 })

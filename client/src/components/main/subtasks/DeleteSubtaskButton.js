@@ -1,5 +1,5 @@
 import { IconButton } from "@mui/material";
-import { deleteSubtask } from "../../../services/subtasksService";
+import { deleteSubtask, fetchSubtasksByUserId } from "../../../services/subtasksService";
 import { useParams } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import DeleteForeverIcon from '@mui/icons-material/DeleteForever'
@@ -25,6 +25,8 @@ const DeleteSubtaskButton = ({
             if (deletedSubtask.task_status !== task_status) {
                 dispatch(updateTaskStatus({ id: task_id, task_status: deletedSubtask.task_status }));
             }
+
+            dispatch(fetchSubtasksByUserId(task_id));
             
         } catch (err) {
             console.log(err);

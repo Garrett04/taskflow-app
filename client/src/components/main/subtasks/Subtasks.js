@@ -2,7 +2,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { getSubtasksError, getSubtasksStatus, selectSampleSubtasks, selectSubtasks } from "../../../features/subtasks/taskSubtasksSlice";
 import { useEffect } from "react";
 import { Box } from "@mui/material";
-import { fetchSubtasksByTaskId } from "../../../services/subtasksService";
+import { fetchSubtasksByTaskId, fetchSubtasksByUserId } from "../../../services/subtasksService";
 import { selectIsAuthenticated } from "../../../features/auth/authSlice";
 import AddSubtask from "./AddSubtask";
 import Subtask from "./Subtask";
