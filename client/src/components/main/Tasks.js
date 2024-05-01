@@ -90,8 +90,9 @@ const Tasks = () => {
 
     const handleClose = async (e, task_title, task_id) => {
         if (e.target === e.currentTarget) {
-            console.log(e.currentTarget);
+            // console.log(e.currentTarget);
             // To delete task if there is no task title.
+            
             if (!task_title) {
                 await deleteTask(task_id);
             }

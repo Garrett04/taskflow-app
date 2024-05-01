@@ -12,6 +12,7 @@ import DeadlineDate from "../components/main/task/DeadlineDate"
 import RestoreTaskButton from "../components/main/task/RestoreTaskButton"
 import DeleteTaskButton from "../components/main/task/DeleteTaskButton"
 import { getTasksError, getTasksStatus, selectTasks } from "../features/tasks/tasksSlice"
+import { dispatchFetchTasksByUserId } from "../utils/dispatchFetchTasksByUserId"
 
 
 const TaskModal = ({
@@ -39,13 +40,13 @@ const TaskModal = ({
     }, [setIsModalOpen, location.pathname])
 
     useEffect(() => {
-        if (location.state?.isNewTask) { // when creating a new task
-            setTitle("");
-            setExpand(false);
-        } else if (taskById?.title) { // to first set title to the existing title
-            setTitle(taskById?.title);
+        if (tasksStatus === 'fulfilled') {
+            setTitle(taskById?.title || "");
         }
-    }, [location.state?.isNewTask, taskById?.title])
+        if (location.state?.isNewTask) {
+            setExpand(false);
+        }
+    }, [tasksStatus, taskById?.title, location.state?.isNewTask]);
 
     const updateTaskTitle = async (e) => {
         e.preventDefault();
@@ -53,15 +54,13 @@ const TaskModal = ({
             // If title is removed it will alert user and not update task.
             if (!title) {
                 window.alert('Please provide task title');
+                setTitle(taskById.title);
                 return;           
             }
             try {
-                const updatedTask = await updateTask({ id: id, title });
-                console.log(updatedTask);
+                await updateTask({ id: id, title });
 
                 setExpand(true);
-
-                // dispatchFetchTasksByUserId(location.pathname);
                 
             } catch (err) {
                 console.log(err);
@@ -71,7 +70,7 @@ const TaskModal = ({
 
     const handleChange = (e) => {
         const { value } = e.target;
-        
+
         setTitle(value);
     }
 
@@ -90,7 +89,7 @@ const TaskModal = ({
                             onChange={handleChange}
                             onKeyUp={updateTaskTitle}
                             error={!title}
-                            placeholder="Task Title"
+                            placeholder="Please provide a title for your task and press Enter"
                             name="task-title"
                             disabled={taskById.archived || taskById.status === 'overdue'}
                         />
