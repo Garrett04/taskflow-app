@@ -1,5 +1,5 @@
 import { useDispatch, useSelector } from "react-redux";
-import { getSubtasksError, getSubtasksStatus, selectSampleSubtasks, selectSubtasks } from "../../../features/subtasks/subtasksSlice";
+import { getSubtasksError, getSubtasksStatus, selectSampleSubtasks, selectSubtasks } from "../../../features/subtasks/taskSubtasksSlice";
 import { useEffect } from "react";
 import { Box } from "@mui/material";
 import { fetchSubtasksByTaskId } from "../../../services/subtasksService";

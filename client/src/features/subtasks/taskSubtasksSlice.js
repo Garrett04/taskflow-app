@@ -17,18 +17,18 @@ const initialState = {
             {id: '4', title: 'Hello World', description: null, task_id: '5', checked: true },
         ],
     },
-    subtasks: {},
+    taskSubtasks: {},
     status: 'idle',
     error: [null]
 }
 
-const subtasksSlice = createSlice({
-    name: 'subtasks',
+const taskSubtasksSlice = createSlice({
+    name: 'taskSubtasks',
     initialState,
     reducers: {
         deleteSubtaskAction: (state, action) => {
             const { task_id, id } = action.payload;
-            state.subtasks[task_id] = state.subtasks[task_id].filter(subtask => subtask.id !== id);
+            state.taskSubtasks[task_id] = state.taskSubtasks[task_id].filter(subtask => subtask.id !== id);
         }
     },
     extraReducers: (builder) => {
@@ -39,7 +39,7 @@ const subtasksSlice = createSlice({
             .addCase(fetchSubtasksByTaskId.fulfilled, (state, action) => {
                 state.status = 'fulfilled';
                 const { task_id, subtasks } = action.payload;
-                state.subtasks[task_id] = subtasks;
+                state.taskSubtasks[task_id] = subtasks;
             })
             .addCase(fetchSubtasksByTaskId.rejected, (state, action) => {
                 state.status = 'rejected';
@@ -50,16 +50,16 @@ const subtasksSlice = createSlice({
 
                 // reassign the subtask with the task id with an empty array
                 // this ensures the last subtask is emptied in the redux state.
-                state.subtasks[task_id] = [];
+                state.taskSubtasks[task_id] = [];
             })
     }
 })
 
-export const selectSampleSubtasks = (state) => state.subtasks.sampleSubtasks;
+export const selectSampleSubtasks = (state) => state.taskSubtasks.sampleSubtasks;
 
-export const { deleteSubtaskAction } = subtasksSlice.actions;
-export const selectSubtasks = (state) => state.subtasks.subtasks;
-export const getSubtasksStatus = (state) => state.subtasks.status;
-export const getSubtasksError = (state) => state.subtasks.error;
+export const { deleteSubtaskAction } = taskSubtasksSlice.actions;
+export const selectSubtasks = (state) => state.taskSubtasks.taskSubtasks;
+export const getSubtasksStatus = (state) => state.taskSubtasks.status;
+export const getSubtasksError = (state) => state.taskSubtasks.error;
 
-export default subtasksSlice.reducer;
+export default taskSubtasksSlice.reducer;

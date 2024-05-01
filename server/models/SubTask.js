@@ -4,7 +4,8 @@ class SubTask {
     async findByUserId(user_id) {
         try {
             // pg query statement
-            const statement = `SELECT subtasks.title AS subtask_title,
+            const statement = `SELECT subtasks.id,
+                                    subtasks.title AS subtask_title,
                                     subtasks.description AS subtask_description
                                 FROM tasks, subtasks
                                 WHERE subtasks.task_id = tasks.id

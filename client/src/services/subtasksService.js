@@ -2,7 +2,7 @@ import { createAsyncThunk } from '@reduxjs/toolkit';
 import API from './client';
 
 export const fetchSubtasksByTaskId = createAsyncThunk(
-    'subtasks/fetchSubtasksByTaskId',
+    'taskSubtasks/fetchSubtasksByTaskId',
     async (task_id, { rejectWithValue }) => {
         try {
             const response = await API.get(`/tasks/${task_id}/subtasks`);
@@ -15,6 +15,19 @@ export const fetchSubtasksByTaskId = createAsyncThunk(
             } else {
                 throw err.response.data.msg;
             }
+        }
+    }
+)
+
+export const fetchSubtasksByUserId = createAsyncThunk(
+    'userSubtasks/fetchSubtasksByUserId',
+    async (task_id) => {
+        try {
+            const response = await API.get(`/tasks/${task_id}/subtasks?find_by_user_id=true`);
+
+            return response.data.subtasks;
+        } catch (err) {
+            throw err.response.data.msg;
         }
     }
 )

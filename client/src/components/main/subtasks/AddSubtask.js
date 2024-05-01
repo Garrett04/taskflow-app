@@ -1,8 +1,9 @@
 import { useTheme } from "@emotion/react";
-import { Box, Button, TextField } from "@mui/material";
+import { Box, Button, Divider, Select, TextField } from "@mui/material";
 import { useState } from "react";
-import { createSubtask, fetchSubtasksByTaskId } from "../../../services/subtasksService";
+import { createSubtask, fetchSubtasksByTaskId, fetchSubtasksByUserId } from "../../../services/subtasksService";
 import { useDispatch } from "react-redux";
+import ExistingSubtasksDropdown from "./ExistingSubtasksDropdown";
 
 
 const AddSubtask = ({
@@ -14,6 +15,8 @@ const AddSubtask = ({
     const [title, setTitle] = useState(''); 
     const [description, setDescription] = useState(''); 
     
+    const [existingSubtaskTitle, setExisitingSubtaskTitle] = useState("");
+
     const dispatch = useDispatch();
 
     const handleSubmit = async (e) => {
@@ -27,9 +30,11 @@ const AddSubtask = ({
             await createSubtask(data);
 
             dispatch(fetchSubtasksByTaskId(task_id));
+            dispatch(fetchSubtasksByUserId(task_id));
 
             setTitle("");
             setDescription("");
+            setExisitingSubtaskTitle("");
             
         } catch (err) {
             console.log(err);
@@ -38,6 +43,13 @@ const AddSubtask = ({
  
     const handleChange = (e) => {
         const { name, value } = e.target;
+        // console.log(name, value);
+
+        if (name === 'existing-subtask') {
+            setTitle(value.subtask_title);
+            setDescription(value.subtask_description);
+            setExisitingSubtaskTitle(value.subtask_title);
+        }
 
         if (name === 'title') {
             setTitle(value);
@@ -51,10 +63,20 @@ const AddSubtask = ({
             height="12rem" 
             sx={{
                 background: theme.palette.ochre.light,
+                margin: '0 0 2.5rem'
             }}
             hidden={archived || task_status === 'overdue'}
         >       
-            <form onSubmit={handleSubmit}>
+        <Divider/>
+            <form
+                style={{
+                    display: 'flex',
+                    flexFlow: 'column',
+                    margin: '1rem 2rem',
+                    gap: '1rem'
+                }} 
+                onSubmit={handleSubmit}
+            >
                 <TextField 
                     placeholder="Subtask Title" 
                     fullWidth
@@ -70,7 +92,34 @@ const AddSubtask = ({
                     name="description"
                     onChange={handleChange}
                 />
-                <Button type="submit">Add Subtask</Button>
+                <Box
+                    sx={{
+                        display: 'flex',                       
+                        justifyItems: 'center',
+                        alignContent: 'center',
+                        width: '100%',
+                        margin: 'auto',
+                        gap: '1rem'
+                    }}
+                >
+                    <ExistingSubtasksDropdown 
+                        task_id={task_id}
+                        title={title} 
+                        setTitle={setTitle}
+                        description={description}
+                        setDescription={setDescription}
+                        handleChange={handleChange}
+                        existingSubtaskTitle={existingSubtaskTitle}
+                    />
+                    <Button 
+                        type="submit"
+                        sx={{
+                            width: '60%'
+                        }}
+                    >
+                        Add Subtask
+                    </Button>
+                </Box>
             </form>
         </Box>
     )
