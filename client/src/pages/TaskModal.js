@@ -26,6 +26,7 @@ const TaskModal = ({
     const tasksError = useSelector(getTasksError);
 
     const [expand, setExpand] = useState(false);
+    const [updateSuccess, setUpdateSuccess] = useState(false);
     const location = useLocation();
 
     const taskById = tasks.find(task => task.id === id);
@@ -61,6 +62,7 @@ const TaskModal = ({
                 await updateTask({ id: id, title });
 
                 setExpand(true);
+                setUpdateSuccess(true);
                 
             } catch (err) {
                 console.log(err);
@@ -92,6 +94,10 @@ const TaskModal = ({
                             placeholder="Please provide a title for your task and press Enter"
                             name="task-title"
                             disabled={taskById.archived || taskById.status === 'overdue'}
+                            color={updateSuccess ? "success" : "info"}
+                            sx={{
+                                padding: '.5rem'
+                            }}
                         />
                         {taskById.archived
                         && <RestoreTaskButton 
