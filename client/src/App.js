@@ -12,9 +12,11 @@ import { getIsAuthenticatedStatus } from "./features/auth/authSlice";
 import Login from './pages/Login';
 import Register from './pages/Register';
 import AccountInfo from "./pages/AccountInfo";
+import { ThemeProvider, createTheme, useMediaQuery } from "@mui/material";
 
 
 function App() {
+  const prefersDarkMode = useMediaQuery('(prefers-color-scheme: dark)');
   const dispatch = useDispatch();
   const isAuthenticatedStatus = useSelector(getIsAuthenticatedStatus);
 
@@ -79,13 +81,47 @@ function App() {
     }
   ])
 
+  const theme = createTheme({
+    palette: {
+      mode: prefersDarkMode ? 'dark' : 'light',
+      primary: {
+        light: '#757ce8',
+        main: '#03a9f4',
+        dark: '#002884',
+        contrastText: '#FFF',
+      },
+      secondary: {
+        light: '#ff7961',
+        main: '#000000',
+        dark: '#ba000d',
+        contrastText: '#FFF',
+      },
+      ochre: {
+        main: '#E3D026',
+        light: '#E9DB5D',
+        dark: '#A29415',
+        contrastText: '#FFF',
+      },
+    },
+    typography: {
+      taskTitle: {
+        fontSize: '1.5rem',
+        fontFamily: 'sans',
+      },
+    },
+  })
+
   useEffect(() => {
     dispatch(fetchAuthenticationStatus());
   }, [dispatch]);
   
 
   if (isAuthenticatedStatus === 'fulfilled' || isAuthenticatedStatus === 'rejected') {
-    return <RouterProvider router={router}/>;
+    return (
+      <ThemeProvider theme={theme}>
+        <RouterProvider router={router}/>
+      </ThemeProvider>
+    );
   }
 }
 

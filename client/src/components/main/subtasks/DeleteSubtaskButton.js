@@ -35,7 +35,7 @@ const DeleteSubtaskButton = ({
 
     return (
         <IconButton title="Delete Subtask" onClick={handleClick} disabled={archived || task_status === 'overdue'}>
-            <DeleteForeverIcon />
+            <DeleteForeverIcon sx={{ color: 'black' }} />
         </IconButton>
     )
 }

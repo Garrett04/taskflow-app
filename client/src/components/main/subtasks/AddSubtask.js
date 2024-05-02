@@ -63,17 +63,17 @@ const AddSubtask = ({
             height="12rem" 
             sx={{
                 background: theme.palette.ochre.light,
-                margin: '0 0 2.5rem'
+                margin: '0 0 2.5rem',
             }}
             hidden={archived || task_status === 'overdue'}
         >       
-        <Divider/>
+        <Divider sx={{ bgcolor: 'black' }} />
             <form
                 style={{
                     display: 'flex',
                     flexFlow: 'column',
                     margin: '1rem 2rem',
-                    gap: '1rem'
+                    gap: '1rem',
                 }} 
                 onSubmit={handleSubmit}
             >
@@ -84,6 +84,11 @@ const AddSubtask = ({
                     name="title"
                     onChange={handleChange}
                     required
+                    sx={{ 
+                        '&.MuiInputBase-root': {
+                            color: 'black'
+                        } 
+                    }}
                 />
                 <TextField  
                     placeholder="Subtask description"
@@ -114,6 +119,7 @@ const AddSubtask = ({
                     <Button 
                         type="submit"
                         fullWidth
+                        sx={{ border: '1px solid black' }}
                     >
                         Add Subtask
                     </Button>

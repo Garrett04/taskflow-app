@@ -70,12 +70,32 @@ export default function ResponsiveDrawer(props) {
 
     const drawer = (
       <div>
-        <Toolbar />
+        <Logo 
+          sx={{
+            fontSize: '2rem',
+            margin: '1rem 3rem 0',
+            [theme.breakpoints.up('sm')]: {
+              display: 'none'
+            }
+          }}
+        >
+          TaskFlow
+        </Logo>
+        <Toolbar 
+          sx={{
+            [theme.breakpoints.down('sm')]: {
+              display: 'none'
+            }
+          }}
+        />
         <Divider 
             sx={{ 
                 marginTop: '1rem', 
                 [theme.breakpoints.down('sm')]: {
-                  marginTop: '.5rem'
+                  marginTop: '.42rem'
+                },
+                [theme.breakpoints.down('md')]: {
+                  marginTop: '.44rem'
                 }
             }} 
         />
@@ -119,6 +139,7 @@ export default function ResponsiveDrawer(props) {
           sx={{
             width: { sm: `calc(100% - ${drawerWidth}px)` },
             ml: { sm: `${drawerWidth}px` },
+            borderBottom: '1px solid white'
           }}
           elevation={0}
         >
@@ -144,14 +165,22 @@ export default function ResponsiveDrawer(props) {
               alignItems='center'
             >
               <a href="/" className="logo">
-                <Logo>TaskFlow</Logo>
+                <Logo
+                  sx={{
+                    [theme.breakpoints.down('md')]: {
+                      display: 'none'
+                    }
+                  }}
+                >
+                  TaskFlow
+                </Logo>
                 <SvgIcon
                   component={TaskFlowLogo} 
                   inheritViewBox 
                   sx={{
                     fontSize: '4rem',
                     marginLeft: '-1.5rem',
-                    [theme.breakpoints.up('sm')]: {
+                    [theme.breakpoints.up('md')]: {
                       display: 'none',
                     }
                   }}
@@ -168,7 +197,7 @@ export default function ResponsiveDrawer(props) {
         <Box
           component="nav"
           sx={{ width: { sm: drawerWidth }, flexShrink: { sm: 0 } }}
-          aria-label="mailbox folders"
+          aria-label="navigation buttons"
         >
           {/* The implementation can be swapped with js to avoid SEO duplication of links. */}
           <Drawer

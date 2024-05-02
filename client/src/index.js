@@ -10,41 +10,12 @@ import { createTheme } from '@mui/material';
 import { ThemeProvider } from '@emotion/react';
 import { BrowserRouter as Router } from 'react-router-dom';
 
-const theme = createTheme({
-  palette: {
-    primary: {
-      light: '#757ce8',
-      main: '#03a9f4',
-      dark: '#002884',
-      contrastText: '#FFF',
-    },
-    secondary: {
-      light: '#ff7961',
-      main: '#000000',
-      dark: '#ba000d',
-      contrastText: '#FFF',
-    },
-    ochre: {
-      main: '#E3D026',
-      light: '#E9DB5D',
-      dark: '#A29415',
-      contrastText: '#242105',
-    },
-  },
-  typography: {
-    taskTitle: {
-      fontSize: '1.5rem',
-      fontFamily: 'sans',
-    },
-  }
-})
+
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   <Provider store={store}>
-    <ThemeProvider theme={theme}>
-        <App />
-    </ThemeProvider>
+      <App />
   </Provider>
 );
 

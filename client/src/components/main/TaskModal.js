@@ -1,17 +1,17 @@
 import { Box, Collapse, Divider, Modal } from "@mui/material"
-import Subtasks from "../components/main/subtasks/Subtasks"
-import { CardBottom, ModalBox, TaskCard, TaskTitle } from "../components/main/MainStyles"
+import Subtasks from "./subtasks/Subtasks"
+import { CardBottom, ModalBox, TaskCard, TaskTitle } from "./MainStyles"
 import { useEffect, useState } from "react"
 import { useSelector } from "react-redux"
 import { useLocation, useParams } from "react-router-dom"
-import { updateTask } from "../services/tasksService"
-import { renderTaskStatus } from "../utils/renderTaskStatus"
-import DeadlineDatePicker from "../components/main/task/DeadlineDatePicker"
-import MoveToTrashButton from "../components/main/task/MoveToTrashButton"
-import DeadlineDate from "../components/main/task/DeadlineDate"
-import RestoreTaskButton from "../components/main/task/RestoreTaskButton"
-import DeleteTaskButton from "../components/main/task/DeleteTaskButton"
-import { getTasksError, getTasksStatus, selectTasks } from "../features/tasks/tasksSlice"
+import { updateTask } from "../../services/tasksService"
+import { renderTaskStatus } from "../../utils/renderTaskStatus"
+import DeadlineDatePicker from "./task/DeadlineDatePicker"
+import MoveToTrashButton from "./task/MoveToTrashButton"
+import DeadlineDate from "./task/DeadlineDate"
+import RestoreTaskButton from "./task/RestoreTaskButton"
+import DeleteTaskButton from "./task/DeleteTaskButton"
+import { getTasksError, getTasksStatus, selectTasks } from "../../features/tasks/tasksSlice"
 
 
 const TaskModal = ({
@@ -95,7 +95,8 @@ const TaskModal = ({
                             disabled={taskById.archived || taskById.status === 'overdue'}
                             color={updateSuccess ? "success" : "info"}
                             sx={{
-                                padding: '.5rem'
+                                padding: '.5rem',
+                                color: 'black'
                             }}
                         />
                         {taskById.archived
@@ -130,7 +131,7 @@ const TaskModal = ({
                             task_status={taskById.status} 
                             archived={taskById.archived} 
                         />
-                        <Divider />
+                        <Divider sx={{ bgcolor: 'black' }} />
                         <CardBottom>
                             {renderTaskStatus(taskById.status)}
                             {taskById.archived || taskById.status === 'overdue' || taskById.status === 'completed'
@@ -148,9 +149,7 @@ const TaskModal = ({
     }
 
     let content;
-    if (tasksStatus === 'pending') {
-        content = 'Loading...';
-    } else if (tasksStatus === 'fulfilled') {
+    if (tasksStatus === 'fulfilled') {
         content = renderTask();
     } else if (tasksStatus === 'rejected') {
         content = tasksError;

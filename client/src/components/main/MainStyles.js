@@ -1,15 +1,15 @@
-import { Box, Card, CardContent, Grid, IconButton, Input, Typography, styled } from "@mui/material";
+import { Box, Card, CardContent, IconButton, Input, Typography, styled } from "@mui/material";
 import MuiAddTaskIcon from '@mui/icons-material/AddTask';
 
 
-export const MainGrid = styled(Grid)(({ theme }) => ({
-    padding: '0 5rem',
-    margin: '.5rem auto',
-    [theme.breakpoints.down('sm')]: {
-        marginLeft: '2rem',
-        padding: '1rem 2.5rem 0'
-    }
-}))
+// export const MainGrid = styled(Grid)(({ theme }) => ({
+//     padding: '0 5rem',
+//     margin: '.5rem auto',
+//     [theme.breakpoints.down('sm')]: {
+//         marginLeft: '2rem',
+//         padding: '1rem 2.5rem 0'
+//     }
+// }))
 
 export const Button = styled(IconButton)(({ theme }) => ({
     '&.MuiIconButton-root': {
@@ -48,6 +48,8 @@ export const TaskHeaderButtonGroup = styled(Box)(({ theme }) => ({
 export const CardBottom = styled(CardContent)(() => ({
     display: 'flex',
     justifyContent: 'space-between',
+    padding: '0 auto',
+    alignItems: 'center',
 }));
 
 export const MuiDeadlineDate = styled(Typography)(({ theme, is_completed }) => ({
@@ -63,7 +65,7 @@ export const ModalBox = styled(Box)(({ theme }) => ({
     transform: 'translate(-50%, -50%)',
     [theme.breakpoints.down('sm')]: {
         width: '70%',
-    }
+    },
 }))
 
 export const TaskTitle = styled(Input)(({ theme }) => ({
@@ -79,6 +81,7 @@ export const TaskCard = styled(Card)(({ theme, task_archived }) => ({
     flexFlow: 'column',
     justifyContent: 'space-between',
     // Indicating a task which is going to be deleted
-    border: task_archived === 'true' ? '2px dotted red' : null,
+    outline: task_archived === 'true' ? '2px dotted red' : null,
     opacity: task_archived === 'true' ? 0.7 : null,
+    color: 'black'
 }))

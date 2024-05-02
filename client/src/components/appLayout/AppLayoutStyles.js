@@ -4,15 +4,9 @@ import MuiInputBase from '@mui/material/InputBase';
 import MuiIconButton from '@mui/material/IconButton';
 
 export const Logo = styled(Typography)(({ theme }) => ({
-    '&.MuiTypography-root': {
-      fontSize: '3rem',
-      fontFamily: 'Special Elite',
-      marginTop: '.5rem',
-      
-      [theme.breakpoints.down('sm')]: {
-        display: 'none'
-      }
-    },
+    fontSize: '3rem',
+    fontFamily: 'Special Elite',
+    marginTop: '.5rem',
 }));
 
 export const Button = styled(MuiButton)(({ theme, backgroundhovercolor }) => ({
@@ -28,7 +22,7 @@ export const Button = styled(MuiButton)(({ theme, backgroundhovercolor }) => ({
     },
     '&.MuiButtonBase-root': {
         [theme.breakpoints.down('sm')]: {
-            minWidth: '3rem',
+            minWidth: '2.2rem',
             margin: 'auto'
         }
     }
@@ -39,14 +33,14 @@ export const ButtonIcon = styled(({ icon: Icon, ...rest }) => (
 ))(({ theme }) => ({
     fontSize: '3rem',
     [theme.breakpoints.down('sm')]: {
-        fontSize: '1.8rem',
+        fontSize: '1.4rem',
     }
 }));
 
 export const ButtonContainer = styled(Box)(({ theme }) => ({
     display: 'flex',
-    gap: '2.2rem',
-    padding: '.5rem 0',
+    gap: '1.25rem',
+    
     [theme.breakpoints.down('sm')]: {
         gap: '.5rem',
     }
@@ -54,21 +48,21 @@ export const ButtonContainer = styled(Box)(({ theme }) => ({
 
 
 export const SearchBarContainer = styled(Paper)(({ theme }) => ({
-    width: '40%',
+    width: '50%',
     padding: '.3rem .8rem',
     display: 'flex',
     alignItems: 'center',
     transition: 'width .1s',
-    background: theme.palette.primary.contrastText,
+    margin: '0 1rem',
     '&:focus-within': {
-        width: '50%',
+        width: '60%',
         transition: 'width .1s'
     },
-
-    [theme.breakpoints.down('sm')]: {
-        padding: '.2rem .4rem',
+    background: theme.palette.mode === 'dark' ? theme.palette.primary.dark : theme.palette.primary.contrastText,
+    [theme.breakpoints.down('md')]: {
+        padding: '.2rem .6rem',
         '&:focus-within': {
-            width: '40%',
+            width: '50%',
         },
     }
 }))

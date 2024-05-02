@@ -148,7 +148,7 @@ const Subtask = ({
     return (
         <Stack
             direction="row"
-            flexWrap="wrap" 
+            flexWrap="nowrap" 
             alignItems="center"
             width='100%'
             key={subtask.id}
@@ -157,7 +157,7 @@ const Subtask = ({
             <FormControlLabel
                 control={
                     <Checkbox
-                        color="secondary" 
+                        color="secondary"
                         checked={checked}
                         sx={{
                             [theme.breakpoints.down('sm')]: {
@@ -166,7 +166,8 @@ const Subtask = ({
                                     marginTop: '-1px'
                                 }
                             },
-                            marginLeft: '1rem'
+                            marginLeft: '1rem',
+                            color: 'black'
                         }}
                         onChange={() => updateSubtaskChecked(subtask.id)}
                         disabled={archived || task_status === 'overdue'}
@@ -178,7 +179,7 @@ const Subtask = ({
             <Box
                 sx={{
                     display: 'inline-flex',
-                    flexFlow: 'row wrap',
+                    flexFlow: 'row nowrap',
                     justifyContent: 'space-between',
                     alignItems: 'center',
                     width: inTaskModal ? "90%" : "80%",
@@ -188,7 +189,7 @@ const Subtask = ({
                 <Box
                     sx={{  
                         display: 'flex',
-                        flexFlow: 'column wrap'
+                        flexFlow: 'column wrap',
                     }}
                 >
                     <DeleteSubtaskButton

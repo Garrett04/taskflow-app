@@ -28,12 +28,6 @@ const SearchBar = () => {
             navigate(`?search=${term}`);
         }
         setTerm("");
-
-        // to just fetch in tasks first by the location 
-        // before the dispatch of filtering tasks by search term or not
-        // this also prevents from removing tasks when searching multiple times.
-
-        // dispatchFetchTasksByUserId(location.pathname);
     }
 
     const handleKeyUp = (e) => {
@@ -43,13 +37,6 @@ const SearchBar = () => {
             handleSearch();
         }
     }
-
-    // useEffect(() => {
-    //     console.log(location);
-    //     if (!term) {
-    //         dispatchFetchTasksByUserId(location.pathname);
-    //     }
-    // }, [term, location.pathname, location.search]);
 
     return (
         <SearchBarContainer>

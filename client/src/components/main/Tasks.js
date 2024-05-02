@@ -2,14 +2,14 @@ import { useDispatch, useSelector } from "react-redux";
 import { filterTasksBySearchTerm, getTasksError, getTasksStatus, selectSampleTasks, selectTasks } from "../../features/tasks/tasksSlice";
 import { useEffect, useState } from "react";
 import { selectIsAuthenticated } from "../../features/auth/authSlice";
-import { Container, Grid, Typography } from "@mui/material";
+import { Box, CircularProgress, Container, Grid, Typography } from "@mui/material";
 import { useTheme } from "@emotion/react";
 import AddTaskButton from "./task/AddTaskButton";
 import Task from "./task/Task";
 import { useLocation, useNavigate, useSearchParams } from "react-router-dom";
 import { renderPageTitle } from "../../utils/renderPageTitle";
 import { dispatchFetchTasksByUserId } from "../../utils/dispatchFetchTasksByUserId";
-import TaskModal from "../../pages/TaskModal";
+import TaskModal from "./TaskModal";
 import FilterDropdowns from "./filterOptions/FilterDropdowns";
 import { deleteTask } from "../../services/tasksService";
 import { fetchSubtasksByTaskId } from "../../services/subtasksService";
@@ -83,7 +83,11 @@ const Tasks = () => {
     if (tasksStatus === 'rejected' || tasksError) {
         content = tasksError;
     } else if (tasksStatus === 'pending') {
-        content = 'Loading...'
+        content = (
+            <Box sx={{ display: 'flex', margin: 'auto' }}>
+                <CircularProgress size="4rem" color="info" />
+            </Box>
+        )
     } else if (tasksStatus === 'fulfilled' || !isAuthenticated) {
         content = renderAllTasks();
     }
@@ -130,7 +134,7 @@ const Tasks = () => {
                     marginBottom: '2rem',
                     [theme.breakpoints.down('sm')]: {
                         fontSize: '1.5rem',
-                    } 
+                    },
                 }} 
                 fontFamily="serif"
             >

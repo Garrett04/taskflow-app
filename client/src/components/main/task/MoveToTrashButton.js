@@ -43,7 +43,7 @@ const MoveToTrashButton = ({
             title='Move to trash' 
             onClick={handleArchive}
         >
-            <DeleteIcon />
+            <DeleteIcon sx={{ color: 'black' }} />
         </IconButton>
     )
 }
