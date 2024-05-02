@@ -1,7 +1,7 @@
-import { Divider, IconButton, InputBase } from "@mui/material";
+import { Divider, IconButton } from "@mui/material";
 import SearchIcon from "@mui/icons-material/Search"
 import ClearIcon from "@mui/icons-material/Clear"
-import { SearchBarContainer } from "./AppLayoutStyles";
+import { InputBase, SearchBarContainer, SearchButton } from "./AppLayoutStyles";
 import { useState } from "react";
 import { useLocation, useNavigate, useSearchParams } from "react-router-dom";
 
@@ -59,9 +59,6 @@ const SearchBar = () => {
                 placeholder="Search Tasks"
                 onChange={handleChange}
                 onKeyUp={handleKeyUp}
-                sx={{
-                    flex: 1,
-                }}
             />
             {term
             &&
@@ -76,9 +73,9 @@ const SearchBar = () => {
                 )
             }
             <Divider sx={{ height: '2rem', margin: '0 .3em' }} orientation="vertical" />
-            <IconButton size="small" title="Search" onClick={handleSearch} >
+            <SearchButton size='small' title="Search" onClick={handleSearch} >
                 <SearchIcon/>
-            </IconButton>
+            </SearchButton>
         </SearchBarContainer>
     )
 }

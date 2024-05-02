@@ -1,5 +1,7 @@
 import { Box, Container, Grid, Paper, TextField, Typography, styled } from "@mui/material";
 import MuiButton from '@mui/material/Button';
+import MuiInputBase from '@mui/material/InputBase';
+import MuiIconButton from '@mui/material/IconButton';
 
 export const Logo = styled(Typography)(({ theme }) => ({
     '&.MuiTypography-root': {
@@ -8,7 +10,7 @@ export const Logo = styled(Typography)(({ theme }) => ({
       marginTop: '.5rem',
       
       [theme.breakpoints.down('sm')]: {
-        fontSize: '2.2rem'
+        display: 'none'
       }
     },
 }));
@@ -52,14 +54,34 @@ export const ButtonContainer = styled(Box)(({ theme }) => ({
 
 
 export const SearchBarContainer = styled(Paper)(({ theme }) => ({
-    width: '35%',
+    width: '40%',
     padding: '.3rem .8rem',
     display: 'flex',
     alignItems: 'center',
     transition: 'width .1s',
     background: theme.palette.primary.contrastText,
     '&:focus-within': {
-        width: '45%',
+        width: '50%',
         transition: 'width .1s'
+    },
+
+    [theme.breakpoints.down('sm')]: {
+        padding: '.2rem .4rem',
+        '&:focus-within': {
+            width: '40%',
+        },
+    }
+}))
+
+export const InputBase = styled(MuiInputBase)(({ theme }) => ({
+    flex: 1,
+    [theme.breakpoints.down('sm')]: {
+        fontSize: '.8rem'
+    }
+}))
+
+export const SearchButton = styled(MuiIconButton)(({ theme }) => ({
+    [theme.breakpoints.down('sm')]: {
+        width: '1rem'
     }
 }))

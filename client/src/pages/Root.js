@@ -3,14 +3,11 @@ import AppLayout from "../components/appLayout/AppLayout";
 import { MainGrid } from "../components/main/MainStyles";
 
 const Root = () => {
-
-  return (
-    <>
-        <AppLayout/>
-        <MainGrid>
-          <Outlet/>
-        </MainGrid>
-    </>
-  )
+    return (
+      <AppLayout>
+        <Outlet/>
+      </AppLayout>
+    )
 }
-export default Root
+
+export default Root;
