@@ -18,12 +18,12 @@ const EditSubtaskButton = ({
         {!isEditMode 
         ? (
             <IconButton onClick={toggleEditMode} disabled={archived || task_status === 'overdue'}>
-                <Edit titleAccess="Edit Subtask" sx={{ color: 'black' }} /> 
+                <Edit titleAccess="Edit Subtask" /> 
             </IconButton>
             )
         : (
             <IconButton onClick={handleSubtaskUpdate}>
-                <DoneIcon titleAccess="Done" sx={{ color: 'black' }} />
+                <DoneIcon titleAccess="Done" />
             </IconButton>
         )}
         </>

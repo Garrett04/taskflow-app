@@ -66,9 +66,9 @@ const Task = ({
                         </TaskHeaderButtonGroup>
                     </TaskHeader> 
                 </Box>
-                <Divider />
+                <Divider/>
                 <Subtasks task_id={task.id} archived={task.archived} task_status={task.status} />
-                <Divider />
+                <Divider/>
                 <CardBottom>
                     {renderTaskStatus(task.status)}
                     <DeadlineDate task_status={task.status} deadline_date={task.deadline_date} />

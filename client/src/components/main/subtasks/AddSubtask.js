@@ -1,5 +1,5 @@
 import { useTheme } from "@emotion/react";
-import { Box, Button, Divider, Select, TextField } from "@mui/material";
+import { Box, Button, Divider, TextField } from "@mui/material";
 import { useState } from "react";
 import { createSubtask, fetchSubtasksByTaskId, fetchSubtasksByUserId } from "../../../services/subtasksService";
 import { useDispatch } from "react-redux";
@@ -59,15 +59,10 @@ const AddSubtask = ({
     }
 
     return (
-        <Box 
-            height="12rem" 
-            sx={{
-                background: theme.palette.ochre.light,
-                margin: '0 0 2.5rem',
-            }}
+        <Box
             hidden={archived || task_status === 'overdue'}
         >       
-        <Divider sx={{ bgcolor: 'black' }} />
+        <Divider />
             <form
                 style={{
                     display: 'flex',
@@ -84,10 +79,13 @@ const AddSubtask = ({
                     name="title"
                     onChange={handleChange}
                     required
-                    sx={{ 
-                        '&.MuiInputBase-root': {
-                            color: 'black'
-                        } 
+                    sx={{
+                        '& .MuiInputBase-input': {
+                            [theme.breakpoints.down('sm')]: {
+                                height: '0',
+                                padding: '.8rem'
+                            }
+                        }
                     }}
                 />
                 <TextField  
@@ -96,6 +94,16 @@ const AddSubtask = ({
                     value={description}
                     name="description"
                     onChange={handleChange}
+                    multiline
+                    rows={3}
+                    sx={{
+                        '& .MuiInputBase-input': {
+                            [theme.breakpoints.down('sm')]: {
+                                height: '0',
+                                padding: '0'
+                            }
+                        }
+                    }}
                 />
                 <Box
                     sx={{
@@ -119,7 +127,15 @@ const AddSubtask = ({
                     <Button 
                         type="submit"
                         fullWidth
-                        sx={{ border: '1px solid black' }}
+                        sx={{ 
+                            [theme.breakpoints.down('sm')]: {
+                                height: '3.5rem',
+                                fontSize: '.8rem'
+                            }, 
+                        }}
+                        color="primary"
+                        variant="outlined"
+                        disableElevation
                     >
                         Add Subtask
                     </Button>

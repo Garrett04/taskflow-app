@@ -67,7 +67,7 @@ const Tasks = () => {
         
         return tasksToRender.map(task => {
             return (
-                <Grid item key={task.id} xs={12} md={6} lg={4}>
+                <Grid item key={task.id} xs={12} md={6} lg={4} xl={3}>
                     <Task 
                         task={task}
                         sort={sort}
@@ -140,7 +140,7 @@ const Tasks = () => {
             >
                 {renderPageTitle(location.pathname)}
             </Typography>
-            <Container className="tasks">
+            <Container maxWidth>
                 <Grid container spacing={3}>
                     {content}
                 </Grid>

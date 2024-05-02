@@ -1,4 +1,4 @@
-import { Box, Container, Grid, Paper, TextField, Typography, styled } from "@mui/material";
+import { Box, Paper, Typography, styled } from "@mui/material";
 import MuiButton from '@mui/material/Button';
 import MuiInputBase from '@mui/material/InputBase';
 import MuiIconButton from '@mui/material/IconButton';
@@ -22,7 +22,7 @@ export const Button = styled(MuiButton)(({ theme, backgroundhovercolor }) => ({
     },
     '&.MuiButtonBase-root': {
         [theme.breakpoints.down('sm')]: {
-            minWidth: '2.2rem',
+            minWidth: '3rem',
             margin: 'auto'
         }
     }

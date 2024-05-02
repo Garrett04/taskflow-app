@@ -134,10 +134,26 @@ const Subtask = ({
                         width: '85%',
                     }}
                 >
-                    <Typography variant="h6" data-testid="subtask-title">
+                    <Typography 
+                        variant="h6" 
+                        data-testid="subtask-title"
+                        sx={{
+                            fontWeight: 'bold',
+                            [theme.breakpoints.down('sm')]: {
+                                fontSize: '1.2rem'
+                            }
+                        }}
+                    >
                         {title}
                     </Typography>
-                    <Typography data-testid="subtask-description">
+                    <Typography 
+                        data-testid="subtask-description"
+                        sx={{
+                            [theme.breakpoints.down('sm')]: {
+                                fontSize: '1rem'
+                            }
+                        }}
+                    >
                         {description}
                     </Typography>
                 </Box>
@@ -157,7 +173,7 @@ const Subtask = ({
             <FormControlLabel
                 control={
                     <Checkbox
-                        color="secondary"
+                        color="success"
                         checked={checked}
                         sx={{
                             [theme.breakpoints.down('sm')]: {
@@ -167,7 +183,7 @@ const Subtask = ({
                                 }
                             },
                             marginLeft: '1rem',
-                            color: 'black'
+                            color: theme.palette.indigo.contrastText
                         }}
                         onChange={() => updateSubtaskChecked(subtask.id)}
                         disabled={archived || task_status === 'overdue'}
@@ -183,6 +199,10 @@ const Subtask = ({
                     justifyContent: 'space-between',
                     alignItems: 'center',
                     width: inTaskModal ? "90%" : "80%",
+                    [theme.breakpoints.down('sm')]: {
+                        flexFlow: 'column wrap',
+                        alignItems: 'start',
+                    }
                 }}
             >
                 {renderSubtaskDataFields()}
@@ -190,6 +210,11 @@ const Subtask = ({
                     sx={{  
                         display: 'flex',
                         flexFlow: 'column wrap',
+                        [theme.breakpoints.down('sm')]: {
+                            flexFlow: 'row nowrap',
+                            justifyContent: 'center',
+                            width: '85%'
+                        }
                     }}
                 >
                     <DeleteSubtaskButton

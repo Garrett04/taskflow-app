@@ -2,7 +2,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { getSubtasksError, getSubtasksStatus, selectSampleSubtasks, selectSubtasks } from "../../../features/subtasks/taskSubtasksSlice";
 import { useEffect } from "react";
 import { Box } from "@mui/material";
-import { fetchSubtasksByTaskId, fetchSubtasksByUserId } from "../../../services/subtasksService";
+import { fetchSubtasksByTaskId } from "../../../services/subtasksService";
 import { selectIsAuthenticated } from "../../../features/auth/authSlice";
 import AddSubtask from "./AddSubtask";
 import Subtask from "./Subtask";
@@ -41,8 +41,9 @@ const Subtasks = ({
                     />
                 </div>
             ))
+        } else if (subtasksByTaskId?.length < 1 && task_status !== 'overdue' && !archived) {
+            return subtasksError;
         }
-        return subtasksError;
     }
 
     let content;
@@ -58,8 +59,8 @@ const Subtasks = ({
                 display: 'flex', 
                 flexFlow: 'column', 
                 gap: '1.2rem', 
-                margin: '0',
-                
+                margin: '1rem 0',
+                justifyContent: 'center'
             }}
         >
             {inTaskModal 
@@ -76,7 +77,8 @@ const Subtasks = ({
                     {content}
                 </Box>
             : content}
-            {inTaskModal && <AddSubtask task_id={task_id} task_status={task_status} archived={archived} />}
+            {inTaskModal 
+            && <AddSubtask task_id={task_id} task_status={task_status} archived={archived} />}
         </Box>
     )
 }

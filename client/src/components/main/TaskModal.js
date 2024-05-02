@@ -94,10 +94,6 @@ const TaskModal = ({
                             name="task-title"
                             disabled={taskById.archived || taskById.status === 'overdue'}
                             color={updateSuccess ? "success" : "info"}
-                            sx={{
-                                padding: '.5rem',
-                                color: 'black'
-                            }}
                         />
                         {taskById.archived
                         && <RestoreTaskButton 
@@ -131,7 +127,7 @@ const TaskModal = ({
                             task_status={taskById.status} 
                             archived={taskById.archived} 
                         />
-                        <Divider sx={{ bgcolor: 'black' }} />
+                        <Divider />
                         <CardBottom>
                             {renderTaskStatus(taskById.status)}
                             {taskById.archived || taskById.status === 'overdue' || taskById.status === 'completed'

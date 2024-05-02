@@ -20,8 +20,8 @@ const AddTaskButton = () => {
 
     return (
         <Tooltip title='Add new task' placement="top">
-            <Button onClick={handleClick} size="large">
-                <AddTaskIcon sx={{ color: 'black' }} />
+            <Button onClick={handleClick} size="large" sx={{ outline: '1.5px solid white' }}>
+                <AddTaskIcon />
             </Button> 
         </Tooltip>
     )

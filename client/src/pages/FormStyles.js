@@ -11,7 +11,7 @@ export const Form = styled(FormGroup)(({ theme }) => ({
     top: '50%',
     left: '50%',
     padding: '3rem',
-    backgroundColor: theme.palette.ochre.light,
+    backgroundColor: theme.palette.indigo.light,
 }))
 
 export const TextField = styled(MuiTextField)(() => ({

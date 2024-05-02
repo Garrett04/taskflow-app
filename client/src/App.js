@@ -87,7 +87,7 @@ function App() {
       primary: {
         light: '#757ce8',
         main: '#03a9f4',
-        dark: '#002884',
+        dark: '#293132',
         contrastText: '#FFF',
       },
       secondary: {
@@ -96,12 +96,12 @@ function App() {
         dark: '#ba000d',
         contrastText: '#FFF',
       },
-      ochre: {
-        main: '#E3D026',
-        light: '#E9DB5D',
-        dark: '#A29415',
-        contrastText: '#FFF',
-      },
+      indigo: {
+        main: '#340068',
+        light: '#7A00F5',
+        dark: '#47008F',
+        contrastText: '#FFF'
+      }
     },
     typography: {
       taskTitle: {

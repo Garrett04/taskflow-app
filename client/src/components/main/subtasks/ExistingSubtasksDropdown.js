@@ -1,7 +1,7 @@
 import { FormControl, InputLabel, MenuItem, Select, Typography } from "@mui/material";
 import { useDispatch, useSelector } from "react-redux";
-import { getUserSubtasksError, getUserSubtasksStatus, selectUserSubtasks } from "../../../features/subtasks/userSubtasksSlice";
-import { useEffect, useState } from "react";
+import { selectUserSubtasks } from "../../../features/subtasks/userSubtasksSlice";
+import { useEffect } from "react";
 import { fetchSubtasksByUserId } from "../../../services/subtasksService";
 
 
@@ -27,7 +27,7 @@ const ExistingSubtasksDropdown = ({
                     flexFlow: 'column',
                     alignItems: 'start',
                     overflowWrap: 'break-word',
-                    textWrap: 'wrap'
+                    textWrap: 'wrap',
                 }}
             >
                 <Typography variant="body1">
