@@ -36,7 +36,7 @@ const MoveToTrashButton = ({
             throw err;
         }
     }
-
+    
     return (
         <IconButton 
             data-testid="trash-button" 

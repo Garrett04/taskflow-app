@@ -110,17 +110,18 @@ const TaskModal = ({
                                 inTaskModal
                             />}
                         {taskById.archived
-                        ? <DeleteTaskButton 
+                        && <DeleteTaskButton 
                             task_id={taskById.id} 
                             deleted_at={taskById.deleted_at}
                             setIsModalOpen={setIsModalOpen}
                             inTaskModal 
-                          />
-                        : <MoveToTrashButton 
+                          />}
+                        {taskById.title && !taskById.archived
+                        &&  <MoveToTrashButton 
                             task_id={taskById.id} 
                             setIsModalOpen={setIsModalOpen}
                             inTaskModal  
-                          />}
+                            />}
                     </Box>
                     <Collapse
                         in={taskById.title ? true : expand} 
