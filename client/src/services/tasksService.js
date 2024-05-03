@@ -35,30 +35,17 @@ export const updateTaskArchived = async (data) => {
         const { task_id, archived } = data;
         const response = await API.put(`/tasks/${task_id}`, { archived });
 
-        return response.data;
+        return response.data.task;
     } catch (err) {
         throw err.response.data.msg;
     }
 }
 
-export const fetchTaskById = createAsyncThunk(
-    'task/fetchTaskById',
-    async (id) => {
-        try {
-            const response = await API.get(`/tasks/${id}`);
-
-            return response.data.task;
-        } catch (err) {
-            throw err.response.data.msg;
-        }
-    }
-)
-
 export const updateTask = async (data) => {
     try {
         const { id, title, deadline_date } = data;
         const response = await API.put(`/tasks/${id}`, {title, deadline_date});
-        console.log(response.data);
+        // console.log(response.data);
 
         return response.data;
     } catch (err) {
@@ -72,6 +59,6 @@ export const deleteTask = async (id) => {
 
         return response.data;
     } catch (err) {
-        throw err.response.data.msg;
+        console.error(err);
     }
 }

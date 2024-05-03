@@ -1,41 +1,37 @@
 import { useDispatch, useSelector } from "react-redux";
-import { fetchSampleSubtasks, getSubtasksError, getSubtasksStatus, selectSampleSubtasks, selectSubtasks } from "../../../features/subtasks/subtasksSlice";
-import { useEffect, useState } from "react";
-import { Box, Checkbox, FormControlLabel, FormGroup, Stack, TextField, Typography } from "@mui/material";
-import { useTheme } from "@emotion/react";
-import { fetchSubtasksByTaskId, updateSubtask } from "../../../services/subtasksService";
-import { selectIsAuthenticated } from "../../../features/auth/authSlice";
-import { handleTaskExpand } from "../../../utils/handleTaskExpand";
+import { getSubtasksError, getSubtasksStatus, selectSubtasks } from "../../../features/subtasks/taskSubtasksSlice";
+import { useEffect } from "react";
+import { Box } from "@mui/material";
+import { fetchSubtasksByTaskId } from "../../../services/subtasksService";
 import AddSubtask from "./AddSubtask";
-import DeleteSubtaskButton from "./DeleteSubtaskButton";
-import { useLocation } from "react-router-dom";
-import EditSubtaskButton from "./EditSubtaskButton";
 import Subtask from "./Subtask";
 
 
 const Subtasks = ({ 
     task_id,
     inTaskModal, // Will always come only from TaskModal page
-    page,
     task_status,
     archived
 }) => {
     const subtasks = useSelector(selectSubtasks);
-    const isAuthenticated = useSelector(selectIsAuthenticated);
-    const sampleSubtasks = useSelector(selectSampleSubtasks);
     const subtasksStatus = useSelector(getSubtasksStatus);
     const subtasksError = useSelector(getSubtasksError);
     
     const dispatch = useDispatch();
     
+    // for every task it will dispatch fetchSubtasksByTaskId
     useEffect(() => {
         dispatch(fetchSubtasksByTaskId(task_id));
     }, [dispatch, task_id])
 
     const renderSubtask = () => {
-        const subtasksByTaskId = isAuthenticated ? subtasks[task_id] : sampleSubtasks[task_id];
+        // since each tasks subtasks is stored in an object with task id as the key in the redux state
+        // and the value is the subtasks array, we access it like so.
+        const subtasksByTaskId = subtasks[task_id];
 
+        // if the subtasks are present
         if (subtasksByTaskId?.length > 0) {
+            // for every subtask render the Subtask component
             return subtasksByTaskId.map(subtask => (
                 <div key={subtask.id}>
                     <Subtask 
@@ -47,8 +43,11 @@ const Subtasks = ({
                     />
                 </div>
             ))
+        // Else if the subtasks are not present and task status is not overdue and archived.
+        // meaning for tasks with a status of overdue and archived should not show "Add new subtasks" message. 
+        } else if (subtasksByTaskId?.length < 1 && task_status !== 'overdue' && !archived) {
+            return subtasksError;
         }
-        return subtasksError;
     }
 
     let content;
@@ -64,8 +63,8 @@ const Subtasks = ({
                 display: 'flex', 
                 flexFlow: 'column', 
                 gap: '1.2rem', 
-                margin: '0',
-                
+                margin: '1rem 0',
+                justifyContent: 'center'
             }}
         >
             {inTaskModal 
@@ -82,7 +81,8 @@ const Subtasks = ({
                     {content}
                 </Box>
             : content}
-            {inTaskModal && <AddSubtask task_id={task_id} task_status={task_status} archived={archived} />}
+            {inTaskModal 
+            && <AddSubtask task_id={task_id} task_status={task_status} archived={archived} />}
         </Box>
     )
 }

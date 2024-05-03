@@ -3,8 +3,6 @@ import Edit from '@mui/icons-material/Edit'
 import DoneIcon from '@mui/icons-material/Done';
 
 const EditSubtaskButton = ({
-    taskId,
-    id,
     task_status,
     archived,
     isEditMode,

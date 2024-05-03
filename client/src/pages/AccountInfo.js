@@ -1,7 +1,7 @@
-import { Box, Button, IconButton, Input, InputAdornment, TextField, Typography } from "@mui/material";
+import { Box, Button, IconButton, InputAdornment, TextField, Typography } from "@mui/material";
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { getUserDataStatus, selectUserData } from "../features/user/userSlice";
+import { selectUserData } from "../features/user/userSlice";
 import { fetchUserData, updateUser } from "../services/userService";
 import Edit from "@mui/icons-material/Edit";
 import Done from "@mui/icons-material/Done";
@@ -10,8 +10,9 @@ import VisibilityOff from "@mui/icons-material/VisibilityOff";
 
 const AccountInfo = () => {
     const userData = useSelector(selectUserData);
-    const userDataStatus = useSelector(getUserDataStatus);
+    // Only for editing username
     const [editUsername, setEditUsername] = useState(false);
+    // For editing everything else other than username
     const [isEditMode, setIsEditMode] = useState(false);
     const [formData, setFormData] = useState({
         username: "",
@@ -20,17 +21,26 @@ const AccountInfo = () => {
         oldPassword: "",
         newPassword: "",
     });
+    // If username exists it will be set to true else false
     const [usernameError, setUsernameError] = useState(false);
+
+    // If invalid old password or same passwords then it will be set to true
     const [passwordError, setPasswordError] = useState(false);
+
+    // if username or password updates have an error then set the error message 
     const [errMsg, setErrMsg] = useState("");
+
+    // to show/hide old password
     const [showPassword, setShowPassword] = useState(false);
     
     const dispatch = useDispatch();
 
+    // fetch user data on first render
     useEffect(() => {
         dispatch(fetchUserData());
     }, [dispatch])
 
+    // fills in the form fields with existing data if any.
     useEffect(() => {
         setFormData(prevFormData => ({
             ...prevFormData,
@@ -58,6 +68,7 @@ const AccountInfo = () => {
     }
 
     const handleAccountUpdate = async () => {
+        // resetting error states
         setPasswordError(false);
         setErrMsg("");
 
@@ -69,10 +80,10 @@ const AccountInfo = () => {
                 new_password: formData.newPassword 
             };
 
-            const updatedUser = await updateUser(data)
+            // updates the user info
+            await updateUser(data)
 
-            console.log(updatedUser);
-
+            // Reset edit states
             setIsEditMode(false);
             setFormData(prevFormData => ({
                 ...prevFormData,
@@ -80,26 +91,29 @@ const AccountInfo = () => {
                 newPassword: "",
             }));
         } catch (err) {
+            // Catches for error and sets it
             setErrMsg(err.data.msg);
             setPasswordError(true);
             
-            console.log(err)
-            // throw err;
+            console.error(err.data.msg);
         }
     }
 
     const handleUsernameUpdate = async () => {
+        // Resets error states
         setUsernameError(false);
         setPasswordError(false);
         setErrMsg("");
 
         try {
+            // updates the username by making a call to the server
             await updateUser({ 
                 username: formData.username, 
                 old_password: formData.oldPassword,
                 new_password: formData.newPassword, 
             });
 
+            // reset form states
             setEditUsername(false);
             setFormData(prevFormData => ({
                 ...prevFormData,
@@ -107,21 +121,23 @@ const AccountInfo = () => {
                 newPassword: "",
             }))
         } catch (err) {
+            // catching and seeting of error states
             setErrMsg(err.data.msg);
             if (err.data.reason === 'username exists') {
                 setUsernameError(true);
             } else {
                 setPasswordError(true);
             }
-            console.log(err);
+            console.error(err.data.msg);
         }
     }
 
+    // to toggle the visibility of the password field from type of text to password and vice versa
     const toggleVisibility = () => {
         setShowPassword(!showPassword);
     }
     
-
+    // renders a form to view/update user info. 
     const renderUserData = () => {
         return (
             <Box

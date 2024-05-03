@@ -1,21 +1,21 @@
-import { DateCalendar, DatePicker, DatePickerToolbar, DateTimePicker, TimePicker } from "@mui/x-date-pickers";
+import { DateTimePicker } from "@mui/x-date-pickers";
 import { LocalizationProvider } from "@mui/x-date-pickers";
 import { AdapterDateFns } from "@mui/x-date-pickers/AdapterDateFnsV3";
-import { parseISO, isBefore, isAfter } from 'date-fns';
-import { updateSubtask } from "../../../services/subtasksService";
-import { fetchTaskById, updateTask } from "../../../services/tasksService";
-import { useDispatch } from "react-redux";
-import { useRef, useState } from "react";
+import { parseISO, isAfter } from 'date-fns';
+import { updateTask } from "../../../services/tasksService";
+import { useState } from "react";
 import { IconButton } from "@mui/material";
 import RemoveCircleIcon from '@mui/icons-material/RemoveCircle';
+import { dispatchFetchTasksByUserId } from "../../../utils/dispatchFetchTasksByUserId";
+import { useLocation } from "react-router-dom";
 
 const DeadlineDatePicker = ({
     deadline_date,
     id
 }) => {
     const [deadlineDate, setDeadlineDate] = useState(deadline_date);
-    const dispatch = useDispatch();
     const currentDate = new Date();
+    const { pathname } = useLocation();
 
     const handleDeadlineDateChange = async (newDate) => {
         try {
@@ -26,7 +26,7 @@ const DeadlineDatePicker = ({
                 await updateTask(data);
             }
         } catch (err) {
-            console.log(err);
+            console.error(err);
         }
     }
 
@@ -38,9 +38,9 @@ const DeadlineDatePicker = ({
 
             setDeadlineDate(null);
 
-            dispatch(fetchTaskById(id));
+            dispatchFetchTasksByUserId(pathname);
         } catch (err) {
-            throw err;
+            console.error(err);
         }
     }
 
@@ -54,7 +54,6 @@ const DeadlineDatePicker = ({
                 sx={{
                     marginLeft: 'auto'
                 }}
-                
             />
             <IconButton title="Remove Deadline Date" onClick={removeDeadlineDate}>
                 <RemoveCircleIcon />

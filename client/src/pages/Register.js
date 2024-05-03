@@ -1,7 +1,7 @@
 import Visibility from "@mui/icons-material/Visibility";
 import VisibilityOff from "@mui/icons-material/VisibilityOff";
 import LoadingButton from "@mui/lab/LoadingButton";
-import { Box, IconButton, InputAdornment, Typography } from "@mui/material";
+import { IconButton, InputAdornment, Typography } from "@mui/material";
 import { useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { Form, TextField } from "./FormStyles";
@@ -29,7 +29,7 @@ const Register = () => {
 
             navigate('/');
         } catch (err) {
-            console.log(err);
+            console.error(err);
         }
     }
 

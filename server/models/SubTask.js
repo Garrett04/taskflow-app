@@ -1,6 +1,29 @@
 const db = require('../config/db/index');
 
 class SubTask {
+    async findByUserId(user_id) {
+        try {
+            // pg query statement
+            const statement = `SELECT subtasks.id,
+                                    subtasks.title AS subtask_title,
+                                    subtasks.description AS subtask_description
+                                FROM tasks, subtasks
+                                WHERE subtasks.task_id = tasks.id
+                                    AND tasks.user_id = $1`;
+            
+            // query database
+            const result = await db.query(statement, [user_id]);
+
+            if (result.rows.length > 0) {
+                return result.rows;
+            }
+
+            return null;
+        } catch (err) {
+            throw new Error(err);
+        }
+    }
+
     async findByTaskId(task_id) {
         try {
             // query statement

@@ -98,6 +98,22 @@ class User {
             throw new Error(err);
         }
     }
+    
+    // for testing purposes
+    async deleteByUsername(username) {
+        try {
+            // pg query statement
+            const statement = `DELETE FROM users
+                                WHERE username = $1`;
+
+            // query database
+            const result = await db.query(statement, [username]);
+
+            return null;
+        } catch (err) {
+            throw new Error(err);
+        }
+    }
 }
 
 module.exports = new User();

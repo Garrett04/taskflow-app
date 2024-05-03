@@ -1,22 +1,10 @@
-import AddTask from "@mui/icons-material/AddTask";
-import { Box, Card, CardContent, Grid, IconButton, Input, Typography, styled } from "@mui/material";
+import { Box, Card, CardContent, IconButton, TextField, Typography, styled } from "@mui/material";
 import MuiAddTaskIcon from '@mui/icons-material/AddTask';
-import MuiCardHeader from '@mui/material/CardHeader';
-
-
-export const MainGrid = styled(Grid)(({ theme }) => ({
-    padding: '0 5rem',
-    margin: '.5rem auto',
-    [theme.breakpoints.down('sm')]: {
-        marginLeft: '2rem',
-        padding: '1rem 2.5rem 0'
-    }
-}))
 
 export const Button = styled(IconButton)(({ theme }) => ({
     '&.MuiIconButton-root': {
-        background: theme.palette.ochre.main,
-        color: theme.palette.ochre.contrastText 
+        background: theme.palette.indigo.main,
+        color: theme.palette.indigo.contrastText 
     },
     position: "fixed", 
     bottom: '0', 
@@ -29,18 +17,30 @@ export const AddTaskIcon = styled(MuiAddTaskIcon)(({ theme }) => ({
     fontSize: '1.8rem'
 }))
 
-export const CardHeader = styled(MuiCardHeader)(({ theme }) => ({
-    backgroundColor: theme.palette.ochre.main,
+export const TaskHeader = styled(Box)(({ theme }) => ({
+    backgroundColor: theme.palette.indigo.main,
     padding: '.5rem 1.1rem',
-    textWrap: 'nowrap',
+    overflowWrap: 'break-word',
+    textAlign: 'left',
+    display: "flex", 
+    justifyContent: "space-between",
     [theme.breakpoints.down('sm')]: {
         fontSize: '1.2rem',
-    }
+    },
 }));
 
-export const CardBottom = styled(CardContent)(() => ({
+export const TaskHeaderButtonGroup = styled(Box)(({ theme }) => ({
+    display: 'flex',
+    flexFlow: 'row',
+    alignItems: 'center',
+}))
+
+export const CardBottom = styled(CardContent)(({ theme }) => ({
     display: 'flex',
     justifyContent: 'space-between',
+    padding: '0 auto',
+    alignItems: 'center',
+    background: theme.palette.mode === 'dark' ? theme.palette.indigo.main : theme.palette.indigo.light
 }));
 
 export const MuiDeadlineDate = styled(Typography)(({ theme, is_completed }) => ({
@@ -56,22 +56,30 @@ export const ModalBox = styled(Box)(({ theme }) => ({
     transform: 'translate(-50%, -50%)',
     [theme.breakpoints.down('sm')]: {
         width: '70%',
-    }
+    },
 }))
 
-export const TaskTitle = styled(Input)(({ theme }) => ({
-    fontSize: '1.5rem',
+export const TaskTitle = styled(TextField)(({ theme }) => ({
     fontFamily: 'sans',
-    backgroundColor: theme.palette.ochre.main,
+    backgroundColor: theme.palette.indigo.dark,
+    padding: '.5rem',
+    '& .MuiInputBase-input': {
+        color: 'white',
+        fontSize: '1.5rem',
+        [theme.breakpoints.down('sm')]: {
+            fontSize: '1.4rem'
+        }
+    }
 }))
 
 export const TaskCard = styled(Card)(({ theme, task_archived }) => ({
     textAlign: 'center',
-    background: theme.palette.ochre.light,
+    background: theme.palette.mode === 'dark' ? theme.palette.indigo.dark : theme.palette.indigo.light,
     display: 'flex',
     flexFlow: 'column',
     justifyContent: 'space-between',
     // Indicating a task which is going to be deleted
-    border: task_archived === 'true' ? '2px dotted red' : null,
+    outline: task_archived === 'true' ? '2px dotted red' : null,
     opacity: task_archived === 'true' ? 0.7 : null,
+    color: 'white'
 }))

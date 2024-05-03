@@ -2,6 +2,26 @@ const Subtask = require('../models/Subtask');
 const Task = require('../models/Task');
 const { updateTaskStatus } = require('../lib/updateTaskStatus');
 
+const getAllSubtasksByUserId = async (req, res, next) => {
+    const user_id = req.user.id;
+    const { find_by_user_id } = req.query;
+
+    if (!find_by_user_id) {
+        return next();
+    }
+
+    const subtasks = await Subtask.findByUserId(user_id);
+
+    if (!subtasks) {
+        return res.status(404).json({ success: false, msg: "No subtasks found by user_id" });
+    }
+
+    res.json({
+        success: true,
+        subtasks
+    });
+}
+
 const getAllSubtasksByTaskId = async (req, res) => {
     const { task_id } = req.params;
 
@@ -46,7 +66,7 @@ const createSubtask = async (req, res) => {
 
     res.status(201).json({
         success: true,
-        task: newSubtask
+        subtask: newSubtask
     });
 }
 
@@ -62,6 +82,10 @@ const updateSubtask = async (req, res) => {
     const updatedTask = await Subtask.update({ id, title, description, checked });
     
     // console.log(title, description, checked);
+
+    if (!updatedTask) {
+        return res.status(404).json({ success: false, msg: "subtask not found by id" });
+    }
 
     if (typeof checked === 'boolean') {
         updatedTaskStatus = await updateTaskStatus(task_id);
@@ -93,6 +117,7 @@ const deleteSubtask = async (req, res) => {
 }
 
 module.exports = {
+    getAllSubtasksByUserId,
     getAllSubtasksByTaskId,
     getSubtaskById,
     createSubtask,

@@ -1,14 +1,11 @@
-import { useEffect, useRef, useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
-import { getSubtasksError, getSubtasksStatus, selectSampleSubtasks, selectSubtasks } from "../../../features/subtasks/subtasksSlice";
-import { selectIsAuthenticated } from "../../../features/auth/authSlice";
+import { useState } from "react";
+import { useDispatch } from "react-redux";
 import { useTheme } from "@emotion/react";
 import { Box, Checkbox, FormControlLabel, Stack, TextField, Typography } from "@mui/material";
 import DeleteSubtaskButton from "./DeleteSubtaskButton";
 import EditSubtaskButton from "./EditSubtaskButton";
-import { fetchSubtasksByTaskId, updateSubtask } from "../../../services/subtasksService";
+import { fetchSubtasksByTaskId, fetchSubtasksByUserId, updateSubtask } from "../../../services/subtasksService";
 import { handleTaskExpand } from "../../../utils/handleTaskExpand";
-import { dispatchFetchTasksByUserId } from '../../../utils/dispatchFetchTasksByUserId';
 import { useLocation } from "react-router-dom";
 import { updateTaskStatus } from "../../../features/tasks/tasksSlice";
 
@@ -27,7 +24,7 @@ const Subtask = ({
     const [checked, setChecked] = useState(subtask.checked || false);
     
     const dispatch = useDispatch();
-    const location = useLocation();
+    const { pathname } = useLocation();
 
 
     const updateSubtaskChecked = async (subtask_id) => {
@@ -42,18 +39,20 @@ const Subtask = ({
             const data = { task_id, id: subtask_id, checked: !checked };
             const updatedSubtask = await updateSubtask(data);
 
-            // console.log(updatedSubtask.task_status, task_status);
+            // update subtasks state
+            // dispatch(fetchSubtasksByTaskId(task_id));
 
             // if updatedTaskStatus is different than the previous task status
             // then dispatchFetchTasksByUserId to update state.
             if (updatedSubtask.task_status !== task_status) {
-                // dispatch(fetchSubtasksByTaskId(task_id));
-                // dispatchFetchTasksByUserId(location.pathname);
-                dispatch(updateTaskStatus({ id: task_id, task_status: updatedSubtask.task_status }));
+                
+                dispatch(fetchSubtasksByTaskId(task_id));
+
+                dispatch(updateTaskStatus({ id: task_id, task_status: updatedSubtask.task_status, pathname }));
             }
             
         } catch (err) {
-            console.log(err);
+            console.error(err);
         }
     }
     
@@ -63,15 +62,18 @@ const Subtask = ({
         try {
             const data = { task_id, id: subtask_id, title, description };
 
-            const updatedSubtask = await updateSubtask(data);
-
-            // console.log(updatedSubtask);
+            // Make a call to the server to update the subtask
+            await updateSubtask(data);
 
             setIsEditMode(false);
 
             dispatch(fetchSubtasksByTaskId(task_id));
+
+            // This updates the state of subtasks by user id
+            // which is used for the existing subtasks dropdown.
+            dispatch(fetchSubtasksByUserId(task_id));
         } catch (err) {
-            console.log(err);
+            console.error(err);
         }
     }
     
@@ -135,10 +137,26 @@ const Subtask = ({
                         width: '85%',
                     }}
                 >
-                    <Typography variant="h6">
+                    <Typography 
+                        variant="h6" 
+                        data-testid="subtask-title"
+                        sx={{
+                            fontWeight: 'bold',
+                            [theme.breakpoints.down('sm')]: {
+                                fontSize: '1.2rem'
+                            }
+                        }}
+                    >
                         {title}
                     </Typography>
-                    <Typography>
+                    <Typography 
+                        data-testid="subtask-description"
+                        sx={{
+                            [theme.breakpoints.down('sm')]: {
+                                fontSize: '1rem'
+                            }
+                        }}
+                    >
                         {description}
                     </Typography>
                 </Box>
@@ -149,15 +167,16 @@ const Subtask = ({
     return (
         <Stack
             direction="row"
-            flexWrap="wrap" 
+            flexWrap="nowrap" 
             alignItems="center"
             width='100%'
             key={subtask.id}
+            data-testid="subtask-container"
         >
             <FormControlLabel
                 control={
                     <Checkbox
-                        color="secondary" 
+                        color="success"
                         checked={checked}
                         sx={{
                             [theme.breakpoints.down('sm')]: {
@@ -166,7 +185,8 @@ const Subtask = ({
                                     marginTop: '-1px'
                                 }
                             },
-                            marginLeft: '1rem'
+                            marginLeft: '1rem',
+                            color: theme.palette.indigo.contrastText
                         }}
                         onChange={() => updateSubtaskChecked(subtask.id)}
                         disabled={archived || task_status === 'overdue'}
@@ -178,17 +198,26 @@ const Subtask = ({
             <Box
                 sx={{
                     display: 'inline-flex',
-                    flexFlow: 'row wrap',
+                    flexFlow: 'row nowrap',
                     justifyContent: 'space-between',
                     alignItems: 'center',
                     width: inTaskModal ? "90%" : "80%",
+                    [theme.breakpoints.down('sm')]: {
+                        flexFlow: 'column wrap',
+                        alignItems: 'start',
+                    }
                 }}
             >
                 {renderSubtaskDataFields()}
                 <Box
                     sx={{  
                         display: 'flex',
-                        flexFlow: 'column wrap'
+                        flexFlow: 'column wrap',
+                        [theme.breakpoints.down('sm')]: {
+                            flexFlow: 'row nowrap',
+                            justifyContent: 'center',
+                            width: '85%'
+                        }
                     }}
                 >
                     <DeleteSubtaskButton

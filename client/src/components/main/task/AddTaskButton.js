@@ -1,7 +1,7 @@
 import { Tooltip } from "@mui/material"
 import { AddTaskIcon, Button } from "../MainStyles"
 import { useLocation, useNavigate } from "react-router-dom"
-import { createTask, fetchTasksByUserId } from "../../../services/tasksService";
+import { createTask } from "../../../services/tasksService";
 
 
 const AddTaskButton = () => {
@@ -12,15 +12,15 @@ const AddTaskButton = () => {
         try {
             const newTask = await createTask();
             
-            navigate(`/task/${newTask.id}`, { state: { from: location.pathname, background: location } });
+            navigate(`/task/${newTask.id}`, { state: { from: location.pathname, isNewTask: true } });
         } catch (err) {
-            console.log(err);
+            console.error(err);
         }
     }
 
     return (
         <Tooltip title='Add new task' placement="top">
-            <Button onClick={handleClick} size="large">
+            <Button onClick={handleClick} size="large" sx={{ outline: '1.5px solid white' }}>
                 <AddTaskIcon />
             </Button> 
         </Tooltip>

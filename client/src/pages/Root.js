@@ -1,16 +1,14 @@
 import { Outlet } from "react-router-dom"
 import AppLayout from "../components/appLayout/AppLayout";
-import { MainGrid } from "../components/main/MainStyles";
 
 const Root = () => {
-
   return (
-    <>
-        <AppLayout/>
-        <MainGrid>
-          <Outlet/>
-        </MainGrid>
-    </>
+    // AppLayout is where the drawer with the header is rendered.
+    <AppLayout>
+      {/* All of the main content.. i.e tasks and filter dropdowns are rendered */}
+      <Outlet/>
+    </AppLayout>
   )
 }
-export default Root
+
+export default Root;

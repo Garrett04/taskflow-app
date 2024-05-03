@@ -17,7 +17,7 @@ const getAllTasksByUserId = async (req, res) => {
         order // ascending || descending
     }
 
-    console.log(data);
+    // console.log(data);
 
     const tasks = await Task.findByUserId(data);
 

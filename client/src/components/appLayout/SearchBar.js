@@ -1,16 +1,16 @@
-import { Divider, IconButton, InputBase } from "@mui/material";
+import { Divider, IconButton } from "@mui/material";
 import SearchIcon from "@mui/icons-material/Search"
 import ClearIcon from "@mui/icons-material/Clear"
-import { SearchBarContainer } from "./AppLayoutStyles";
+import { InputBase, SearchBarContainer, SearchButton } from "./AppLayoutStyles";
 import { useState } from "react";
 import { useLocation, useNavigate, useSearchParams } from "react-router-dom";
-import { dispatchFetchTasksByUserId } from "../../utils/dispatchFetchTasksByUserId";
 
 
 const SearchBar = () => {
     const [searchParams] = useSearchParams();
 
     const search = searchParams.get('search');
+    // This is the term provided by user in the search box
     const [term, setTerm] = useState(search || "");
     const navigate = useNavigate();
     const location = useLocation();
@@ -22,20 +22,20 @@ const SearchBar = () => {
         setTerm(value);
     }
 
+    // This handles empty search term.
     const handleSearch = () => {
+        // If term is empty then navigate to home page
         if (!term) {
             navigate(location.pathname);
+        // Else navigate to that search term
         } else {
             navigate(`?search=${term}`);
         }
+        // Clear the term
         setTerm("");
-
-        // to just fetch in tasks first by the location 
-        // before the dispatch of filtering tasks by search term or not
-        // this also prevents from removing tasks when searching multiple times.
-        dispatchFetchTasksByUserId(location.pathname);
     }
 
+    // For when user hits the Enter key
     const handleKeyUp = (e) => {
         const { key } = e;
 
@@ -52,12 +52,10 @@ const SearchBar = () => {
                 placeholder="Search Tasks"
                 onChange={handleChange}
                 onKeyUp={handleKeyUp}
-                sx={{
-                    flex: 1,
-                }}
             />
             {term
             &&
+                // A cancel button to cancel the search
                 (
                     <IconButton 
                         size="small" 
@@ -69,9 +67,10 @@ const SearchBar = () => {
                 )
             }
             <Divider sx={{ height: '2rem', margin: '0 .3em' }} orientation="vertical" />
-            <IconButton size="small" title="Search" onClick={handleSearch} >
+            {/* The search button which simply calls handleSearch when clicked */}
+            <SearchButton size='small' title="Search" onClick={handleSearch} >
                 <SearchIcon/>
-            </IconButton>
+            </SearchButton>
         </SearchBarContainer>
     )
 }

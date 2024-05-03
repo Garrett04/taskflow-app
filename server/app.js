@@ -7,11 +7,7 @@ const cookieParser = require('cookie-parser');
 const session = require('express-session');
 const pgSession = require('connect-pg-simple')(session);
 const pool = require('./config/db/config');
-const cron = require('node-cron');
-const { isAfter, differenceInDays, differenceInMinutes } = require('date-fns');
-const Task = require('./models/Task');
-
-const PORT = process.env.PORT || 3000;
+const { UUIDv4 } = require('uuid-v4-validator');
 
 // Useful middlewares
 app.use(express.json());
@@ -44,56 +40,7 @@ app.use(session({
 }))
 
 // CRON SETUP
-// Updates the task status to overdue if current time exceeds the deadline date
-const updateTaskStatus = async () => {
-    const currentDate = new Date();
-
-    const tasks = await Task.find();
-
-    tasks.forEach(
-        async ({id, deadline_date, status}) => {
-        if (isAfter(currentDate, deadline_date) && status === 'pending') {
-            // change status of task to overdue
-            const data = { id, status: "overdue" };
-            const updatedTask = await Task.update(data);
-            console.log(updatedTask);
-            // console.log("deadline date:", deadline_date);
-            console.log("current date:", currentDate);
-        }
-    })
-}
-
-// Permanently deletes a task if the current date exceeds the deleted at date by 20 days.
-const deleteTask = async () => {
-    const currentDate = new Date();
-
-    const tasks = await Task.find();
-
-    tasks.forEach(
-        async ({ id, deleted_at, archived }) =>  {
-            if (archived) {
-                const difference = differenceInDays(currentDate, deleted_at);
-
-                if (difference >= 20) {
-                    const deletedTask = await Task.deleteById(id);
-                    console.log("deletedTask:", deletedTask);
-                    console.log("deleted_at:", deleted_at);
-                }
-                console.log("difference:", difference);
-            }
-        }
-    )
-}
-
-// For every 1 minute
-cron.schedule("*/1 * * * *", async () => {
-    try {
-        await updateTaskStatus();
-        await deleteTask();
-    } catch (err) {
-        throw err;
-    }
-}) 
+require('./config/cronJob');
 
 // PASSPORT AUTHENTICATION
 require('./config/passport/JWTStrategy')(passport);
@@ -101,8 +48,42 @@ require('./config/passport/JWTStrategy')(passport);
 app.use(passport.initialize());
 app.use(passport.session());
 
+app.use('/api/tasks/:id', (req, res, next) => {
+    const { id } = req.params;
+
+    if (id && !UUIDv4.validate(id)) {
+        return res.status(400).json({ success: false, msg: "Invalid uuid parameter" });
+    }
+
+    next();
+})
+
+app.use('/api/tasks/:task_id/subtasks', (req, res, next) => {
+    const { task_id } = req.params;
+
+    if (task_id && !UUIDv4.validate(task_id)) {
+        return res.status(400).json({ success: false, msg: "Invalid uuid parameter" });
+    }
+
+    next();
+})
+
+
+app.use('/api/tasks/:task_id/subtasks/:id', (req, res, next) => {
+    const { task_id, id } = req.params;
+
+    if ((task_id && id) && (!UUIDv4.validate(task_id) || !UUIDv4.validate(id))) {
+        return res.status(400).json({ success: false, msg: "Invalid uuid parameters" });
+    }
+
+    next();
+})
+
 app.use('/api', require('./routes/index'));
 
-app.listen(PORT, () => {
-    console.log(`Server listening on port ${PORT}`);
+app.use((err, req, res, next) => {
+    console.error(err.stack);
+    res.status(500).send('Internal Server Error: ' + err.message);
 })
+
+module.exports = app;

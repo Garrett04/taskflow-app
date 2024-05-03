@@ -1,9 +1,10 @@
-export const renderPageTitle = (status) => {
-    if (status === 'completed') {
+// Renders page title based on the current path
+export const renderPageTitle = (pathname) => {
+    if (pathname.includes('/completed-tasks')) {
         return "Completed Tasks";
-    } else if (status === 'overdue') {
+    } else if (pathname.includes('/overdue-tasks')) {
         return "Overdue Tasks";
-    } else if (status === 'archived') {
+    } else if (pathname.includes('/trash')) {
         return "Trash";
     } else {
         return "All Tasks";

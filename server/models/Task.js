@@ -89,7 +89,6 @@ class Task {
                 values.push(data.status);
             // if data.archived is true then return only the archived tasks
             } else if (data.archived) {
-                console.log('hello from archived');
                 statement += ` AND archived = true`;
             }
 

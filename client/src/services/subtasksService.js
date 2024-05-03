@@ -2,7 +2,7 @@ import { createAsyncThunk } from '@reduxjs/toolkit';
 import API from './client';
 
 export const fetchSubtasksByTaskId = createAsyncThunk(
-    'subtasks/fetchSubtasksByTaskId',
+    'taskSubtasks/fetchSubtasksByTaskId',
     async (task_id, { rejectWithValue }) => {
         try {
             const response = await API.get(`/tasks/${task_id}/subtasks`);
@@ -11,10 +11,23 @@ export const fetchSubtasksByTaskId = createAsyncThunk(
         } catch (err) {
             if (err.response && err.response.status === 404) {
                 // rejectWithValue is from the thunkAPI which attaches a custom error message to action.payload
-                return rejectWithValue("Add new subtasks by clicking here");
+                return rejectWithValue("Add new subtasks");
             } else {
                 throw err.response.data.msg;
             }
+        }
+    }
+)
+
+export const fetchSubtasksByUserId = createAsyncThunk(
+    'userSubtasks/fetchSubtasksByUserId',
+    async (task_id) => {
+        try {
+            const response = await API.get(`/tasks/${task_id}/subtasks?find_by_user_id=true`);
+
+            return response.data.subtasks;
+        } catch (err) {
+            throw err.response.data.msg;
         }
     }
 )
@@ -46,7 +59,7 @@ export const updateSubtask = async (data) => {
     try {
         const { task_id, id, title, description, checked } = data;
         const response = await API.put(`/tasks/${task_id}/subtasks/${id}`, { title, description, checked });
-        console.log('Updated subtask:', response.data.subtask);
+        // console.log('Updated subtask:', response.data);
         return { subtask: response.data.subtask, task_status: response.data.task_status };
     } catch (err) {
         throw err.response.data.msg;
