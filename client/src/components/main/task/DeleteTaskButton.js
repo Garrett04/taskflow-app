@@ -4,8 +4,6 @@ import { deleteTask } from "../../../services/tasksService";
 import { addDays, formatDistanceToNow } from "date-fns";
 import { dispatchFetchTasksByUserId } from "../../../utils/dispatchFetchTasksByUserId";
 import { useLocation, useNavigate } from "react-router-dom";
-import { fetchSubtasksByUserId } from "../../../services/subtasksService";
-import { useDispatch } from "react-redux";
 
 const DeleteTaskButton = ({
     task_id,
@@ -16,7 +14,6 @@ const DeleteTaskButton = ({
     const days_left = formatDistanceToNow(addDays(deleted_at, 20));
     const location = useLocation();
     const navigate = useNavigate();
-    const dispatch = useDispatch();
 
     const handleDelete = async (e) => {
         e.stopPropagation();

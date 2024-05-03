@@ -3,7 +3,6 @@ import { getSubtasksError, getSubtasksStatus, selectSubtasks } from "../../../fe
 import { useEffect } from "react";
 import { Box } from "@mui/material";
 import { fetchSubtasksByTaskId } from "../../../services/subtasksService";
-import { selectIsAuthenticated } from "../../../features/auth/authSlice";
 import AddSubtask from "./AddSubtask";
 import Subtask from "./Subtask";
 

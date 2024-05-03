@@ -78,7 +78,7 @@ const FilterDropdowns = () => {
         orderBy={orderBy} 
       />
     </Box>
-);
+  );
 };
 
 export default FilterDropdowns;

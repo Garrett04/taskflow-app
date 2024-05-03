@@ -41,19 +41,6 @@ export const updateTaskArchived = async (data) => {
     }
 }
 
-export const fetchTaskById = createAsyncThunk(
-    'task/fetchTaskById',
-    async (id) => {
-        try {
-            const response = await API.get(`/tasks/${id}`);
-
-            return response.data.task;
-        } catch (err) {
-            throw err.response.data.msg;
-        }
-    }
-)
-
 export const updateTask = async (data) => {
     try {
         const { id, title, deadline_date } = data;
