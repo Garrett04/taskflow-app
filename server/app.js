@@ -40,7 +40,7 @@ app.use(session({
 }))
 
 // CRON SETUP
-// require('./config/cronJob');
+require('./config/cronJob');
 
 // PASSPORT AUTHENTICATION
 require('./config/passport/JWTStrategy')(passport);
