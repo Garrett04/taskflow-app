@@ -52,7 +52,7 @@ const Subtask = ({
             }
             
         } catch (err) {
-            console.log(err);
+            throw err;
         }
     }
     
@@ -70,7 +70,7 @@ const Subtask = ({
 
             dispatch(fetchSubtasksByUserId(task_id));
         } catch (err) {
-            console.log(err);
+            throw err;
         }
     }
     

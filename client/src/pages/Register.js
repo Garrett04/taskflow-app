@@ -29,7 +29,7 @@ const Register = () => {
 
             navigate('/');
         } catch (err) {
-            console.log(err);
+            throw err;
         }
     }
 

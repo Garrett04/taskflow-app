@@ -37,7 +37,7 @@ const AddSubtask = ({
             setExisitingSubtaskTitle("");
             
         } catch (err) {
-            console.log(err);
+            throw err;
         }
     }
  

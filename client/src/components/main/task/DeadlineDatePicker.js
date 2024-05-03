@@ -25,7 +25,7 @@ const DeadlineDatePicker = ({
                 await updateTask(data);
             }
         } catch (err) {
-            console.log(err);
+            throw err;
         }
     }
 

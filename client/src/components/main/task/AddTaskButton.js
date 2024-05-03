@@ -14,7 +14,7 @@ const AddTaskButton = () => {
             
             navigate(`/task/${newTask.id}`, { state: { from: location.pathname, isNewTask: true } });
         } catch (err) {
-            console.log(err);
+            throw err;
         }
     }
 

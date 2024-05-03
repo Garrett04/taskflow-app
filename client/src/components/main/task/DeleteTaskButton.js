@@ -30,7 +30,7 @@ const DeleteTaskButton = ({
                 navigate(-1);
             }
         } catch (err) {
-            console.log(err);
+            throw err;
         }
     }
     

@@ -82,7 +82,7 @@ const AccountInfo = () => {
             setErrMsg(err.data.msg);
             setPasswordError(true);
             
-            console.log(err)
+            throw err
             // throw err;
         }
     }
@@ -112,7 +112,7 @@ const AccountInfo = () => {
             } else {
                 setPasswordError(true);
             }
-            console.log(err);
+            throw err;
         }
     }
 
