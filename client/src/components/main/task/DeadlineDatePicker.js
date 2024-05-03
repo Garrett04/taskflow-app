@@ -7,14 +7,16 @@ import { useDispatch } from "react-redux";
 import { useState } from "react";
 import { IconButton } from "@mui/material";
 import RemoveCircleIcon from '@mui/icons-material/RemoveCircle';
+import { dispatchFetchTasksByUserId } from "../../../utils/dispatchFetchTasksByUserId";
+import { useLocation } from "react-router-dom";
 
 const DeadlineDatePicker = ({
     deadline_date,
     id
 }) => {
     const [deadlineDate, setDeadlineDate] = useState(deadline_date);
-    const dispatch = useDispatch();
     const currentDate = new Date();
+    const { pathname } = useLocation();
 
     const handleDeadlineDateChange = async (newDate) => {
         try {
@@ -37,7 +39,7 @@ const DeadlineDatePicker = ({
 
             setDeadlineDate(null);
 
-            dispatch(fetchTaskById(id));
+            dispatchFetchTasksByUserId(pathname);
         } catch (err) {
             throw err;
         }
