@@ -1,5 +1,5 @@
 import { useDispatch, useSelector } from "react-redux";
-import { getSubtasksError, getSubtasksStatus, selectSampleSubtasks, selectSubtasks } from "../../../features/subtasks/taskSubtasksSlice";
+import { getSubtasksError, getSubtasksStatus, selectSubtasks } from "../../../features/subtasks/taskSubtasksSlice";
 import { useEffect } from "react";
 import { Box } from "@mui/material";
 import { fetchSubtasksByTaskId } from "../../../services/subtasksService";
@@ -15,8 +15,6 @@ const Subtasks = ({
     archived
 }) => {
     const subtasks = useSelector(selectSubtasks);
-    const isAuthenticated = useSelector(selectIsAuthenticated);
-    const sampleSubtasks = useSelector(selectSampleSubtasks);
     const subtasksStatus = useSelector(getSubtasksStatus);
     const subtasksError = useSelector(getSubtasksError);
     
@@ -27,7 +25,7 @@ const Subtasks = ({
     }, [dispatch, task_id])
 
     const renderSubtask = () => {
-        const subtasksByTaskId = isAuthenticated ? subtasks[task_id] : sampleSubtasks[task_id];
+        const subtasksByTaskId = subtasks[task_id];
 
         if (subtasksByTaskId?.length > 0) {
             return subtasksByTaskId.map(subtask => (

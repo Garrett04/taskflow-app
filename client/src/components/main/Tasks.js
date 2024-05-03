@@ -1,5 +1,5 @@
 import { useDispatch, useSelector } from "react-redux";
-import { filterTasksBySearchTerm, getTasksError, getTasksStatus, selectSampleTasks, selectTasks } from "../../features/tasks/tasksSlice";
+import { filterTasksBySearchTerm, getTasksError, getTasksStatus, selectTasks } from "../../features/tasks/tasksSlice";
 import { useEffect, useState } from "react";
 import { selectIsAuthenticated } from "../../features/auth/authSlice";
 import { Box, CircularProgress, Container, Grid, Typography } from "@mui/material";
@@ -21,7 +21,6 @@ const Tasks = () => {
     const tasks = useSelector(selectTasks);
     const tasksStatus = useSelector(getTasksStatus);
     const tasksError = useSelector(getTasksError);
-    const sampleTasks = useSelector(selectSampleTasks);
     
     const isAuthenticated = useSelector(selectIsAuthenticated);
     
@@ -64,9 +63,8 @@ const Tasks = () => {
     const renderAllTasks = () => {
         // Checks if user isAuthenticated then render the users tasks 
         // else just the sampleTasks
-        const tasksToRender = isAuthenticated ? tasks : sampleTasks;
         
-        return tasksToRender.map(task => {
+        return tasks.map(task => {
             return (
                 <Grid item key={task.id} xs={12} md={6} lg={4} xl={3}>
                     <Task 
