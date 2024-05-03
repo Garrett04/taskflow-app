@@ -1,5 +1,4 @@
 const Subtask = require('../models/Subtask');
-const Task = require('../models/Task');
 const { updateTaskStatus } = require('../lib/updateTaskStatus');
 
 const getAllSubtasksByUserId = async (req, res, next) => {

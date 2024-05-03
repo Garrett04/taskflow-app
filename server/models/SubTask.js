@@ -1,6 +1,6 @@
 const db = require('../config/db/index');
 
-class SubTask {
+class Subtask {
     async findByUserId(user_id) {
         try {
             // pg query statement
@@ -149,4 +149,4 @@ class SubTask {
 }
 
 
-module.exports = new SubTask();
+module.exports = new Subtask();
