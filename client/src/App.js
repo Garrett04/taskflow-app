@@ -12,11 +12,13 @@ import { getIsAuthenticatedStatus } from "./features/auth/authSlice";
 import Login from './pages/Login';
 import Register from './pages/Register';
 import AccountInfo from "./pages/AccountInfo";
-import { ThemeProvider, createTheme, useMediaQuery } from "@mui/material";
+import { ThemeProvider, createTheme } from "@mui/material";
+import PrivateRoutes from './utils/PrivateRoutes';
+import NotFound from "./pages/NotFound/NotFound";
 
 
 function App() {
-  const prefersDarkMode = useMediaQuery('(prefers-color-scheme: dark)');
+  // const prefersDarkMode = useMediaQuery('(prefers-color-scheme: dark)');
   const dispatch = useDispatch();
   const isAuthenticatedStatus = useSelector(getIsAuthenticatedStatus);
 
@@ -26,49 +28,54 @@ function App() {
       element: <Root />,
       children: [
         {
-          path: '/account-info',
-          element: <AccountInfo />,
-        },
-        {
-          path: '/',
-          element: <Tasks />,
+          element: <PrivateRoutes />,
           children: [
             {
-              path: 'task/:id',
-              element: null,
+              path: '/account-info',
+              element: <AccountInfo />,
+            },
+            {
+              path: '/',
+              element: <Tasks />,
+              children: [
+                {
+                  path: 'task/:id',
+                  element: null,
+                }
+              ]
+            },
+            {
+              path: '/completed-tasks',
+              element: <Tasks />,
+              children: [
+                {
+                  path: 'task/:id',
+                  element: null,
+                }
+              ]
+            },
+            {
+              path: '/overdue-tasks',
+              element: <Tasks />,
+              children: [
+                {
+                  path: 'task/:id',
+                  element: null,
+                }
+              ]
+            },
+            {
+              path: '/trash',
+              element: <Tasks />,
+              children: [
+                {
+                  path: 'task/:id',
+                  element: null,
+                }
+              ]
             }
           ]
         },
-        {
-          path: '/completed-tasks',
-          element: <Tasks />,
-          children: [
-            {
-              path: 'task/:id',
-              element: null,
-            }
-          ]
-        },
-        {
-          path: '/overdue-tasks',
-          element: <Tasks />,
-          children: [
-            {
-              path: 'task/:id',
-              element: null,
-            }
-          ]
-        },
-        {
-          path: '/trash',
-          element: <Tasks />,
-          children: [
-            {
-              path: 'task/:id',
-              element: null,
-            }
-          ]
-        }
       ],
     },
     {
@@ -78,12 +85,17 @@ function App() {
     {
       path: '/register',
       element: <Register/>
+    },
+    {
+      path: '*',
+      element: <NotFound/>
     }
   ])
 
   const theme = createTheme({
     palette: {
-      mode: prefersDarkMode ? 'dark' : 'light',
+      // mode: prefersDarkMode ? 'dark' : 'light',
+      mode: 'dark',
       primary: {
         light: '#757ce8',
         main: '#03a9f4',
@@ -101,7 +113,15 @@ function App() {
         light: '#7A00F5',
         dark: '#47008F',
         contrastText: '#FFF'
-      }
+      },
+      background: {
+        default: '#121212',
+        paper: '#212121',
+      },
+      text: {
+        primary: '#FFFFFF',
+        secondary: '#FFFFFF',
+      },
     },
     typography: {
       taskTitle: {

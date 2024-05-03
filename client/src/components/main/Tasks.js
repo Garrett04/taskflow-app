@@ -140,7 +140,7 @@ const Tasks = () => {
             >
                 {renderPageTitle(location.pathname)}
             </Typography>
-            <Container maxWidth>
+            <Container maxWidth="100%">
                 <Grid container spacing={3}>
                     {content}
                 </Grid>

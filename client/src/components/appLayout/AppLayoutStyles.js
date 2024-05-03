@@ -53,6 +53,7 @@ export const SearchBarContainer = styled(Paper)(({ theme }) => ({
     display: 'flex',
     alignItems: 'center',
     transition: 'width .1s',
+    border: '1px solid white',
     margin: '0 1rem',
     '&:focus-within': {
         width: '60%',
