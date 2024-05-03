@@ -30,7 +30,7 @@ const DeleteSubtaskButton = ({
             dispatch(fetchSubtasksByUserId(task_id));
             
         } catch (err) {
-            throw err;
+            console.error(err);
         }
     }
 

@@ -32,7 +32,7 @@ const RestoreTaskButton = ({
                 navigate(-1);
             }
         } catch (err) {
-            throw err;
+            console.error(err);
         }
     }
 

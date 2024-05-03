@@ -26,7 +26,7 @@ const DeleteTaskButton = ({
                 navigate(-1);
             }
         } catch (err) {
-            throw err;
+            console.error(err);
         }
     }
     

@@ -26,7 +26,7 @@ const DeadlineDatePicker = ({
                 await updateTask(data);
             }
         } catch (err) {
-            throw err;
+            console.error(err);
         }
     }
 
@@ -40,7 +40,7 @@ const DeadlineDatePicker = ({
 
             dispatchFetchTasksByUserId(pathname);
         } catch (err) {
-            throw err;
+            console.error(err);
         }
     }
 

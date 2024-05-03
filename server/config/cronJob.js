@@ -50,7 +50,7 @@ cronJob = cron.schedule("*/1 * * * *", async () => {
         await updateTaskStatus();
         await deleteTask();
     } catch (err) {
-        throw err;
+        console.error(err);
     }
 }) 
 
