@@ -4,6 +4,7 @@ import ClearIcon from "@mui/icons-material/Clear"
 import { InputBase, SearchBarContainer, SearchButton } from "./AppLayoutStyles";
 import { useState } from "react";
 import { useLocation, useNavigate, useSearchParams } from "react-router-dom";
+import { dispatchFetchTasksByUserId } from "../../utils/dispatchFetchTasksByUserId";
 
 
 const SearchBar = () => {
@@ -33,6 +34,10 @@ const SearchBar = () => {
         }
         // Clear the term
         setTerm("");
+
+        // Dispatch fetchTasksByUserId to fetch tasks 
+        // before the dispatch of filterTasksBySearchTerm
+        dispatchFetchTasksByUserId(location.pathname);
     }
 
     // For when user hits the Enter key

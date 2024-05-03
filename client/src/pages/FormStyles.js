@@ -2,7 +2,7 @@ import { FormGroup, styled } from "@mui/material";
 import MuiTextField from '@mui/material/TextField';
 
 export const Form = styled(FormGroup)(({ theme }) => ({
-    width: '70%',
+    width: '80%',
     border: '1px solid black',
     borderRadius: '2rem',
     textAlign: 'center',
@@ -14,7 +14,7 @@ export const Form = styled(FormGroup)(({ theme }) => ({
     backgroundColor: theme.palette.primary.light,
 }))
 
-export const TextField = styled(MuiTextField)(() => ({
-    width: '50%',
-    margin: '1rem auto'
+export const TextField = styled(MuiTextField)(({ theme }) => ({
+    width: '80%',
+    margin: '1rem auto',
 }))

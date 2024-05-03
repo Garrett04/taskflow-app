@@ -1,14 +1,17 @@
-import { Box, Button, IconButton, InputAdornment, TextField, Typography } from "@mui/material";
+import { Box, Button, CircularProgress, IconButton, InputAdornment, TextField, Typography } from "@mui/material";
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { selectUserData } from "../features/user/userSlice";
+import { getUserDataStatus, selectUserData } from "../features/user/userSlice";
 import { fetchUserData, updateUser } from "../services/userService";
 import Edit from "@mui/icons-material/Edit";
 import Done from "@mui/icons-material/Done";
 import Visibility from "@mui/icons-material/Visibility";
 import VisibilityOff from "@mui/icons-material/VisibilityOff";
+import { useTheme } from "@emotion/react";
 
 const AccountInfo = () => {
+    const theme = useTheme();
+    const userDataStatus = useSelector(getUserDataStatus);
     const userData = useSelector(selectUserData);
     // Only for editing username
     const [editUsername, setEditUsername] = useState(false);
@@ -139,165 +142,177 @@ const AccountInfo = () => {
     
     // renders a form to view/update user info. 
     const renderUserData = () => {
-        return (
-            <Box
-                sx={{
-                    display: 'flex',
-                    border: '1px solid black',
-                    width: '75%',
-                    marginTop: '1rem',
-                    justifyContent: 'center',
-                    padding: '2rem 0',
-                    borderRadius: '1rem'
-                }}
-            >
+        if (userDataStatus === 'fulfilled') {
+
+        
+            return (
                 <Box
                     sx={{
-                        width: '65%',
                         display: 'flex',
-                        flexDirection: 'column',
-                        gap: '1rem'
+                        marginTop: '1rem',
+                        justifyContent: 'center',
+                        padding: '2rem 0',
+                        width: '65%',
+                        [theme.breakpoints.down('sm')]: {
+                            width: '95%'
+                        }
                     }}
                 >
-                    <TextField 
-                        label="Username" 
-                        name="username"
-                        value={formData.username || ""}
-                        fullWidth
-                        onChange={handleChange}
-                        InputProps={{
-                            readOnly: !editUsername,
-                            endAdornment: (
-                                <>
-                                {!isEditMode 
-                                &&
-                                    <InputAdornment position="end">
-                                        {!editUsername
-                                        ? (
-                                            <IconButton
-                                                title="Edit Username" 
-                                                size="small" 
-                                                onClick={() => setEditUsername(true)}
-                                            >
-                                                <Edit />
-                                            </IconButton>
-                                        )
-                                        : (
-                                            <IconButton
-                                                title="Submit" 
-                                                size="small" 
-                                                onClick={handleUsernameUpdate}
-                                            >
-                                                <Done />
-                                            </IconButton>
-                                        )}
-                                    </InputAdornment>}
-                                </>
-                            )
+                    <Box
+                        sx={{
+                            width: '65%',
+                            display: 'flex',
+                            flexDirection: 'column',
+                            gap: '1rem'
                         }}
-                        error={usernameError}
-                        variant={!editUsername ? "filled" : "outlined"}
-                    />
-                    <TextField 
-                        label="First Name" 
-                        name="firstName"
-                        value={formData.firstName || ""}
-                        fullWidth
-                        onChange={handleChange}
-                        InputProps={{
-                            readOnly: !isEditMode
-                        }}
-                        variant={!isEditMode ? "filled" : "outlined"}
-                    />
-                    <TextField 
-                        label="Last Name" 
-                        name="lastName"
-                        value={formData.lastName || ""}
-                        fullWidth
-                        onChange={handleChange}
-                        InputProps={{
-                            readOnly: !isEditMode
-                        }}
-                        variant={!isEditMode ? "filled" : "outlined"}
-                    />
-                    <TextField 
-                        label="Old Password" 
-                        name="oldPassword"
-                        type={!showPassword ? "password" : "text"}
-                        value={formData.oldPassword}
-                        fullWidth
-                        onChange={handleChange}
-                        InputProps={{
-                            readOnly: !isEditMode && !editUsername,
-                            endAdornment: (
-                                <>
-                                    {(isEditMode || editUsername)
+                    >
+                        <TextField 
+                            label="Username" 
+                            name="username"
+                            value={formData.username || ""}
+                            fullWidth
+                            onChange={handleChange}
+                            InputProps={{
+                                readOnly: !editUsername,
+                                endAdornment: (
+                                    <>
+                                    {!isEditMode 
                                     &&
-                                    <InputAdornment position="end">
-                                        <IconButton onClick={toggleVisibility}>
-                                            {showPassword ? <Visibility/> : <VisibilityOff/>}
-                                        </IconButton>
-                                    </InputAdornment>}
-                                </>
-                            )
-                        }}
-                        error={passwordError}
-                        variant={!isEditMode && !editUsername ? "filled" : "outlined"}
-                    />
-                    <TextField 
-                        label="New Password"
-                        name="newPassword" 
-                        type="password"
-                        value={formData.newPassword}
-                        fullWidth
-                        onChange={handleChange}
-                        InputProps={{
-                            readOnly: !isEditMode && !editUsername
-                        }}
-                        error={passwordError}
-                        variant={!isEditMode && !editUsername ? "filled" : "outlined"}
-                    />
-                    <Typography variant="body2" color="error">
-                        {errMsg}
-                    </Typography>
-                    {!isEditMode
-                    ? (
-                        <Button disabled={editUsername} size="small" onClick={handleClick} variant="contained">
-                            Update Account
-                        </Button>
-                    )
-                    : (
-                        <Button 
-                            disabled={editUsername}
-                            size="small" 
-                            onClick={handleAccountUpdate} 
-                            variant="contained" 
-                            color="success"
-                        >
-                            Submit
-                        </Button>
-                    )}
+                                        <InputAdornment position="end">
+                                            {!editUsername
+                                            ? (
+                                                <IconButton
+                                                    title="Edit Username" 
+                                                    size="small" 
+                                                    onClick={() => setEditUsername(true)}
+                                                >
+                                                    <Edit />
+                                                </IconButton>
+                                            )
+                                            : (
+                                                <IconButton
+                                                    title="Submit" 
+                                                    size="small" 
+                                                    onClick={handleUsernameUpdate}
+                                                >
+                                                    <Done />
+                                                </IconButton>
+                                            )}
+                                        </InputAdornment>}
+                                    </>
+                                )
+                            }}
+                            error={usernameError}
+                            variant={!editUsername ? "filled" : "outlined"}
+                        />
+                        <TextField 
+                            label="First Name" 
+                            name="firstName"
+                            value={formData.firstName || ""}
+                            fullWidth
+                            onChange={handleChange}
+                            InputProps={{
+                                readOnly: !isEditMode
+                            }}
+                            variant={!isEditMode ? "filled" : "outlined"}
+                        />
+                        <TextField 
+                            label="Last Name" 
+                            name="lastName"
+                            value={formData.lastName || ""}
+                            fullWidth
+                            onChange={handleChange}
+                            InputProps={{
+                                readOnly: !isEditMode
+                            }}
+                            variant={!isEditMode ? "filled" : "outlined"}
+                        />
+                        <TextField 
+                            label="Old Password" 
+                            name="oldPassword"
+                            type={!showPassword ? "password" : "text"}
+                            value={formData.oldPassword}
+                            fullWidth
+                            onChange={handleChange}
+                            InputProps={{
+                                readOnly: !isEditMode && !editUsername,
+                                endAdornment: (
+                                    <>
+                                        {(isEditMode || editUsername)
+                                        &&
+                                        <InputAdornment position="end">
+                                            <IconButton onClick={toggleVisibility}>
+                                                {showPassword ? <Visibility/> : <VisibilityOff/>}
+                                            </IconButton>
+                                        </InputAdornment>}
+                                    </>
+                                )
+                            }}
+                            error={passwordError}
+                            variant={!isEditMode && !editUsername ? "filled" : "outlined"}
+                        />
+                        <TextField 
+                            label="New Password"
+                            name="newPassword" 
+                            type="password"
+                            value={formData.newPassword}
+                            fullWidth
+                            onChange={handleChange}
+                            InputProps={{
+                                readOnly: !isEditMode && !editUsername
+                            }}
+                            error={passwordError}
+                            variant={!isEditMode && !editUsername ? "filled" : "outlined"}
+                        />
+                        <Typography variant="body2" color="error">
+                            {errMsg}
+                        </Typography>
+                        {!isEditMode
+                        ? (
+                            <Button disabled={editUsername} size="small" onClick={handleClick} variant="contained">
+                                Update Account
+                            </Button>
+                        )
+                        : (
+                            <Button 
+                                disabled={editUsername} 
+                                onClick={handleAccountUpdate} 
+                                variant="contained" 
+                                color="success"
+                            >
+                                Submit
+                            </Button>
+                        )}
+                    </Box>
                 </Box>
-            </Box>
-        )
+            )
+        }
     }
 
+    let content;
+    if (userDataStatus === 'pending') {
+        content = <CircularProgress />;
+    } else if (userDataStatus === 'fulfilled') {
+        content = renderUserData();
+    }
+
+    
     return (
-      <Box margin="7rem 1rem"
-        sx={{
-            display: 'flex',
-            flexFlow: 'column wrap',
-            justifyContent: 'center',
-            alignItems: 'center'
-        }}
-      >
-        <Typography 
-            variant="h4"
+        <Box margin="7rem 0"
+          sx={{
+              display: 'flex',
+              flexFlow: 'column wrap',
+              justifyContent: 'center',
+              alignItems: 'center',
+          }}
         >
-            Account Information
-        </Typography>
-        {renderUserData()}
-      </Box>
+          <Typography 
+              variant="h4"
+          >
+              Account Information
+          </Typography>
+          {content}
+        </Box>
     )
 }
 

@@ -93,7 +93,7 @@ const Register = () => {
                 onClick={handleRegister} 
                 variant='contained'
                 sx={{
-                    width: '50%',
+                    width: '70%',
                     margin: '1rem auto',
                     padding: '1rem',
                     fontSize: '1rem',
