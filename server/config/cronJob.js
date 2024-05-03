@@ -38,7 +38,7 @@ const deleteTask = async () => {
                     // console.log("deletedTask:", deletedTask);
                     // console.log("deleted_at:", deleted_at);
                 }
-                console.log("difference:", difference);
+                // console.log("difference:", difference);
             }
         }
     )

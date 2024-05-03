@@ -6,8 +6,6 @@ import { renderTaskStatus } from "../../../utils/renderTaskStatus";
 import MoveToTrashButton from "./MoveToTrashButton";
 import RestoreTaskButton from "./RestoreTaskButton";
 import DeleteTaskButton from "./DeleteTaskButton";
-import { useSelector } from "react-redux";
-import { selectIsAuthenticated } from "../../../features/auth/authSlice";
 import DeadlineDate from "./DeadlineDate";
 
 const Task = ({
@@ -16,7 +14,6 @@ const Task = ({
     order,
     setIsModalOpen
 }) => {
-    const isAuthenticated = useSelector(selectIsAuthenticated);
     const navigate = useNavigate();
 
     const { pathname } = useLocation();

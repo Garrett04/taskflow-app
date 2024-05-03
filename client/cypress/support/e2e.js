@@ -18,35 +18,3 @@ import './commands'
 
 // Alternatively you can use CommonJS syntax:
 // require('./commands')
-
-// beforeEach(() => {
-//     const username = Cypress.env('username');
-//     const password = Cypress.env('password');
-
-//     // Visit homepage
-//     cy.visit(url);
-
-//     // Click the login account button
-//     cy.get('a[href="/login"]').click();
-
-//     // Verify that url includes /login
-//     cy.url().should('include', '/login');
-
-//     // Type the username in the input field
-//     cy.get('input[name="username"]').type(username);
-
-//     // Verify that the username is typed
-//     cy.get('input[name="username"]').should('have.value', username);
-
-//     // Type the password in the input field
-//     cy.get('input[name="password"]').type(password);
-
-//     // Verify that the password is typed
-//     cy.get('input[name="password"]').should('have.value', password);
-
-//     // Click the Login button
-//     cy.get('button').contains('Login').click();
-
-//     // Verify that url is equal to homepage
-//     cy.url().should('eq', url);
-// })

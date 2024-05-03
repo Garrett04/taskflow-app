@@ -45,7 +45,7 @@ export const updateTask = async (data) => {
     try {
         const { id, title, deadline_date } = data;
         const response = await API.put(`/tasks/${id}`, {title, deadline_date});
-        console.log(response.data);
+        // console.log(response.data);
 
         return response.data;
     } catch (err) {
