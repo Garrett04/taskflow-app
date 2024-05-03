@@ -4,7 +4,7 @@ import { useState } from "react";
 import { createSubtask, fetchSubtasksByTaskId, fetchSubtasksByUserId } from "../../../services/subtasksService";
 import { useDispatch } from "react-redux";
 import ExistingSubtasksDropdown from "./ExistingSubtasksDropdown";
-
+import LoadingButton from '@mui/lab/LoadingButton';
 
 const AddSubtask = ({
     task_id,
@@ -14,6 +14,7 @@ const AddSubtask = ({
     const theme = useTheme();
     const [title, setTitle] = useState(''); 
     const [description, setDescription] = useState(''); 
+    const [loading, setLoading] = useState(false);
     
     const [existingSubtaskTitle, setExisitingSubtaskTitle] = useState("");
 
@@ -27,16 +28,19 @@ const AddSubtask = ({
             }
             const data = { task_id, title, description };
 
+            setLoading(true);
             await createSubtask(data);
 
             dispatch(fetchSubtasksByTaskId(task_id));
             dispatch(fetchSubtasksByUserId(task_id));
 
+            setLoading(false);
             setTitle("");
             setDescription("");
             setExisitingSubtaskTitle("");
             
         } catch (err) {
+            setLoading(false);
             console.error(err);
         }
     }
@@ -124,7 +128,7 @@ const AddSubtask = ({
                         handleChange={handleChange}
                         existingSubtaskTitle={existingSubtaskTitle}
                     />
-                    <Button 
+                    <LoadingButton 
                         type="submit"
                         fullWidth
                         sx={{ 
@@ -136,9 +140,10 @@ const AddSubtask = ({
                         color="primary"
                         variant="outlined"
                         disableElevation
+                        loading={loading}
                     >
                         Add Subtask
-                    </Button>
+                    </LoadingButton>
                 </Box>
             </form>
         </Box>

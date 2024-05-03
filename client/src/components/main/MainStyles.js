@@ -33,10 +33,6 @@ export const TaskHeaderButtonGroup = styled(Box)(({ theme }) => ({
     display: 'flex',
     flexFlow: 'row',
     alignItems: 'center',
-    width: '8%',
-    [theme.breakpoints.up('xl')]: {
-       width: '5%', 
-    }
 }))
 
 export const CardBottom = styled(CardContent)(({ theme }) => ({

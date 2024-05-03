@@ -80,13 +80,13 @@ const Tasks = () => {
     }
 
     let content;
-    if (tasksStatus === 'rejected' || tasksError) {
-        content = tasksError;
-    } else if (tasksStatus === 'pending') {
+    if (tasksStatus === 'pending') {
         content = <CircularProgress color="info" sx={{ margin: 'auto' }} />;
     } else if (tasksStatus === 'fulfilled' || !isAuthenticated) {
         content = renderAllTasks();
-    }
+    } else if (tasksStatus === 'rejected' || tasksError) {
+        content = tasksError;
+    } 
 
     const handleClose = async (e, task_title, task_id) => {
         try {
