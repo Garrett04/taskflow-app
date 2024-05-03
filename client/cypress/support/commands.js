@@ -29,9 +29,6 @@ Cypress.Commands.add('login', (username, password) => {
   // Visit homepage
   cy.visit('/');
 
-  // Click the login account button
-  cy.get('a[href="/login"]').click();
-
   // Verify that url includes /login
   cy.url().should('include', '/login');
 
@@ -81,7 +78,7 @@ Cypress.Commands.add('addSubtasks', (subtasks, options) => {
     .within(() => {
     for (let i = 0; i < subtasks.length; i++) {
       cy.get('input[name="title"]').type(subtasks[i].title);
-      cy.get('input[name="description"]').type(subtasks[i].description);
+      cy.get('textarea[name="description"]').type(subtasks[i].description);
       cy.get('button[type="submit"]').click();
 
       cy.get('[data-testid="subtask-title"]').contains(subtasks[i].title);
@@ -104,7 +101,7 @@ Cypress.Commands.add('deleteTask', (task_title) => {
 
 Cypress.Commands.add('closeModal', () => {
   // Click outside the task modal
-  cy.get('div.MuiBackdrop-root').scrollIntoView().click({ force: true });
+  cy.get('div.MuiBackdrop-root').click({ force: true, multiple: true });
 })
 
 Cypress.Commands.add('checkTask', (task_title, subtasks, options) => {

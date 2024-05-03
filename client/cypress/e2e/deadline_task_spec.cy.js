@@ -27,7 +27,7 @@ describe('Task with deadline date', () => {
             cy.closeModal();
 
             // Click the overdue tasks page button
-            cy.get('div.MuiButtonBase-root [data-testid="HourglassDisabledIcon"]').click();
+            cy.get('div.MuiButtonBase-root [data-testid="HourglassDisabledIcon"]').first().click();
 
             cy.url().should('eq', Cypress.config().baseUrl + 'overdue-tasks');
 
