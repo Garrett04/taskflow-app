@@ -19,14 +19,19 @@ const Subtasks = ({
     
     const dispatch = useDispatch();
     
+    // for every task it will dispatch fetchSubtasksByTaskId
     useEffect(() => {
         dispatch(fetchSubtasksByTaskId(task_id));
     }, [dispatch, task_id])
 
     const renderSubtask = () => {
+        // since each tasks subtasks is stored in an object with task id as the key in the redux state
+        // and the value is the subtasks array, we access it like so.
         const subtasksByTaskId = subtasks[task_id];
 
+        // if the subtasks are present
         if (subtasksByTaskId?.length > 0) {
+            // for every subtask render the Subtask component
             return subtasksByTaskId.map(subtask => (
                 <div key={subtask.id}>
                     <Subtask 
@@ -38,6 +43,8 @@ const Subtasks = ({
                     />
                 </div>
             ))
+        // Else if the subtasks are not present and task status is not overdue and archived.
+        // meaning for tasks with a status of overdue and archived should not show "Add new subtasks" message. 
         } else if (subtasksByTaskId?.length < 1 && task_status !== 'overdue' && !archived) {
             return subtasksError;
         }

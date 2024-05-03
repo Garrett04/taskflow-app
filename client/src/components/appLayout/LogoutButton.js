@@ -10,12 +10,16 @@ const LogoutButton = () => {
     const dispatch = useDispatch();
     const navigate = useNavigate();
 
+    // make a call to the server to logout using the logoutUser service
+    // and dispatch fetchAuthenticationStatus to update the authenticated state
+    // navigate the user back to login screen.
     const handleLogout = async () => {
         await logoutUser();
         dispatch(fetchAuthenticationStatus());
-        navigate('/');
+        navigate('/login');
     }
 
+    // Only if user is Authenticated, it will render the logout button
     if (isAuthenticated) {
         return (
             <Button 
@@ -26,6 +30,8 @@ const LogoutButton = () => {
                 size='small'
                 disableElevation
                 onClick={handleLogout}
+                // backgroundhovercolor is a custom prop passed in the button styles
+                // this is to follow the DRY rule.
                 backgroundhovercolor='red'
             >
                 <ButtonIcon icon={LogoutIcon} />

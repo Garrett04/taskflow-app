@@ -52,7 +52,7 @@ const Subtask = ({
             }
             
         } catch (err) {
-            throw err;
+            console.error(err);
         }
     }
     
@@ -62,15 +62,18 @@ const Subtask = ({
         try {
             const data = { task_id, id: subtask_id, title, description };
 
+            // Make a call to the server to update the subtask
             await updateSubtask(data);
 
             setIsEditMode(false);
 
             dispatch(fetchSubtasksByTaskId(task_id));
 
+            // This updates the state of subtasks by user id
+            // which is used for the existing subtasks dropdown.
             dispatch(fetchSubtasksByUserId(task_id));
         } catch (err) {
-            throw err;
+            console.error(err);
         }
     }
     

@@ -28,18 +28,24 @@ const Tasks = () => {
     const navigate = useNavigate();
 
     const [searchParams] = useSearchParams();
+    // either gets the sort and order option from the url
+    // or from the task modal.
+    // in cases where the user sorts first and then opens a task modal
+    // to persist the sort and order options.
     const sort = searchParams.get('sort') || location.state?.sort;
     const order = searchParams.get('order') || location.state?.order;
+
     const search = searchParams.get('search');
     const dispatch = useDispatch();
     
+    // controls the task modal open prop
     const [isModalOpen, setIsModalOpen] = useState(false);
 
     useEffect(() => {
-        // if isModalOpen and search term is false then dispatch fetchTasksByUserId
-        // this prevents the dispatch from happening again when modal is open or search term is not included.
+        // if isModalOpen is false then dispatch fetchTasksByUserId
+        // this prevents the dispatch from happening again when modal is open.
+        // it improves the performance of the app by a bit.
         if (!isModalOpen) {
-            // console.log(sort, order, location.pathname);
             dispatchFetchTasksByUserId(location.pathname, { sort, order });
         }
     }, [
@@ -47,23 +53,18 @@ const Tasks = () => {
         sort, 
         order, 
         isModalOpen, 
-        search
     ]);
 
     useEffect(() => {
         // if tasksStatus is fulfilled and the search term is present
         // then dispatch filterTasksBySearch action
-        // console.log(tasksStatus, search);
+        // for cases when user reloads the page.
         if (tasksStatus === 'fulfilled' && search) {
-            // console.log('hello');
             dispatch(filterTasksBySearchTerm({ term: search }));
         }
     }, [dispatch, search, tasksStatus]);
     
     const renderAllTasks = () => {
-        // Checks if user isAuthenticated then render the users tasks 
-        // else just the sampleTasks
-        
         return tasks.map(task => {
             return (
                 <Grid item key={task.id} xs={12} md={6} lg={4} xl={3}>
@@ -95,18 +96,22 @@ const Tasks = () => {
         try {
             if (e.target === e.currentTarget) {
                 // If not a uuid then just navigate and dont delete
+                // since the server uses only a uuid.
                 if (!uuidValidate(task_id)) {
                     navigate(-1)
                 }
 
-                // console.log(e.currentTarget);
                 // To delete task if there is no task title.
                 if (!task_title) {
                     await deleteTask(task_id);
                 }
 
+                // for cases when the subtasks in the task have been updated or added 
+                // through the task modal
+                // a dispatch of fetchSubtasksByTaskId would update the state
                 dispatch(fetchSubtasksByTaskId(task_id));
 
+                // to close the modal
                 setIsModalOpen(false);
 
                 // if when adding task and after closing the modal
@@ -115,24 +120,28 @@ const Tasks = () => {
                 // else when the task has not been added and just isModalOpened
                 // then navigate to the page before.
                 if (location.state?.from) {
-                    // console.log("hello", location.pathname);
-                    // update tasks state after adding task.
+                    // update tasks state after adding task and closing modal.
                     dispatchFetchTasksByUserId(location.pathname);
+                    
+                    // passing in sort and order from the task modal
                     navigate('/', { state: { sort: location.state.sort, order: location.state.order }});
                 } else {
-                    // console.log("hello 2");
                     navigate(-1, { state: { sort: location.state.sort, order: location.state.order }});
                 }
             }
         } catch (err) {
-            throw err;
+            console.error(err);
         }
     };
 
     return (
         // Show all tasks here
         <>
+            {/* FilterDropdowns is a top level component which renders
+                SortByDropdown and OrderByDropdown.
+            */}
             <FilterDropdowns />
+            {/* Task Title */}
             <Typography 
                 paragraph
                 variant="h4"
@@ -148,6 +157,7 @@ const Tasks = () => {
             >
                 {renderPageTitle(location.pathname)}
             </Typography>
+            {/* The main container for tasks */}
             <Container maxWidth="100%">
                 <Grid container spacing={3}>
                     {content}

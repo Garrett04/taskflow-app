@@ -11,7 +11,7 @@ const DeleteTaskButton = ({
     setIsModalOpen,
     inTaskModal
 }) => {
-    const days_left = formatDistanceToNow(addDays(deleted_at, 20));
+    const days_left = formatDistanceToNow(addDays(deleted_at, 30));
     const location = useLocation();
     const navigate = useNavigate();
 
@@ -19,7 +19,6 @@ const DeleteTaskButton = ({
         e.stopPropagation();
         try {
             await deleteTask(task_id);
-            // dispatch(fetchTasksByUserId({ status: 'idle', archived: false }));
             dispatchFetchTasksByUserId(location.pathname);
 
             if (inTaskModal) {

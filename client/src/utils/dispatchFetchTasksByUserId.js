@@ -1,11 +1,13 @@
 import { store } from '../app/store';
 import { fetchTasksByUserId } from '../services/tasksService';
 
+// A function to dispatch FetchTasksByUserId based on the current pathname and filterOptions (optional)
 export const dispatchFetchTasksByUserId = (currentPath, filterOptions) => {
     // If filterOptions object isnt present then default it to an empty object.
     // to prevent throwing an error when destructuring.
     const { sort, order } = filterOptions ?? {};
 
+    
     if (currentPath.includes('/completed-tasks')) {
         
         store.dispatch(fetchTasksByUserId({ status: 'completed', sort, order }));

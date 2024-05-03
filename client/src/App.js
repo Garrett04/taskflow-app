@@ -8,33 +8,41 @@ import Tasks from "./components/main/Tasks";
 import { useDispatch, useSelector } from "react-redux";
 import { useEffect } from "react";
 import { fetchAuthenticationStatus } from "./services/authService";
-import { getIsAuthenticatedStatus } from "./features/auth/authSlice";
+import { getIsAuthenticatedStatus, selectIsAuthenticated } from "./features/auth/authSlice";
 import Login from './pages/Login';
 import Register from './pages/Register';
 import AccountInfo from "./pages/AccountInfo";
-import { ThemeProvider, createTheme } from "@mui/material";
+import { CssBaseline, ThemeProvider, createTheme } from "@mui/material";
 import PrivateRoutes from './utils/PrivateRoutes';
 import NotFound from "./pages/NotFound/NotFound";
 
 
 function App() {
+  // To get the users preferred color scheme.
   // const prefersDarkMode = useMediaQuery('(prefers-color-scheme: dark)');
   const dispatch = useDispatch();
   const isAuthenticatedStatus = useSelector(getIsAuthenticatedStatus);
+  const isAuthenticated = useSelector(selectIsAuthenticated);
 
+  // Router tree
   const router = createBrowserRouter([
     {
+      // This is where the app layout is provided
       path: '/',
       element: <Root />,
       children: [
         {
+          // This handles user authentication
           element: <PrivateRoutes />,
           children: [
+            // Where all the account info is provided and can be updated
             {
               path: '/account-info',
               element: <AccountInfo />,
             },
             {
+              // Can be considered as the starting point for an authenticated user.
+              // All tasks get rendered here
               path: '/',
               element: <Tasks />,
               children: [
@@ -45,6 +53,7 @@ function App() {
               ]
             },
             {
+              // A completed tasks page which shows all the completed tasks.
               path: '/completed-tasks',
               element: <Tasks />,
               children: [
@@ -55,6 +64,7 @@ function App() {
               ]
             },
             {
+              // An overdue tasks page where all overdue tasks exists
               path: '/overdue-tasks',
               element: <Tasks />,
               children: [
@@ -65,6 +75,9 @@ function App() {
               ]
             },
             {
+              // A trash page where all archived/tasks to be deleted exist.
+              // A task remains for 30 days before it gets permanantaly deleted.
+              // or the user can manually delete it.
               path: '/trash',
               element: <Tasks />,
               children: [
@@ -92,6 +105,7 @@ function App() {
     }
   ])
 
+  // MUI theme settings
   const theme = createTheme({
     palette: {
       // mode: prefersDarkMode ? 'dark' : 'light',
@@ -108,6 +122,7 @@ function App() {
         dark: '#ba000d',
         contrastText: '#FFF',
       },
+      // This color is used for a task card and modal
       indigo: {
         main: '#340068',
         light: '#7A00F5',
@@ -131,14 +146,19 @@ function App() {
     },
   })
 
+  // dispatch fetchAuthenticationStatus to check if user is authenticated before proceeding
   useEffect(() => {
     dispatch(fetchAuthenticationStatus());
   }, [dispatch]);
   
 
-  if (isAuthenticatedStatus === 'fulfilled' || isAuthenticatedStatus === 'rejected') {
+  // Strict checks to see if user is authenticated properly.
+  if ((isAuthenticatedStatus === 'fulfilled' || isAuthenticatedStatus === 'rejected') && typeof isAuthenticated === 'boolean') {
     return (
+      // ThemeProvider is used by MUI for applying the theme settings
       <ThemeProvider theme={theme}>
+        <CssBaseline />
+        {/* RouterProvider is used by react-router */}
         <RouterProvider router={router}/>
       </ThemeProvider>
     );

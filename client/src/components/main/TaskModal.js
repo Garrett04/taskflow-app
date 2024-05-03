@@ -28,7 +28,6 @@ const TaskModal = ({
     const [updateSuccess, setUpdateSuccess] = useState(false);
     const location = useLocation();
 
-    // const taskById = tasks.find(task => task.id === id);
     const taskById = useSelector(selectTaskById(id));
 
     const dispatch = useDispatch();
@@ -56,6 +55,7 @@ const TaskModal = ({
             // If title is removed it will alert user and not update task.
             if (!title) {
                 window.alert('Please provide task title');
+                // to put back the existing title
                 setTitle(taskById.title);
                 return;           
             }
@@ -67,11 +67,9 @@ const TaskModal = ({
                 
                 // Update redux tasks state
                 dispatch(updateTaskTitleAction({ id: id, title }));
-
-                console.log(taskById);
                 
             } catch (err) {
-                throw err;
+                console.error(err);
             }
         }
     }

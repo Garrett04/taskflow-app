@@ -10,6 +10,7 @@ const SearchBar = () => {
     const [searchParams] = useSearchParams();
 
     const search = searchParams.get('search');
+    // This is the term provided by user in the search box
     const [term, setTerm] = useState(search || "");
     const navigate = useNavigate();
     const location = useLocation();
@@ -21,15 +22,20 @@ const SearchBar = () => {
         setTerm(value);
     }
 
+    // This handles empty search term.
     const handleSearch = () => {
+        // If term is empty then navigate to home page
         if (!term) {
             navigate(location.pathname);
+        // Else navigate to that search term
         } else {
             navigate(`?search=${term}`);
         }
+        // Clear the term
         setTerm("");
     }
 
+    // For when user hits the Enter key
     const handleKeyUp = (e) => {
         const { key } = e;
 
@@ -49,6 +55,7 @@ const SearchBar = () => {
             />
             {term
             &&
+                // A cancel button to cancel the search
                 (
                     <IconButton 
                         size="small" 
@@ -60,6 +67,7 @@ const SearchBar = () => {
                 )
             }
             <Divider sx={{ height: '2rem', margin: '0 .3em' }} orientation="vertical" />
+            {/* The search button which simply calls handleSearch when clicked */}
             <SearchButton size='small' title="Search" onClick={handleSearch} >
                 <SearchIcon/>
             </SearchButton>

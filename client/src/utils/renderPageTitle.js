@@ -1,3 +1,4 @@
+// Renders page title based on the current path
 export const renderPageTitle = (pathname) => {
     if (pathname.includes('/completed-tasks')) {
         return "Completed Tasks";

@@ -6,6 +6,8 @@ const PrivateRoutes = () => {
     const location = useLocation();
     const isAuthenticated = useSelector(selectIsAuthenticated);
 
+    // If user is authenticated then navigate user to the protected route
+    // Else navigate user to login page
     if (isAuthenticated) {
         return <Outlet/>;
     } else {

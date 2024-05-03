@@ -1,6 +1,5 @@
 import * as React from 'react';
 import Box from '@mui/material/Box';
-import CssBaseline from '@mui/material/CssBaseline';
 import ResponsiveDrawer from './ResponsiveDrawer';
 import { Toolbar } from '@mui/material';
 import { useTheme } from '@emotion/react';
@@ -12,7 +11,7 @@ const AppLayout = ({ children }) => {
 
   return (
       <Box sx={{ display: 'flex' }}>
-        <CssBaseline />
+        {/* Responsive Drawer has the header with it */}
         <ResponsiveDrawer/>
         <Box
           component="main"
@@ -26,6 +25,7 @@ const AppLayout = ({ children }) => {
           }}
         >
           <Toolbar />
+          {/* this is where all the main content gets rendered */}
           {children}
         </Box>
       </Box>

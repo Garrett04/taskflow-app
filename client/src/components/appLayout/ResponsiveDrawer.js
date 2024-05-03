@@ -33,10 +33,11 @@ export default function ResponsiveDrawer(props) {
     const {pathname} = useLocation();
     const navigate = useNavigate();
     const isAuthenticated = useSelector(selectIsAuthenticated);
-    const { window } = props;
     const [mobileOpen, setMobileOpen] = React.useState(false);
     const [isClosing, setIsClosing] = React.useState(false);
 
+    // when a button in the drawer is clicked, 
+    // it will navigate the user accordingly.
     const handleClick = (text) => {
       if (text === 'All Tasks') {
         navigate('/');
@@ -66,6 +67,7 @@ export default function ResponsiveDrawer(props) {
 
     const drawer = (
       <div>
+        {/* Logo over here will only be rendered in mobile and tablet view */}
         <Logo 
           sx={{
             fontSize: '2rem',
@@ -84,6 +86,8 @@ export default function ResponsiveDrawer(props) {
             }
           }}
         />
+        {/* To connect the bottom border between header and the drawer, 
+        the styles have been adjusted a little */}
         <Divider 
             sx={{ 
                 marginTop: '1rem', 
@@ -124,9 +128,6 @@ export default function ResponsiveDrawer(props) {
         </List>
       </div>
     );
-
-    // Remove this const when copying and pasting into your project.
-    const container = window !== undefined ? () => window().document.body : undefined;
 
     return (
       <Box sx={{ display: 'flex' }}>
@@ -195,15 +196,13 @@ export default function ResponsiveDrawer(props) {
           sx={{ width: { sm: drawerWidth }, flexShrink: { sm: 0 } }}
           aria-label="navigation buttons"
         >
-          {/* The implementation can be swapped with js to avoid SEO duplication of links. */}
           <Drawer
-            container={container}
             variant="temporary"
             open={mobileOpen}
             onTransitionEnd={handleDrawerTransitionEnd}
             onClose={handleDrawerClose}
             ModalProps={{
-              keepMounted: true, // Better open performance on mobile.
+              keepMounted: true,
             }}
             sx={{
               display: { xs: 'block', sm: 'none' },

@@ -23,7 +23,12 @@ const Task = ({
 
     const handleOpen = (task_id) => {
         // open is changed to true to prevent another dispatch of fetchTasksByUserId
+        // and open the TaskModal
         setIsModalOpen(true);
+
+        // passing in the sort and order option to the task modal route 
+        // so that sortBy and orderBy displays the same options
+        // instead of going to its default state.
         navigate(`task/${task_id}`, { 
             state: { 
                 sort, 
@@ -35,15 +40,13 @@ const Task = ({
     return (
         // Checks if it is not in the trash page then pass in the task.archived else null
         // Just to indicate that the task is going to be deleted or in the trash section
-        // isAuthenticated was put in here to handle sample tasks
         <>
             <TaskCard 
                 onClick={() => handleOpen(task.id)} 
-                // To change the styling of the task when it is deleted and in a overdue tasks page or completed tasks page.
+                // To change the styling of the task 
+                // when it is deleted and in a overdue tasks page or completed tasks page.
                 task_archived={
-                    (isAuthenticated 
-                        && (pathname.includes('/overdue-tasks') || pathname.includes('/completed-tasks'))
-                    ) 
+                    (pathname.includes('/overdue-tasks') || pathname.includes('/completed-tasks'))
                         ? task.archived.toString() 
                         : null
                 }
@@ -67,10 +70,12 @@ const Task = ({
                     </TaskHeader> 
                 </Box>
                 <Divider/>
+                {/* Subtasks component renders all subtasks associated by the task id */}
                 <Subtasks task_id={task.id} archived={task.archived} task_status={task.status} />
                 <Divider/>
                 <CardBottom>
                     {renderTaskStatus(task.status)}
+                    {/* DeadlineDate displays the deadline date if present */}
                     <DeadlineDate task_status={task.status} deadline_date={task.deadline_date} />
                 </CardBottom>
             </TaskCard>

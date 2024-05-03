@@ -33,7 +33,7 @@ const deleteTask = async () => {
             if (archived) {
                 const difference = differenceInDays(currentDate, deleted_at);
 
-                if (difference >= 20) {
+                if (difference >= 30) {
                     const deletedTask = await Task.deleteById(id);
                     // console.log("deletedTask:", deletedTask);
                     // console.log("deleted_at:", deleted_at);
