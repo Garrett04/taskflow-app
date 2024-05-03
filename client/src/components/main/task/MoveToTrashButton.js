@@ -1,5 +1,5 @@
 import DeleteIcon from '@mui/icons-material/Delete';
-import { IconButton } from '@mui/material';
+import { IconButton, useTheme } from '@mui/material';
 import { updateTaskArchived } from '../../../services/tasksService';
 import { useDispatch } from 'react-redux';
 import { handleTaskExpand } from '../../../utils/handleTaskExpand';
@@ -12,6 +12,7 @@ const MoveToTrashButton = ({
     inTaskModal,
     setIsModalOpen
 }) => {
+    const theme = useTheme();
     const dispatch = useDispatch();
     const { pathname } = useLocation();
     const navigate = useNavigate();
@@ -42,6 +43,12 @@ const MoveToTrashButton = ({
             data-testid="trash-button" 
             title='Move to trash' 
             onClick={handleArchive}
+            sx={{
+                width: inTaskModal ? '10%' : 'auto',
+                [theme.breakpoints.up('xl')]: {
+                    width: inTaskModal ? '5%' : 'auto'
+                }
+            }}
         >
             <DeleteIcon />
         </IconButton>

@@ -43,7 +43,11 @@ const ExistingSubtasksDropdown = ({
     if (userSubtasks.length > 0) {
         return (
             <FormControl fullWidth>
-                <InputLabel id="existing-subtask">Existing Subtask</InputLabel>
+                <InputLabel 
+                    id="existing-subtask" 
+                >
+                    Existing Subtask
+                </InputLabel>
                 <Select
                     labelId="existing-subtask"
                     label="existing-subtask"

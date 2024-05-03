@@ -2,7 +2,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { filterTasksBySearchTerm, getTasksError, getTasksStatus, selectTasks } from "../../features/tasks/tasksSlice";
 import { useEffect, useState } from "react";
 import { selectIsAuthenticated } from "../../features/auth/authSlice";
-import { Box, CircularProgress, Container, Grid, Typography } from "@mui/material";
+import { CircularProgress, Container, Grid, Typography } from "@mui/material";
 import { useTheme } from "@emotion/react";
 import AddTaskButton from "./task/AddTaskButton";
 import Task from "./task/Task";
@@ -83,11 +83,7 @@ const Tasks = () => {
     if (tasksStatus === 'rejected' || tasksError) {
         content = tasksError;
     } else if (tasksStatus === 'pending') {
-        content = (
-            <Box sx={{ display: 'flex', margin: 'auto' }}>
-                <CircularProgress size="4rem" color="info" />
-            </Box>
-        )
+        content = <CircularProgress color="info" sx={{ margin: 'auto' }} />;
     } else if (tasksStatus === 'fulfilled' || !isAuthenticated) {
         content = renderAllTasks();
     }

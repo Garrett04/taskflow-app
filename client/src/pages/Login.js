@@ -14,6 +14,8 @@ const Login = () => {
     const [password, setPassword] = useState("");
     const [username, setUsername] = useState("");
     const [showPassword, setShowPassword] = useState(false);
+    const [errMsg, setErrMsg] = useState("");
+    const [loading, setLoading] = useState(false);
 
     const dispatch = useDispatch();
     const location = useLocation();
@@ -39,6 +41,8 @@ const Login = () => {
     const handleLogin = async (e) => {
         e.preventDefault();
         try {
+            setLoading(true);
+
             await loginUser({ username, password });
 
             dispatch(fetchAuthenticationStatus());
@@ -49,6 +53,8 @@ const Login = () => {
                 navigate('/');
             }
         } catch (err) {
+            setErrMsg(err.data.msg);
+            setLoading(false);
             console.error(err);
         }
     }
@@ -95,6 +101,7 @@ const Login = () => {
                     )
                 }}
             />
+            <Typography sx={{ color: 'red' }}>{errMsg}</Typography>
             <LoadingButton 
                 onClick={handleLogin} 
                 variant='contained'
@@ -106,6 +113,7 @@ const Login = () => {
                 }}
                 color='primary'
                 disableElevation
+                loading={loading}
             >
                 Login
             </LoadingButton>

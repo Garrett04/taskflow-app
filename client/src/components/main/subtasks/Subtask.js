@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
 import { useTheme } from "@emotion/react";
 import { Box, Checkbox, FormControlLabel, Stack, TextField, Typography } from "@mui/material";
@@ -21,10 +21,17 @@ const Subtask = ({
     const [isEditMode, setIsEditMode] = useState(false);
     const [title, setTitle] = useState(subtask.title);
     const [description, setDescription] = useState(subtask.description);
-    const [checked, setChecked] = useState(subtask.checked || false);
+    const [checked, setChecked] = useState(false);
     
     const dispatch = useDispatch();
     const { pathname } = useLocation();
+
+    useEffect(() => {
+        // Updates the checked state of each subtask
+        if (typeof subtask.checked === 'boolean') {
+            setChecked(subtask.checked);
+        }
+    }, [subtask])
 
 
     const updateSubtaskChecked = async (subtask_id) => {
@@ -46,7 +53,7 @@ const Subtask = ({
             // then dispatchFetchTasksByUserId to update state.
             if (updatedSubtask.task_status !== task_status) {
                 
-                dispatch(fetchSubtasksByTaskId(task_id));
+                // dispatch(fetchSubtasksByTaskId(task_id));
 
                 dispatch(updateTaskStatus({ id: task_id, task_status: updatedSubtask.task_status, pathname }));
             }
@@ -134,7 +141,7 @@ const Subtask = ({
                         flexFlow: 'column',
                         justifyContent: 'center',
                         overflowWrap: 'break-word',
-                        width: '85%',
+                        width: '80%',
                     }}
                 >
                     <Typography 
@@ -190,7 +197,7 @@ const Subtask = ({
                         }}
                         onChange={() => updateSubtaskChecked(subtask.id)}
                         disabled={archived || task_status === 'overdue'}
-                        size="small"
+                        size="medium"
                     />
                 } 
                 onClick={handleTaskExpand}
@@ -201,10 +208,12 @@ const Subtask = ({
                     flexFlow: 'row nowrap',
                     justifyContent: 'space-between',
                     alignItems: 'center',
-                    width: inTaskModal ? "90%" : "80%",
+                    width: inTaskModal ? "90%" : '80%',
                     [theme.breakpoints.down('sm')]: {
-                        flexFlow: 'column wrap',
-                        alignItems: 'start',
+                        width: '80%',
+                    },
+                    [theme.breakpoints.up('xl')]: {
+                        width: '100%'
                     }
                 }}
             >
@@ -213,11 +222,6 @@ const Subtask = ({
                     sx={{  
                         display: 'flex',
                         flexFlow: 'column wrap',
-                        [theme.breakpoints.down('sm')]: {
-                            flexFlow: 'row nowrap',
-                            justifyContent: 'center',
-                            width: '85%'
-                        }
                     }}
                 >
                     <DeleteSubtaskButton

@@ -1,11 +1,10 @@
 import { useDispatch, useSelector } from "react-redux";
 import { getSubtasksError, getSubtasksStatus, selectSubtasks } from "../../../features/subtasks/taskSubtasksSlice";
 import { useEffect } from "react";
-import { Box } from "@mui/material";
+import { Box, useTheme, LinearProgress } from "@mui/material";
 import { fetchSubtasksByTaskId } from "../../../services/subtasksService";
 import AddSubtask from "./AddSubtask";
 import Subtask from "./Subtask";
-
 
 const Subtasks = ({ 
     task_id,
@@ -13,6 +12,7 @@ const Subtasks = ({
     task_status,
     archived
 }) => {
+    const theme = useTheme();
     const subtasks = useSelector(selectSubtasks);
     const subtasksStatus = useSelector(getSubtasksStatus);
     const subtasksError = useSelector(getSubtasksError);
@@ -21,6 +21,7 @@ const Subtasks = ({
     
     // for every task it will dispatch fetchSubtasksByTaskId
     useEffect(() => {
+        console.log('hello');
         dispatch(fetchSubtasksByTaskId(task_id));
     }, [dispatch, task_id])
 
@@ -52,7 +53,7 @@ const Subtasks = ({
 
     let content;
     if (subtasksStatus === 'pending') {
-        content = 'Loading...';
+        content = <LinearProgress color="inherit" sx={{ width: '90%', margin: 'auto' }} />;
     } else if (subtasksStatus === 'fulfilled' || subtasks) {
         content = renderSubtask();
     }
@@ -76,6 +77,9 @@ const Subtasks = ({
                         maxHeight: '20rem',
                         overflowX: 'hidden',
                         gap: '1.2rem',
+                        [theme.breakpoints.down('sm')]: {
+                            maxHeight: '18rem'
+                        }
                     }}
                 >
                     {content}

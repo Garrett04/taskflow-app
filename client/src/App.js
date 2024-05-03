@@ -138,12 +138,6 @@ function App() {
         secondary: '#FFFFFF',
       },
     },
-    typography: {
-      taskTitle: {
-        fontSize: '1.5rem',
-        fontFamily: 'sans',
-      },
-    },
   })
 
   // dispatch fetchAuthenticationStatus to check if user is authenticated before proceeding

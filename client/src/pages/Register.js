@@ -16,6 +16,8 @@ const Register = () => {
     const [showPassword, setShowPassword] = useState(false);
     const isAuthenticatedStatus = useSelector(getIsAuthenticatedStatus);
     const isAuthenticated = useSelector(selectIsAuthenticated);
+    const [loading, setLoading] = useState(false);
+    const [errMsg, setErrMsg] = useState("");
 
     const dispatch = useDispatch();
     const navigate = useNavigate();
@@ -23,12 +25,16 @@ const Register = () => {
     const handleRegister = async (e) => {
         e.preventDefault();
         try {
+            setLoading(true);
+
             await registerUser({ username, password });
 
             dispatch(fetchAuthenticationStatus());
 
             navigate('/');
         } catch (err) {
+            setErrMsg(err.data.msg);
+            setLoading(false);
             console.error(err);
         }
     }
@@ -89,6 +95,7 @@ const Register = () => {
                     )
                 }}
             />
+            <Typography sx={{ color: 'red' }}>{errMsg}</Typography>
             <LoadingButton 
                 onClick={handleRegister} 
                 variant='contained'
@@ -100,6 +107,7 @@ const Register = () => {
                 }}
                 color='primary'
                 disableElevation
+                loading={loading}
             >
                 Register
             </LoadingButton>

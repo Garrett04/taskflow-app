@@ -51,7 +51,12 @@ const Task = ({
             >
                 <Box>
                     <TaskHeader>
-                        <Typography width="75%" variant="taskTitle">
+                        <Typography 
+                            sx={{
+                                fontSize: '1.5rem',
+                                fontFamily: 'sans',
+                            }}
+                        >
                             {task.title}
                         </Typography>
                         <TaskHeaderButtonGroup> 
