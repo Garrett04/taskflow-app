@@ -70,6 +70,13 @@ const tasksSlice = createSlice({
             } else if (pathname.includes('/completed-tasks')) {
                 state.tasks = state.tasks.filter(task => task.status === 'completed');
             }
+        },
+        updateTaskTitleAction: (state, action) => {
+            const { id, title } = action.payload;
+
+            const taskIndex = state.tasks.findIndex(task => task.id === id);
+
+            state.tasks[taskIndex].title = title;
         }
     },
     extraReducers: (builder) => {
@@ -89,11 +96,18 @@ const tasksSlice = createSlice({
     }
 })
 
-export const { updateTaskStatus, filterTasksBySearchTerm, moveTaskToTrash, restoreTask } = tasksSlice.actions;
+export const { 
+    updateTaskStatus, 
+    filterTasksBySearchTerm, 
+    moveTaskToTrash, 
+    restoreTask, 
+    updateTaskTitleAction 
+} = tasksSlice.actions;
 
 
 export const selectTasks = (state) => state.tasks.tasks;
 export const getTasksStatus = (state) => state.tasks.status;
 export const getTasksError = (state) => state.tasks.error;
+export const selectTaskById = (id) => (state) => state.tasks.tasks.find(task => task.id === id);
 
 export default tasksSlice.reducer;

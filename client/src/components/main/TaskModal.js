@@ -2,7 +2,7 @@ import { Box, Collapse, Divider, Modal } from "@mui/material"
 import Subtasks from "./subtasks/Subtasks"
 import { CardBottom, ModalBox, TaskCard, TaskTitle } from "./MainStyles"
 import { useEffect, useState } from "react"
-import { useSelector } from "react-redux"
+import { useDispatch, useSelector } from "react-redux"
 import { useLocation, useParams } from "react-router-dom"
 import { updateTask } from "../../services/tasksService"
 import { renderTaskStatus } from "../../utils/renderTaskStatus"
@@ -11,7 +11,7 @@ import MoveToTrashButton from "./task/MoveToTrashButton"
 import DeadlineDate from "./task/DeadlineDate"
 import RestoreTaskButton from "./task/RestoreTaskButton"
 import DeleteTaskButton from "./task/DeleteTaskButton"
-import { getTasksError, getTasksStatus, selectTasks } from "../../features/tasks/tasksSlice"
+import { getTasksError, getTasksStatus, selectTaskById, selectTasks, updateTaskTitleAction } from "../../features/tasks/tasksSlice"
 
 
 const TaskModal = ({
@@ -28,8 +28,10 @@ const TaskModal = ({
     const [updateSuccess, setUpdateSuccess] = useState(false);
     const location = useLocation();
 
-    const taskById = tasks.find(task => task.id === id);
+    // const taskById = tasks.find(task => task.id === id);
+    const taskById = useSelector(selectTaskById(id));
 
+    const dispatch = useDispatch();
     const [title, setTitle] = useState("");
 
     useEffect(() => {
@@ -62,6 +64,11 @@ const TaskModal = ({
 
                 setExpand(true);
                 setUpdateSuccess(true);
+                
+                // Update redux tasks state
+                dispatch(updateTaskTitleAction({ id: id, title }));
+
+                console.log(taskById);
                 
             } catch (err) {
                 throw err;
@@ -157,7 +164,7 @@ const TaskModal = ({
         <>
             <Modal 
                 open={isModalOpen}
-                onClose={(e) => handleClose(e, title, id)}
+                onClose={(e) => handleClose(e, taskById.title, id)}
             >
                 <ModalBox data-testid="task-modal">
                     {content}
