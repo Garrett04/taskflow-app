@@ -13,6 +13,7 @@ import TaskModal from "./TaskModal";
 import FilterDropdowns from "./filterOptions/FilterDropdowns";
 import { deleteTask } from "../../services/tasksService";
 import { fetchSubtasksByTaskId } from "../../services/subtasksService";
+import { validate as uuidValidate } from 'uuid';
 
 
 const Tasks = () => {
@@ -93,31 +94,40 @@ const Tasks = () => {
     }
 
     const handleClose = async (e, task_title, task_id) => {
-        if (e.target === e.currentTarget) {
-            // console.log(e.currentTarget);
-            // To delete task if there is no task title.
-            
-            if (!task_title) {
-                await deleteTask(task_id);
-            }
-            dispatch(fetchSubtasksByTaskId(task_id));
+        try {
+            if (e.target === e.currentTarget) {
+                // If not a uuid then just navigate and dont delete
+                if (!uuidValidate(task_id)) {
+                    navigate(-1)
+                }
 
-            setIsModalOpen(false);
-            
-            // if when adding task and after closing the modal
-            // the location.state.from will be present
-            // then navigate to home page
-            // else when the task has not been added and just isModalOpened
-            // then navigate to the page before.
-            if (location.state?.from) {
-                // console.log("hello", location.pathname);
-                // update tasks state after adding task.
-                dispatchFetchTasksByUserId(location.pathname);
-                navigate('/', { state: { sort: location.state.sort, order: location.state.order }});
-            } else {
-                // console.log("hello 2");
-                navigate(-1, { state: { sort: location.state.sort, order: location.state.order }});
+                // console.log(e.currentTarget);
+                // To delete task if there is no task title.
+                if (!task_title) {
+                    await deleteTask(task_id);
+                }
+
+                dispatch(fetchSubtasksByTaskId(task_id));
+
+                setIsModalOpen(false);
+
+                // if when adding task and after closing the modal
+                // the location.state.from will be present
+                // then navigate to home page
+                // else when the task has not been added and just isModalOpened
+                // then navigate to the page before.
+                if (location.state?.from) {
+                    // console.log("hello", location.pathname);
+                    // update tasks state after adding task.
+                    dispatchFetchTasksByUserId(location.pathname);
+                    navigate('/', { state: { sort: location.state.sort, order: location.state.order }});
+                } else {
+                    // console.log("hello 2");
+                    navigate(-1, { state: { sort: location.state.sort, order: location.state.order }});
+                }
             }
+        } catch (err) {
+            throw err;
         }
     };
 

@@ -141,7 +141,9 @@ const TaskModal = ({
                     </Collapse>
                 </TaskCard>
             )
-        }     
+        } else {
+            return "Task not found by id"
+        }   
     }
 
     let content;

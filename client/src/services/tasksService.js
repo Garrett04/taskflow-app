@@ -72,6 +72,6 @@ export const deleteTask = async (id) => {
 
         return response.data;
     } catch (err) {
-        throw err.response.data.msg;
+        throw err;
     }
 }
