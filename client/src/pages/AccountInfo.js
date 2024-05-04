@@ -8,6 +8,7 @@ import Done from "@mui/icons-material/Done";
 import Visibility from "@mui/icons-material/Visibility";
 import VisibilityOff from "@mui/icons-material/VisibilityOff";
 import { useTheme } from "@emotion/react";
+import { getIsAuthenticatedStatus } from '../features/auth/authSlice';
 
 const AccountInfo = () => {
     const theme = useTheme();
@@ -35,6 +36,8 @@ const AccountInfo = () => {
 
     // to show/hide old password
     const [showPassword, setShowPassword] = useState(false);
+
+    const isAuthenticatedStatus = useSelector(getIsAuthenticatedStatus);
     
     const dispatch = useDispatch();
 
@@ -290,7 +293,7 @@ const AccountInfo = () => {
     }
 
     let content;
-    if (userDataStatus === 'pending') {
+    if (isAuthenticatedStatus === 'fulfilled' && userDataStatus === 'pending') {
         content = <CircularProgress />;
     } else if (userDataStatus === 'fulfilled') {
         content = renderUserData();
