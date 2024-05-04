@@ -12,7 +12,7 @@ import { getIsAuthenticatedStatus, selectIsAuthenticated } from "./features/auth
 import Login from './pages/Login';
 import Register from './pages/Register';
 import AccountInfo from "./pages/AccountInfo";
-import { CssBaseline, ThemeProvider, createTheme } from "@mui/material";
+import { Box, CircularProgress, CssBaseline, ThemeProvider, Typography, createTheme } from "@mui/material";
 import PrivateRoutes from './utils/PrivateRoutes';
 import NotFound from "./pages/NotFound/NotFound";
 
@@ -147,6 +147,30 @@ function App() {
   
 
   // Strict checks to see if user is authenticated properly.
+  if (isAuthenticatedStatus === 'pending') {
+    return (
+      <Box
+        sx={{
+          position: 'absolute',
+          top: '50%',
+          left: '50%',
+          transform: 'translate(-50%, -50%)',
+          textAlign: 'center',
+          bgcolor: 'rgb(0, 0, 0)',
+          padding: '10rem',
+          borderRadius: 4,
+          border: '1px solid white',
+          [theme.breakpoints.down('sm')]: {
+            padding: '5rem'
+          }
+        }}
+      >
+        <Typography sx={{ color: 'white', fontSize: '1.5rem' }}>Verifying Authentication Status</Typography>
+        <CircularProgress sx={{ marginTop: '2rem' }} />
+      </Box>
+    )
+  }
+
   if ((isAuthenticatedStatus === 'fulfilled' || isAuthenticatedStatus === 'rejected') && typeof isAuthenticated === 'boolean') {
     return (
       // ThemeProvider is used by MUI for applying the theme settings
