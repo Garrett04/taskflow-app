@@ -1,70 +1,85 @@
-# Getting Started with Create React App
+# TaskFlow
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+> The frontend for a Task Managament Web App built using React.
 
-## Available Scripts
+## Table of contents
+* [General Information](#general-information)
 
-In the project directory, you can run:
+* [Technologies Used](#technologies-used)
 
-### `npm start`
+* [Setup](#setup)
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+* [Project Status](#project-status)
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+* [Room for Improvement](#room-for-improvement)
 
-### `npm test`
+* [Project Takeaways](#project-takeaways)
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
 
-### `npm run build`
+## Basic Wireframes:
+![Desktop Wireframe](wireframe/Desktop.png)
+![Mobile Wireframe](wireframe/Mobile.png)
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+## General Information:
+- Build a functioning task management web app using React
+- Allow users to register and log in via the client side using TaskFlow account.
+- Allow creation of tasks and subtasks
+- Allow viewing of tasks and subtasks
+- Allow viewing of a single task
+- Allow sorting of tasks by deadline date or created date
+- Allow adding, editing and deletion of tasks and subtasks
+- Allow removal of tasks and subtasks
+- Allow logout of users
+- Allow editing of user info
+- Use Git version control
+- Use command line
+- Develop locally on your computer
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+## Technologies Used:
+- `@reduxjs/toolkit`: ^2.2.3,
+- `axios`: ^1.6.8,
+- `react-redux`: ^9.1.1,
+- `react-router-dom`: ^6.22.3,
+- `@emotion/react`: "^11.11.4",
+- `@emotion/styled`: "^11.11.5",
+- `@mui/icons-material`: "^5.15.15",
+- `@mui/lab`: "^5.0.0-alpha.170",
+- `@mui/material`: "^5.15.15",
+- `@mui/x-date-pickers`: "^7.2.0",
+- `date-fns`: "^3.6.0",
+- `uuid`: "^9.0.1",
 
-### `npm run eject`
+## Setup
+To set up locally, begin by installing node_modules:
 
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
+```
+npm install
+```
 
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+This command will also execute the `install` script from `package.json`.
+  
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
+Then run the app which is located in `client/` directory:
 
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
+```
+npm start
+```
 
-## Learn More
+## Project Status
+In Progress: 
+- Engaged in persisting user login.
+- Engaged in adding more cypress e2e testing. 
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+## Room for Improvement
+Room for improvement:
+- Better use of redux.
+- Handling of errors.
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+To-Do:
+- Engaged in persisting user login.
 
-### Code Splitting
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
-
-### Analyzing the Bundle Size
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
-
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+## Project Takeaways
+- Better ways of handling errors.
+- Learn typescript for react.
+- Better implementation of CSS.
